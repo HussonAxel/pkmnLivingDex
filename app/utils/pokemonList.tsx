@@ -11,31 +11,27 @@ import axios from "redaxios";
 
 const rootApiURL = "https://pokeapi.co/api/v2/";
 
-export const fetchGenerationsWithNames = createServerFn({
+export const fetchGenerationsDetails = createServerFn({
   method: "GET",
 }).handler(async () => {
-  console.info("Fetching generations with names...");
+  console.info("Fetching generations with full data...");
 
-  const generations = await axios
+  const generationsList = await axios
     .get<PokemonsListType>(`${rootApiURL}generation/`)
     .then((response) => response.data.results);
 
-  const generationsWithNames = await Promise.all(
-    generations.map(async (gen) => {
+  const generationsData = await Promise.all(
+    generationsList.map(async (gen) => {
       const genId = gen.url.split("/").filter(Boolean).pop();
 
       try {
-        const details = await axios
+        const fullData = await axios
           .get<GenerationsRoot>(`${rootApiURL}generation/${genId}`)
           .then((response) => response.data);
 
-        const englishName = details.names.find(
-          (n) => n.language.name === "en"
-        )?.name;
-
         return {
-          ...gen,
-          displayName: englishName || gen.name,
+          ...fullData,
+          displayName: fullData.name,
         };
       } catch (error) {
         console.error(
@@ -45,20 +41,20 @@ export const fetchGenerationsWithNames = createServerFn({
         return {
           ...gen,
           displayName: gen.name,
+          error: true,
         };
       }
     })
   );
 
-  return generationsWithNames;
+  return generationsData;
 });
 
-export const pokemonQueryGenerationsWithNamesOptions = () =>
+export const pokemonQueryGenerationsDetailsOptions = () =>
   queryOptions({
-    queryKey: ["generations-with-names"],
-    queryFn: () => fetchGenerationsWithNames(),
+    queryKey: ["generations-full-data"],
+    queryFn: () => fetchGenerationsDetails(),
   });
-
 export const fetchPokemonList = createServerFn({ method: "GET" }).handler(
   async () => {
     console.info("Fetching pokemon list...");

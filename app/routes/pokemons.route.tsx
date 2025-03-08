@@ -1,11 +1,11 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, Outlet, createFileRoute } from "@tanstack/react-router";
-import { pokemonQueryGenerationsWithNamesOptions } from "~/utils/pokemonList";
+import { pokemonQueryGenerationsDetailsOptions } from "~/utils/pokemonList";
 
 export const Route = createFileRoute("/pokemons")({
   loader: async ({ context }) => {
     await context.queryClient.ensureQueryData(
-      pokemonQueryGenerationsWithNamesOptions()
+      pokemonQueryGenerationsDetailsOptions()
     );
   },
   head: () => ({
@@ -16,7 +16,7 @@ export const Route = createFileRoute("/pokemons")({
 
 function PostsComponent() {
   const generationsQuery = useSuspenseQuery(
-    pokemonQueryGenerationsWithNamesOptions()
+    pokemonQueryGenerationsDetailsOptions()
   );
   console.log(generationsQuery.data);
 
