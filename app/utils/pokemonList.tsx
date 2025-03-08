@@ -1,26 +1,14 @@
 import { queryOptions } from "@tanstack/react-query";
 import { notFound, NotFoundError } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
+import {
+  PokemonDetailsType,
+  PokemonListType,
+  PokemonsListType,
+} from "./types/pokemonList.types";
 import axios from "redaxios";
 
 const rootApiURL = "https://pokeapi.co/api/v2/";
-
-export type PokemonsListType = {
-  count: number;
-  next: null;
-  previous: null;
-  results: Array<{
-    name: string;
-    url: string;
-  }>;
-};
-
-export type PokemonListType = {
-  results: Array<{
-    name: string;
-    url: string;
-  }>;
-};
 
 export const fetchPokemonList = createServerFn({ method: "GET" }).handler(
   async () => {
@@ -46,7 +34,7 @@ export const fetchPokemon = createServerFn({ method: "GET" })
       .then((response) => response.data)
       .catch((err) => {
         console.error(err);
-        if ((err.status = 404)) {
+        if (err.status === 404) {
           throw notFound();
         }
         throw err;
@@ -58,4 +46,28 @@ export const pokemonListQueryOptions = (pokemonName: string) =>
   queryOptions({
     queryKey: ["pokemon", pokemonName],
     queryFn: () => fetchPokemon({ data: pokemonName }),
+  });
+
+export const fetchPokemonDetails = createServerFn({ method: "GET" })
+  .validator((name: string) => name)
+  .handler(async ({ data: name }) => {
+    console.info(`Fetching ${name} data...`);
+    const pokemon = await axios
+      .get<PokemonDetailsType>(`${rootApiURL}${name}`)
+      .then((r) => r.data)
+      .catch((err) => {
+        console.error(err);
+        if (err.status === 404) {
+          throw notFound();
+        }
+        throw err;
+      });
+    return pokemon;
+  });
+
+export const pokemonDetailsQueryOptions = (pokemonName: string) =>
+  queryOptions({
+    queryKey: ["pokemon", "details", pokemonName],
+    queryFn: () => fetchPokemonDetails({ data: pokemonName }),
+    staleTime: 1000 * 60 * 10,
   });

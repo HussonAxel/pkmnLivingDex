@@ -92,12 +92,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             Home
           </Link>{" "}
           <Link
-            to="/posts"
+            to="/pokemons"
             activeProps={{
               className: "font-bold",
             }}
           >
-            Posts
+            Pokemons
           </Link>{" "}
           <Link
             to="/users"

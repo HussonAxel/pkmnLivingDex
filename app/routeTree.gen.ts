@@ -15,14 +15,14 @@ import { Route as RedirectImport } from './routes/redirect'
 import { Route as DeferredImport } from './routes/deferred'
 import { Route as PathlessLayoutImport } from './routes/_pathlessLayout'
 import { Route as UsersRouteImport } from './routes/users.route'
-import { Route as PostsRouteImport } from './routes/posts.route'
+import { Route as PokemonsRouteImport } from './routes/pokemons.route'
 import { Route as IndexImport } from './routes/index'
 import { Route as UsersIndexImport } from './routes/users.index'
-import { Route as PostsIndexImport } from './routes/posts.index'
+import { Route as PokemonsIndexImport } from './routes/pokemons.index'
 import { Route as UsersUserIdImport } from './routes/users.$userId'
-import { Route as PostsPostIdImport } from './routes/posts.$postId'
+import { Route as PokemonsPokemonNameImport } from './routes/pokemons.$pokemonName'
 import { Route as PathlessLayoutNestedLayoutImport } from './routes/_pathlessLayout/_nested-layout'
-import { Route as PostsPostIdDeepImport } from './routes/posts_.$postId.deep'
+import { Route as PokemonsPokemonNameDeepImport } from './routes/pokemons_.$pokemonName.deep'
 import { Route as PathlessLayoutNestedLayoutRouteBImport } from './routes/_pathlessLayout/_nested-layout/route-b'
 import { Route as PathlessLayoutNestedLayoutRouteAImport } from './routes/_pathlessLayout/_nested-layout/route-a'
 
@@ -51,9 +51,9 @@ const UsersRouteRoute = UsersRouteImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const PostsRouteRoute = PostsRouteImport.update({
-  id: '/posts',
-  path: '/posts',
+const PokemonsRouteRoute = PokemonsRouteImport.update({
+  id: '/pokemons',
+  path: '/pokemons',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -69,10 +69,10 @@ const UsersIndexRoute = UsersIndexImport.update({
   getParentRoute: () => UsersRouteRoute,
 } as any)
 
-const PostsIndexRoute = PostsIndexImport.update({
+const PokemonsIndexRoute = PokemonsIndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => PostsRouteRoute,
+  getParentRoute: () => PokemonsRouteRoute,
 } as any)
 
 const UsersUserIdRoute = UsersUserIdImport.update({
@@ -81,10 +81,10 @@ const UsersUserIdRoute = UsersUserIdImport.update({
   getParentRoute: () => UsersRouteRoute,
 } as any)
 
-const PostsPostIdRoute = PostsPostIdImport.update({
-  id: '/$postId',
-  path: '/$postId',
-  getParentRoute: () => PostsRouteRoute,
+const PokemonsPokemonNameRoute = PokemonsPokemonNameImport.update({
+  id: '/$pokemonName',
+  path: '/$pokemonName',
+  getParentRoute: () => PokemonsRouteRoute,
 } as any)
 
 const PathlessLayoutNestedLayoutRoute = PathlessLayoutNestedLayoutImport.update(
@@ -94,9 +94,9 @@ const PathlessLayoutNestedLayoutRoute = PathlessLayoutNestedLayoutImport.update(
   } as any,
 )
 
-const PostsPostIdDeepRoute = PostsPostIdDeepImport.update({
-  id: '/posts_/$postId/deep',
-  path: '/posts/$postId/deep',
+const PokemonsPokemonNameDeepRoute = PokemonsPokemonNameDeepImport.update({
+  id: '/pokemons_/$pokemonName/deep',
+  path: '/pokemons/$pokemonName/deep',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -125,11 +125,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/posts': {
-      id: '/posts'
-      path: '/posts'
-      fullPath: '/posts'
-      preLoaderRoute: typeof PostsRouteImport
+    '/pokemons': {
+      id: '/pokemons'
+      path: '/pokemons'
+      fullPath: '/pokemons'
+      preLoaderRoute: typeof PokemonsRouteImport
       parentRoute: typeof rootRoute
     }
     '/users': {
@@ -167,12 +167,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PathlessLayoutNestedLayoutImport
       parentRoute: typeof PathlessLayoutImport
     }
-    '/posts/$postId': {
-      id: '/posts/$postId'
-      path: '/$postId'
-      fullPath: '/posts/$postId'
-      preLoaderRoute: typeof PostsPostIdImport
-      parentRoute: typeof PostsRouteImport
+    '/pokemons/$pokemonName': {
+      id: '/pokemons/$pokemonName'
+      path: '/$pokemonName'
+      fullPath: '/pokemons/$pokemonName'
+      preLoaderRoute: typeof PokemonsPokemonNameImport
+      parentRoute: typeof PokemonsRouteImport
     }
     '/users/$userId': {
       id: '/users/$userId'
@@ -181,12 +181,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UsersUserIdImport
       parentRoute: typeof UsersRouteImport
     }
-    '/posts/': {
-      id: '/posts/'
+    '/pokemons/': {
+      id: '/pokemons/'
       path: '/'
-      fullPath: '/posts/'
-      preLoaderRoute: typeof PostsIndexImport
-      parentRoute: typeof PostsRouteImport
+      fullPath: '/pokemons/'
+      preLoaderRoute: typeof PokemonsIndexImport
+      parentRoute: typeof PokemonsRouteImport
     }
     '/users/': {
       id: '/users/'
@@ -209,11 +209,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PathlessLayoutNestedLayoutRouteBImport
       parentRoute: typeof PathlessLayoutNestedLayoutImport
     }
-    '/posts_/$postId/deep': {
-      id: '/posts_/$postId/deep'
-      path: '/posts/$postId/deep'
-      fullPath: '/posts/$postId/deep'
-      preLoaderRoute: typeof PostsPostIdDeepImport
+    '/pokemons_/$pokemonName/deep': {
+      id: '/pokemons_/$pokemonName/deep'
+      path: '/pokemons/$pokemonName/deep'
+      fullPath: '/pokemons/$pokemonName/deep'
+      preLoaderRoute: typeof PokemonsPokemonNameDeepImport
       parentRoute: typeof rootRoute
     }
   }
@@ -221,18 +221,18 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-interface PostsRouteRouteChildren {
-  PostsPostIdRoute: typeof PostsPostIdRoute
-  PostsIndexRoute: typeof PostsIndexRoute
+interface PokemonsRouteRouteChildren {
+  PokemonsPokemonNameRoute: typeof PokemonsPokemonNameRoute
+  PokemonsIndexRoute: typeof PokemonsIndexRoute
 }
 
-const PostsRouteRouteChildren: PostsRouteRouteChildren = {
-  PostsPostIdRoute: PostsPostIdRoute,
-  PostsIndexRoute: PostsIndexRoute,
+const PokemonsRouteRouteChildren: PokemonsRouteRouteChildren = {
+  PokemonsPokemonNameRoute: PokemonsPokemonNameRoute,
+  PokemonsIndexRoute: PokemonsIndexRoute,
 }
 
-const PostsRouteRouteWithChildren = PostsRouteRoute._addFileChildren(
-  PostsRouteRouteChildren,
+const PokemonsRouteRouteWithChildren = PokemonsRouteRoute._addFileChildren(
+  PokemonsRouteRouteChildren,
 )
 
 interface UsersRouteRouteChildren {
@@ -281,18 +281,18 @@ const PathlessLayoutRouteWithChildren = PathlessLayoutRoute._addFileChildren(
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/posts': typeof PostsRouteRouteWithChildren
+  '/pokemons': typeof PokemonsRouteRouteWithChildren
   '/users': typeof UsersRouteRouteWithChildren
   '': typeof PathlessLayoutNestedLayoutRouteWithChildren
   '/deferred': typeof DeferredRoute
   '/redirect': typeof RedirectRoute
-  '/posts/$postId': typeof PostsPostIdRoute
+  '/pokemons/$pokemonName': typeof PokemonsPokemonNameRoute
   '/users/$userId': typeof UsersUserIdRoute
-  '/posts/': typeof PostsIndexRoute
+  '/pokemons/': typeof PokemonsIndexRoute
   '/users/': typeof UsersIndexRoute
   '/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
-  '/posts/$postId/deep': typeof PostsPostIdDeepRoute
+  '/pokemons/$pokemonName/deep': typeof PokemonsPokemonNameDeepRoute
 }
 
 export interface FileRoutesByTo {
@@ -300,99 +300,99 @@ export interface FileRoutesByTo {
   '': typeof PathlessLayoutNestedLayoutRouteWithChildren
   '/deferred': typeof DeferredRoute
   '/redirect': typeof RedirectRoute
-  '/posts/$postId': typeof PostsPostIdRoute
+  '/pokemons/$pokemonName': typeof PokemonsPokemonNameRoute
   '/users/$userId': typeof UsersUserIdRoute
-  '/posts': typeof PostsIndexRoute
+  '/pokemons': typeof PokemonsIndexRoute
   '/users': typeof UsersIndexRoute
   '/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
-  '/posts/$postId/deep': typeof PostsPostIdDeepRoute
+  '/pokemons/$pokemonName/deep': typeof PokemonsPokemonNameDeepRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/posts': typeof PostsRouteRouteWithChildren
+  '/pokemons': typeof PokemonsRouteRouteWithChildren
   '/users': typeof UsersRouteRouteWithChildren
   '/_pathlessLayout': typeof PathlessLayoutRouteWithChildren
   '/deferred': typeof DeferredRoute
   '/redirect': typeof RedirectRoute
   '/_pathlessLayout/_nested-layout': typeof PathlessLayoutNestedLayoutRouteWithChildren
-  '/posts/$postId': typeof PostsPostIdRoute
+  '/pokemons/$pokemonName': typeof PokemonsPokemonNameRoute
   '/users/$userId': typeof UsersUserIdRoute
-  '/posts/': typeof PostsIndexRoute
+  '/pokemons/': typeof PokemonsIndexRoute
   '/users/': typeof UsersIndexRoute
   '/_pathlessLayout/_nested-layout/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/_pathlessLayout/_nested-layout/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
-  '/posts_/$postId/deep': typeof PostsPostIdDeepRoute
+  '/pokemons_/$pokemonName/deep': typeof PokemonsPokemonNameDeepRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/posts'
+    | '/pokemons'
     | '/users'
     | ''
     | '/deferred'
     | '/redirect'
-    | '/posts/$postId'
+    | '/pokemons/$pokemonName'
     | '/users/$userId'
-    | '/posts/'
+    | '/pokemons/'
     | '/users/'
     | '/route-a'
     | '/route-b'
-    | '/posts/$postId/deep'
+    | '/pokemons/$pokemonName/deep'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | ''
     | '/deferred'
     | '/redirect'
-    | '/posts/$postId'
+    | '/pokemons/$pokemonName'
     | '/users/$userId'
-    | '/posts'
+    | '/pokemons'
     | '/users'
     | '/route-a'
     | '/route-b'
-    | '/posts/$postId/deep'
+    | '/pokemons/$pokemonName/deep'
   id:
     | '__root__'
     | '/'
-    | '/posts'
+    | '/pokemons'
     | '/users'
     | '/_pathlessLayout'
     | '/deferred'
     | '/redirect'
     | '/_pathlessLayout/_nested-layout'
-    | '/posts/$postId'
+    | '/pokemons/$pokemonName'
     | '/users/$userId'
-    | '/posts/'
+    | '/pokemons/'
     | '/users/'
     | '/_pathlessLayout/_nested-layout/route-a'
     | '/_pathlessLayout/_nested-layout/route-b'
-    | '/posts_/$postId/deep'
+    | '/pokemons_/$pokemonName/deep'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  PostsRouteRoute: typeof PostsRouteRouteWithChildren
+  PokemonsRouteRoute: typeof PokemonsRouteRouteWithChildren
   UsersRouteRoute: typeof UsersRouteRouteWithChildren
   PathlessLayoutRoute: typeof PathlessLayoutRouteWithChildren
   DeferredRoute: typeof DeferredRoute
   RedirectRoute: typeof RedirectRoute
-  PostsPostIdDeepRoute: typeof PostsPostIdDeepRoute
+  PokemonsPokemonNameDeepRoute: typeof PokemonsPokemonNameDeepRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  PostsRouteRoute: PostsRouteRouteWithChildren,
+  PokemonsRouteRoute: PokemonsRouteRouteWithChildren,
   UsersRouteRoute: UsersRouteRouteWithChildren,
   PathlessLayoutRoute: PathlessLayoutRouteWithChildren,
   DeferredRoute: DeferredRoute,
   RedirectRoute: RedirectRoute,
-  PostsPostIdDeepRoute: PostsPostIdDeepRoute,
+  PokemonsPokemonNameDeepRoute: PokemonsPokemonNameDeepRoute,
 }
 
 export const routeTree = rootRoute
@@ -406,22 +406,22 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/posts",
+        "/pokemons",
         "/users",
         "/_pathlessLayout",
         "/deferred",
         "/redirect",
-        "/posts_/$postId/deep"
+        "/pokemons_/$pokemonName/deep"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/posts": {
-      "filePath": "posts.route.tsx",
+    "/pokemons": {
+      "filePath": "pokemons.route.tsx",
       "children": [
-        "/posts/$postId",
-        "/posts/"
+        "/pokemons/$pokemonName",
+        "/pokemons/"
       ]
     },
     "/users": {
@@ -451,17 +451,17 @@ export const routeTree = rootRoute
         "/_pathlessLayout/_nested-layout/route-b"
       ]
     },
-    "/posts/$postId": {
-      "filePath": "posts.$postId.tsx",
-      "parent": "/posts"
+    "/pokemons/$pokemonName": {
+      "filePath": "pokemons.$pokemonName.tsx",
+      "parent": "/pokemons"
     },
     "/users/$userId": {
       "filePath": "users.$userId.tsx",
       "parent": "/users"
     },
-    "/posts/": {
-      "filePath": "posts.index.tsx",
-      "parent": "/posts"
+    "/pokemons/": {
+      "filePath": "pokemons.index.tsx",
+      "parent": "/pokemons"
     },
     "/users/": {
       "filePath": "users.index.tsx",
@@ -475,8 +475,8 @@ export const routeTree = rootRoute
       "filePath": "_pathlessLayout/_nested-layout/route-b.tsx",
       "parent": "/_pathlessLayout/_nested-layout"
     },
-    "/posts_/$postId/deep": {
-      "filePath": "posts_.$postId.deep.tsx"
+    "/pokemons_/$pokemonName/deep": {
+      "filePath": "pokemons_.$pokemonName.deep.tsx"
     }
   }
 }
