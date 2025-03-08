@@ -5,24 +5,58 @@ import {
   PokemonDetailsType,
   PokemonListType,
   PokemonsListType,
+  GenerationsRoot,
 } from "./types/pokemonList.types";
 import axios from "redaxios";
 
 const rootApiURL = "https://pokeapi.co/api/v2/";
 
-export const fetchGenerationList = createServerFn({ method: "GET" }).handler(
-  async () => {
-    console.info("Fetching generations list...");
-    return axios
-      .get<PokemonsListType>(`${rootApiURL}generation/`)
-      .then((response) => response.data.results);
-  }
-);
+export const fetchGenerationsWithNames = createServerFn({
+  method: "GET",
+}).handler(async () => {
+  console.info("Fetching generations with names...");
 
-export const pokemonQueryGenerationOptions = () =>
+  const generations = await axios
+    .get<PokemonsListType>(`${rootApiURL}generation/`)
+    .then((response) => response.data.results);
+
+  const generationsWithNames = await Promise.all(
+    generations.map(async (gen) => {
+      const genId = gen.url.split("/").filter(Boolean).pop();
+
+      try {
+        const details = await axios
+          .get<GenerationsRoot>(`${rootApiURL}generation/${genId}`)
+          .then((response) => response.data);
+
+        const englishName = details.names.find(
+          (n) => n.language.name === "en"
+        )?.name;
+
+        return {
+          ...gen,
+          displayName: englishName || gen.name,
+        };
+      } catch (error) {
+        console.error(
+          `Error fetching details for generation ${gen.name}:`,
+          error
+        );
+        return {
+          ...gen,
+          displayName: gen.name,
+        };
+      }
+    })
+  );
+
+  return generationsWithNames;
+});
+
+export const pokemonQueryGenerationsWithNamesOptions = () =>
   queryOptions({
-    queryKey: ["generations"],
-    queryFn: () => fetchGenerationList(),
+    queryKey: ["generations-with-names"],
+    queryFn: () => fetchGenerationsWithNames(),
   });
 
 export const fetchPokemonList = createServerFn({ method: "GET" }).handler(

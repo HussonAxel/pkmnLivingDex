@@ -1,10 +1,12 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, Outlet, createFileRoute } from "@tanstack/react-router";
-import { pokemonQueryGenerationOptions } from "~/utils/pokemonList";
+import { pokemonQueryGenerationsWithNamesOptions } from "~/utils/pokemonList";
 
 export const Route = createFileRoute("/pokemons")({
   loader: async ({ context }) => {
-    await context.queryClient.ensureQueryData(pokemonQueryGenerationOptions());
+    await context.queryClient.ensureQueryData(
+      pokemonQueryGenerationsWithNamesOptions()
+    );
   },
   head: () => ({
     meta: [{ title: "Pokemons" }],
@@ -13,14 +15,17 @@ export const Route = createFileRoute("/pokemons")({
 });
 
 function PostsComponent() {
-  const generationsQuery = useSuspenseQuery(pokemonQueryGenerationOptions());
+  const generationsQuery = useSuspenseQuery(
+    pokemonQueryGenerationsWithNamesOptions()
+  );
+  console.log(generationsQuery.data);
 
   return (
     <div className="p-2 flex gap-2">
       <ul className="list-disc pl-4">
         {[
           ...generationsQuery.data,
-          { name: "i-do-not-exist", title: "Non-existent Post" },
+          { name: "i-do-not-exist", displayName: "Non-existent Post" },
         ].map((generation) => {
           return (
             <li key={generation.name} className="whitespace-nowrap">
@@ -32,7 +37,7 @@ function PostsComponent() {
                 className="block py-1 text-blue-800 hover:text-blue-600"
                 activeProps={{ className: "text-black font-bold" }}
               >
-                <div>{generation.name}</div>
+                <div>{generation.displayName}</div>
               </Link>
             </li>
           );
