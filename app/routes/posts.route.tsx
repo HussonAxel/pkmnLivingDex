@@ -1,45 +1,38 @@
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { Link, Outlet, createFileRoute } from '@tanstack/react-router'
-import { postsQueryOptions } from '../utils/posts'
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { Outlet, createFileRoute } from "@tanstack/react-router";
+// import { postsQueryOptions } from "../utils/posts";
+import { pokemonQueryOptions } from "~/utils/pokemonList";
 
-export const Route = createFileRoute('/posts')({
+export const Route = createFileRoute("/posts")({
   loader: async ({ context }) => {
-    await context.queryClient.ensureQueryData(postsQueryOptions())
+    // await context.queryClient.ensureQueryData(postsQueryOptions());
+    await context.queryClient.ensureQueryData(pokemonQueryOptions());
   },
   head: () => ({
-    meta: [{ title: 'Posts' }],
+    meta: [{ title: "Posts" }],
   }),
   component: PostsComponent,
-})
+});
 
 function PostsComponent() {
-  const postsQuery = useSuspenseQuery(postsQueryOptions())
+  const pokemonsQuery = useSuspenseQuery(pokemonQueryOptions());
 
   return (
     <div className="p-2 flex gap-2">
       <ul className="list-disc pl-4">
         {[
-          ...postsQuery.data,
-          { id: 'i-do-not-exist', title: 'Non-existent Post' },
-        ].map((post) => {
+          ...pokemonsQuery.data,
+          { id: "i-do-not-exist", title: "Non-existent Post" },
+        ].map((pokemon) => {
           return (
-            <li key={post.id} className="whitespace-nowrap">
-              <Link
-                to="/posts/$postId"
-                params={{
-                  postId: post.id,
-                }}
-                className="block py-1 text-blue-800 hover:text-blue-600"
-                activeProps={{ className: 'text-black font-bold' }}
-              >
-                <div>{post.title.substring(0, 20)}</div>
-              </Link>
+            <li key={pokemon.name} className="whitespace-nowrap">
+              {pokemon.name}
             </li>
-          )
+          );
         })}
       </ul>
       <hr />
       <Outlet />
     </div>
-  )
+  );
 }
