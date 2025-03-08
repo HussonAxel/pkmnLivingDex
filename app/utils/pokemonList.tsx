@@ -11,6 +11,10 @@ import axios from "redaxios";
 
 const rootApiURL = "https://pokeapi.co/api/v2/";
 
+type GenerationData =
+  | (GenerationsRoot & { displayName: string })
+  | { name: string; displayName: string; error?: boolean };
+
 export const fetchGenerationsDetails = createServerFn({
   method: "GET",
 }).handler(async () => {
@@ -32,7 +36,7 @@ export const fetchGenerationsDetails = createServerFn({
         return {
           ...fullData,
           displayName: fullData.name,
-        };
+        } as GenerationData;
       } catch (error) {
         console.error(
           `Error fetching details for generation ${gen.name}:`,
@@ -42,7 +46,7 @@ export const fetchGenerationsDetails = createServerFn({
           ...gen,
           displayName: gen.name,
           error: true,
-        };
+        } as GenerationData;
       }
     })
   );
