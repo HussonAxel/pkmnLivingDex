@@ -10,6 +10,21 @@ import axios from "redaxios";
 
 const rootApiURL = "https://pokeapi.co/api/v2/";
 
+export const fetchGenerationList = createServerFn({ method: "GET" }).handler(
+  async () => {
+    console.info("Fetching generations list...");
+    return axios
+      .get<PokemonsListType>(`${rootApiURL}generation/`)
+      .then((response) => response.data.results);
+  }
+);
+
+export const pokemonQueryGenerationOptions = () =>
+  queryOptions({
+    queryKey: ["generations"],
+    queryFn: () => fetchGenerationList(),
+  });
+
 export const fetchPokemonList = createServerFn({ method: "GET" }).handler(
   async () => {
     console.info("Fetching pokemon list...");

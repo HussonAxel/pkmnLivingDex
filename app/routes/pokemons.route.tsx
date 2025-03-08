@@ -1,10 +1,10 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, Outlet, createFileRoute } from "@tanstack/react-router";
-import { pokemonQueryOptions } from "~/utils/pokemonList";
+import { pokemonQueryGenerationOptions } from "~/utils/pokemonList";
 
 export const Route = createFileRoute("/pokemons")({
   loader: async ({ context }) => {
-    await context.queryClient.ensureQueryData(pokemonQueryOptions());
+    await context.queryClient.ensureQueryData(pokemonQueryGenerationOptions());
   },
   head: () => ({
     meta: [{ title: "Pokemons" }],
@@ -13,26 +13,26 @@ export const Route = createFileRoute("/pokemons")({
 });
 
 function PostsComponent() {
-  const pokemonsQuery = useSuspenseQuery(pokemonQueryOptions());
+  const generationsQuery = useSuspenseQuery(pokemonQueryGenerationOptions());
 
   return (
     <div className="p-2 flex gap-2">
       <ul className="list-disc pl-4">
         {[
-          ...pokemonsQuery.data,
+          ...generationsQuery.data,
           { name: "i-do-not-exist", title: "Non-existent Post" },
-        ].map((pokemon) => {
+        ].map((generation) => {
           return (
-            <li key={pokemon.name} className="whitespace-nowrap">
+            <li key={generation.name} className="whitespace-nowrap">
               <Link
                 to="/pokemons/$pokemonName"
                 params={{
-                  pokemonName: pokemon.name,
+                  pokemonName: generation.name,
                 }}
                 className="block py-1 text-blue-800 hover:text-blue-600"
                 activeProps={{ className: "text-black font-bold" }}
               >
-                <div>{pokemon.name}</div>
+                <div>{generation.name}</div>
               </Link>
             </li>
           );
