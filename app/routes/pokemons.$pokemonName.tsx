@@ -1,17 +1,17 @@
 import { ErrorComponent, Link, createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { postQueryOptions } from "../utils/posts";
+import { pokemonDetailsQueryOptions } from "~/utils/pokemonList";
 import type { ErrorComponentProps } from "@tanstack/react-router";
 import { NotFound } from "~/components/NotFound";
 
 export const Route = createFileRoute("/pokemons/$pokemonName")({
   loader: async ({ params: { pokemonName }, context }) => {
     const data = await context.queryClient.ensureQueryData(
-      postQueryOptions(pokemonName)
+      pokemonDetailsQueryOptions(pokemonName)
     );
 
     return {
-      title: data.title,
+      title: data.name,
     };
   },
   head: ({ loaderData }) => ({
@@ -19,7 +19,7 @@ export const Route = createFileRoute("/pokemons/$pokemonName")({
   }),
   errorComponent: PostErrorComponent,
   notFoundComponent: () => {
-    return <NotFound>Post not found</NotFound>;
+    return <NotFound>Pokemon not found </NotFound>;
   },
   component: PostComponent,
 });
@@ -30,16 +30,23 @@ export function PostErrorComponent({ error }: ErrorComponentProps) {
 
 function PostComponent() {
   const { pokemonName } = Route.useParams();
-  const postQuery = useSuspenseQuery(postQueryOptions(pokemonName));
+  const postQuery = useSuspenseQuery(pokemonDetailsQueryOptions(pokemonName));
 
   return (
     <div className="space-y-2">
-      <h4 className="text-xl font-bold underline">{postQuery.data.title}</h4>
-      <div className="text-sm">{postQuery.data.body}</div>
+      <h4 className="text-xl font-bold underline">
+        {postQuery.data.species.name}
+      </h4>
+      <div className="text-sm">{postQuery.data.base_experience}</div>
+      <img
+        src={
+          postQuery.data.sprites.other["official-artwork"].front_default ?? ""
+        }
+      />
       <Link
         to="/pokemons/$pokemonName/deep"
         params={{
-          pokemonName: postQuery.data.id,
+          pokemonName: postQuery.data.name,
         }}
         activeProps={{ className: "text-black font-bold" }}
         className="block py-1 text-blue-800 hover:text-blue-600"
