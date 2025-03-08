@@ -26,21 +26,19 @@ function PostsComponent() {
         {...generationsQuery.data.map((generation) => {
           console.log(generation);
           return (
-            <li
+            <Link
               key={generation.name}
-              className="whitespace-nowrap px-16 hover:bg-[#313244]"
+              to="/pokemons/$pokemonName"
+              params={{
+                pokemonName: generation.name,
+              }}
+              className="block py-1 text-white"
+              activeProps={{ className: "bg-[#313244]" }}
             >
-              <Link
-                to="/pokemons/$pokemonName"
-                params={{
-                  pokemonName: generation.name,
-                }}
-                className="block py-1 text-white "
-                activeProps={{ className: "text-black font-bold underline" }}
-              >
+              <li className="whitespace-nowrap px-16 py-1 hover:bg-gray-800">
                 <div className="capitalize">{`Generation ${generation.id} - ${generation.main_region?.name}`}</div>
-              </Link>
-            </li>
+              </li>
+            </Link>
           );
         })}
       </ul>
