@@ -1,7 +1,7 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { postQueryOptions } from "../utils/posts";
-import { PostErrorComponent } from "./pokemons.$pokemonName";
+import { PostErrorComponent } from "./pokemons.$generationID";
 
 export const Route = createFileRoute("/pokemons_/$pokemonName/deep")({
   loader: async ({ params: { pokemonName }, context }) => {

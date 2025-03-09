@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, Outlet, createFileRoute } from "@tanstack/react-router";
 import { pokemonQueryGenerationsDetailsOptions } from "~/utils/pokemonList";
-import type { GenerationsRoot } from "~/utils/types/pokemonList.types";
+import { CaretRight } from "@phosphor-icons/react";
 
 export const Route = createFileRoute("/pokemons")({
   loader: async ({ context }) => {
@@ -21,22 +21,28 @@ function PostsComponent() {
   );
 
   return (
-    <div className="flex gap-2">
-      <ul className="text-xl border-r-2">
-        {...generationsQuery.data.map((generation) => {
-          console.log(generation);
+    <div className="flex ">
+      <ul className="text-xl border-r-2 border-b-2">
+        {generationsQuery.data.map((generation) => {
+          if (!("id" in generation)) return null;
           return (
             <Link
               key={generation.name}
-              to="/pokemons/$pokemonName"
+              to="/pokemons/$generationID"
               params={{
-                pokemonName: generation.name,
+                generationID: generation.id.toString(),
               }}
-              className="block py-1 text-white"
-              activeProps={{ className: "bg-[#313244]" }}
+              className="flex my-2 text-white mx-4"
+              activeProps={{
+                className:
+                  "bg-gray-600/80 rounded-md group is-active font-bold underline",
+              }}
             >
-              <li className="whitespace-nowrap px-16 py-1 hover:bg-gray-800">
-                <div className="capitalize">{`Generation ${generation.id} - ${generation.main_region?.name}`}</div>
+              <li className="whitespace-nowrap w-full p-4 group-[.is-active]:hover:bg-gray-600/80 hover:bg-gray-600/40 hover:rounded-md">
+                <div className="capitalize flex text-center items-end justify-between w-[350px]">
+                  {`Generation ${generation.id} - ${generation.main_region?.name}`}
+                  <CaretRight size={24} weight="bold" />
+                </div>
               </li>
             </Link>
           );
