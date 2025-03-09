@@ -407,3 +407,29 @@ export interface Name2 {
   en: string;
   jp: string;
 }
+
+export interface PokemonType {
+  name: string;
+  url?: string;
+}
+
+export interface PokemonSprites {
+  regular: string;
+  shiny?: string;
+}
+
+export interface Pokemon {
+  pokedex_id: number;
+  generation: number;
+  category: string;
+  name: {
+    en: string;
+    fr: string;
+  };
+  types: PokemonType[];
+  sprites: PokemonSprites;
+  evolution?: any;
+  talents?: any[];
+  stats?: any;
+  resistances?: any[];
+}
