@@ -15,8 +15,195 @@
   body {
     @apply text-gray-900 bg-gray-50 dark:bg-gray-950 dark:text-gray-200;
   }
+}
 
-  .using-mouse * {
-    outline: none !important;
-  }
+.icon {
+  border-radius:
+    100%;
+  height: 100px;
+  width: 100px;
+  margin:
+    auto;
+  transition:
+    200ms all;
+}
+
+.Insecte,
+svg.Insecte {
+  background: #92BC2C;
+  box-shadow: 0 0 10px #92BC2C;
+}
+
+svg.Insecte path {
+  fill: #92BC2C;
+}
+
+.Ténèbres,
+svg.Ténèbres {
+  background: #595761;
+  box-shadow: 0 0 10px #595761;
+}
+
+svg.Ténèbres path {
+  fill: #595761;
+}
+
+.Dragon,
+svg.Dragon {
+  background: #0C69C8;
+  box-shadow: 0 0 10px #0C69C8;
+}
+
+svg.Dragon path {
+  fill: #0C69C8;
+}
+
+.Électrik,
+svg.Électrik {
+  background: #F2D94E;
+  box-shadow: 0 0 10px #F2D94E;
+}
+
+svg.Électrik path {
+  fill: #F2D94E;
+}
+
+.Feu,
+svg.Feu {
+  background: #FBA54C;
+  box-shadow: 0 0 10px #fba64c;
+}
+
+svg.Feu path {
+  fill: #FBA54C;
+}
+
+.Fée,
+svg.Fée {
+  background: #EE90E6;
+  box-shadow: 0 0 10px #EE90E6;
+}
+
+svg.Fée path {
+  fill: #EE90E6;
+}
+
+.Combat,
+svg.Combat {
+  background: #D3425F;
+  box-shadow: 0 0 10px #D3425F;
+}
+
+svg.Combat path {
+  fill: #D3425F;
+}
+
+.Vol,
+svg.Vol {
+  background: #A1BBEC;
+  box-shadow: 0 0 10px #A1BBEC;
+}
+
+svg.Vol path {
+  fill: #A1BBEC;
+}
+
+.Spectre,
+svg.Spectre {
+  background: #5F6DBC;
+  box-shadow: 0 0 10px #5F6DBC;
+}
+
+svg.Spectre path {
+  fill: #5F6DBC;
+}
+
+.Plante,
+svg.Plante {
+  background: #5FBD58;
+  box-shadow: 0 0 10px #5FBD58;
+}
+
+svg.Plante path {
+  fill: #5FBD58;
+}
+
+.Sol,
+svg.Sol {
+  background: #DA7C4D;
+  box-shadow: 0 0 10px #DA7C4D;
+}
+
+svg.Sol path {
+  fill: #DA7C4D;
+}
+
+.Glace,
+svg.Glace {
+  background: #75D0C1;
+  box-shadow: 0 0 10px #75D0C1;
+}
+
+svg.Glace path {
+  fill: #75D0C1;
+}
+
+.Normal,
+svg.Normal {
+  background: #A0A29F;
+  box-shadow: 0 0 10px #A0A29F;
+}
+
+svg.Normal path {
+  fill: #A0A29F;
+}
+
+.Poison,
+svg.Poison {
+  background: #B763CF;
+  box-shadow: 0 0 10px #B763CF;
+}
+
+svg.Poison path {
+  fill: #B763CF;
+}
+
+.Psy,
+svg.Psy {
+  background: #FA8581;
+  box-shadow: 0 0 10px #FA8581;
+}
+
+svg.Psy path {
+  fill: #FA8581;
+}
+
+.Roche,
+svg.Roche {
+  background: #C9BB8A;
+  box-shadow: 0 0 10px #C9BB8A;
+}
+
+svg.Roche path {
+  fill: #C9BB8A;
+}
+
+.Acier,
+svg.Acier {
+  background: #5695A3;
+  box-shadow: 0 0 10px #5695A3;
+}
+
+svg.Acier path {
+  fill: #5695A3;
+}
+
+.Eau,
+svg.Eau {
+  background: #539DDF;
+  box-shadow: 0 0 10px #539DDF;
+}
+
+svg.Eau path {
+  fill: #539DDF;
 }
