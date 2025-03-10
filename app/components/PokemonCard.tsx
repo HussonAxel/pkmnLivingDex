@@ -1,11 +1,33 @@
-import { ViewSettings } from "~/types/pokemonTypes";
-
-type PokemonCardProps = {
-  pokemon: any;
-  viewSettings: ViewSettings;
-};
+import { ViewSettings, PokemonCardProps } from "~/types/pokemonTypes";
+import { DotsThreeVertical } from "@phosphor-icons/react";
+import { useState } from "react";
+import { PokemonCardMenu } from "./DropdownMenu";
+import {
+  PlusCircle,
+  Sparkle,
+  Info,
+  Target,
+  Trash,
+  Share,
+} from "@phosphor-icons/react";
 
 export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
+  const dropdownPokemonCard = [
+    { icon: PlusCircle, text: "Add to collection" },
+    { icon: Sparkle, text: "Add to collection as shiny" },
+    {
+      icon: Info,
+      text: "See more information",
+    },
+    { icon: Target, text: "Start Hunting" },
+    {
+      icon: Trash,
+      text: "Remove from collection",
+    },
+    { icon: Share, text: "Share pokemon's page" },
+  ];
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const getOfficialArtworkUrl = (pokemonId: number) => {
     const baseUrl =
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork";
@@ -16,20 +38,35 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
   const getGenerationVariantsForm = ["Paldea", "Alola", "Hisui", "Galar"];
 
   return (
-    <div className="p-4 border rounded-lg shadow hover:shadow-md transition-all hover:bg-white/20 hover:border-white/40 hover:scale-105 ">
+    <div className="p-4 border rounded-lg shadow hover:shadow-md transition-all group hover:bg-white/20 hover:border-white/40 hover:scale-[1.02] relative">
       <div
         key={pokemon.pokedex_id}
         className={`${viewSettings.isUserDatabase ? "opacity-30" : "opacity-100"}`}
       >
+        <div className="relative">
+          <DotsThreeVertical
+            size={24}
+            weight="bold"
+            className="absolute right-0 mr-8 md:mr-0 cursor-pointer group-hover:visible"
+            onClick={(e) => {
+              e.stopPropagation();
+              setMenuOpen(!menuOpen);
+            }}
+          />
+          <PokemonCardMenu
+            isOpen={menuOpen}
+            onClose={() => setMenuOpen(false)}
+            menuItems={dropdownPokemonCard as []}
+          />
+        </div>
         <img
           src={getOfficialArtworkUrl(pokemon.pokedex_id)}
           alt={pokemon.name[viewSettings.language]}
-          className={`mx-auto object-contain ${viewSettings.isGridView ? "w-32 h-32" : "w-24 h-24 float-left mr-4"}`}
+          className={`mx-auto object-contain ${viewSettings.isGridView ? "w-38 h-38" : "w-48 h-48 float-left mr-4"}`}
           onError={(e) => {
             (e.target as HTMLImageElement).src = pokemon.sprites.regular;
           }}
         />
-
         <div
           className={`${viewSettings.isGridView ? "mt-2 text-center" : "flex flex-col justify-center h-24"}`}
         >

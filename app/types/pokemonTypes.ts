@@ -21,3 +21,8 @@ export type Pokemon = {
     regular: string;
   };
 };
+
+export type PokemonCardProps = {
+  pokemon: any;
+  viewSettings: ViewSettings;
+};
