@@ -8,7 +8,7 @@ import type { ErrorComponentProps } from "@tanstack/react-router";
 import { NotFound } from "~/components/NotFound";
 import { PokemonGenerationView } from "~/components/PokemonGenerationView";
 
-export const Route = createFileRoute("/pokemons/$generationID")({
+export const Route = createFileRoute("/pokedex/$generationID")({
   loader: async ({ params: { generationID }, context }) => {
     await context.queryClient.ensureQueryData(
       pokemonsPerGenerationDetailsOptions(generationID)

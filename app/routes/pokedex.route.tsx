@@ -6,7 +6,7 @@ import {
 } from "~/utils/pokemonList";
 import { CaretRight } from "@phosphor-icons/react";
 
-export const Route = createFileRoute("/pokemons")({
+export const Route = createFileRoute("/pokedex")({
   loader: async ({ context }) => {
     await context.queryClient.ensureQueryData(
       pokemonQueryGenerationsDetailsOptions()
@@ -30,7 +30,7 @@ function PostsComponent() {
           return (
             <Link
               key={generation.name}
-              to="/pokemons/$generationID"
+              to="/pokedex/$generationID"
               params={{
                 generationID: generation.id.toString(),
               }}
@@ -50,7 +50,7 @@ function PostsComponent() {
           );
         })}
         <Link
-          to="/pokemons/$generationID"
+          to="/pokedex/$generationID"
           params={{
             generationID: "0",
           }}

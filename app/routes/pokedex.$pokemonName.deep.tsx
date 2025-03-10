@@ -1,9 +1,9 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { postQueryOptions } from "../utils/posts";
-import { PostErrorComponent } from "./pokemons.$generationID";
+import { PostErrorComponent } from "./pokedex.$generationID";
 
-export const Route = createFileRoute("/pokemons_/$pokemonName/deep")({
+export const Route = createFileRoute("/pokedex/$pokemonName/deep")({
   loader: async ({ params: { pokemonName }, context }) => {
     const data = await context.queryClient.ensureQueryData(
       postQueryOptions(pokemonName)
@@ -27,7 +27,7 @@ function PostDeepComponent() {
   return (
     <div className="p-2 space-y-2">
       <Link
-        to="/pokemons"
+        to="/pokedex"
         className="block py-1 text-blue-800 hover:text-blue-600"
       >
         ← All Posts
