@@ -165,3 +165,18 @@ export const pokemonDetailsQueryOptions = (pokemonName: string) =>
     queryFn: () => fetchPokemonDetails({ data: pokemonName }),
     staleTime: 1000 * 60 * 10,
   });
+
+export const getEntirePokedexTyradex = createServerFn({
+  method: "GET",
+}).handler(async () => {
+  console.info("Fetching pokemon list from Tyradex");
+  return axios
+    .get<RootpokemonDetailsPerGenerations>(`${tyradexAPIRootURL}pokemon`)
+    .then((response) => response.data);
+});
+
+export const getEntirePokedexTyradexOptions = () =>
+  queryOptions({
+    queryKey: ["pokedex"],
+    queryFn: () => getEntirePokedexTyradex(),
+  });

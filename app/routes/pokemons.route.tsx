@@ -1,6 +1,9 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, Outlet, createFileRoute } from "@tanstack/react-router";
-import { pokemonQueryGenerationsDetailsOptions } from "~/utils/pokemonList";
+import {
+  getEntirePokedexTyradexOptions,
+  pokemonQueryGenerationsDetailsOptions,
+} from "~/utils/pokemonList";
 import { CaretRight } from "@phosphor-icons/react";
 
 export const Route = createFileRoute("/pokemons")({
@@ -19,6 +22,8 @@ function PostsComponent() {
   const generationsQuery = useSuspenseQuery(
     pokemonQueryGenerationsDetailsOptions()
   );
+  const dataPokedex = useSuspenseQuery(getEntirePokedexTyradexOptions());
+  console.log(dataPokedex);
 
   return (
     <div className="flex ">
@@ -47,6 +52,24 @@ function PostsComponent() {
             </Link>
           );
         })}
+        <Link
+          to="/pokemons/$generationID"
+          params={{
+            generationID: "0",
+          }}
+          className="flex my-2 text-white mx-4"
+          activeProps={{
+            className:
+              "bg-gray-600/80 rounded-md group is-active font-bold underline",
+          }}
+        >
+          <li className="whitespace-nowrap w-full p-4 group-[.is-active]:hover:bg-gray-600/80 hover:bg-gray-600/40 hover:rounded-md">
+            <div className="capitalize flex text-center items-end justify-between w-[350px]">
+              Toutes générations
+              <CaretRight size={24} weight="bold" />
+            </div>
+          </li>
+        </Link>
       </ul>
       <hr />
       <Outlet />
