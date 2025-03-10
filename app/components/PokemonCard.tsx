@@ -38,7 +38,7 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
   const getGenerationVariantsForm = ["Paldea", "Alola", "Hisui", "Galar"];
 
   return (
-    <div className="px-4 py-8 border rounded-lg shadow hover:shadow-md transition-all group hover:bg-white/20 hover:border-white/40 hover:scale-[1.02] relative">
+    <div className="p-4 border rounded-lg shadow hover:shadow-md transition-all group hover:bg-white/20 hover:border-white/40 hover:scale-[1.02] relative">
       <div
         key={pokemon.pokedex_id}
         className={`${viewSettings.isUserDatabase ? "opacity-30" : "opacity-100"}`}
@@ -70,7 +70,8 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
         <div
           className={`${viewSettings.isGridView ? "flex flex-col text-center gap-2 " : "flex flex-col justify-center h-24"}`}
         >
-          <h2 className="font-bold text-3xl ">
+          <h2 className="font-bold text-xl xl:text-2xl truncate w-full">
+            {" "}
             {pokemon.name[viewSettings.language]}
           </h2>
           <span className={viewSettings.isGridView ? "" : "text-sm"}>

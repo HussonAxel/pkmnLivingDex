@@ -24,7 +24,7 @@ function PostsComponent() {
   );
   return (
     <div className="flex ">
-      <ul className="text-xl border-r-2 border-b-2">
+      <ul className="text-xl border-r-2 border-b-2 max-w-[333px]">
         {generationsQuery.data.map((generation) => {
           if (!("id" in generation)) return null;
           return (
@@ -41,7 +41,7 @@ function PostsComponent() {
               }}
             >
               <li className="whitespace-nowrap w-full p-4 group-[.is-active]:hover:bg-gray-600/80 hover:bg-gray-600/40 hover:rounded-md">
-                <div className="capitalize flex text-center items-end justify-between w-[350px]">
+                <div className="capitalize flex text-center items-end justify-between w-[300px]">
                   {`Generation ${generation.id} - ${generation.main_region?.name}`}
                   <CaretRight size={24} weight="bold" />
                 </div>
@@ -61,7 +61,7 @@ function PostsComponent() {
           }}
         >
           <li className="whitespace-nowrap w-full p-4 group-[.is-active]:hover:bg-gray-600/80 hover:bg-gray-600/40 hover:rounded-md">
-            <div className="capitalize flex text-center items-end justify-between w-[350px]">
+            <div className="capitalize flex text-center items-end justify-between w-[300px]">
               Toutes générations
               <CaretRight size={24} weight="bold" />
             </div>

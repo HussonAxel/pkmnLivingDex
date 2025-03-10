@@ -42,7 +42,9 @@ export function PokemonGenerationView({
               Toutes générations confondues
             </h2>
           ) : (
-            <h2 className="text-2xl font-bold">Generation {generationID}</h2>
+            <h2 className="text-[64px] font-bold py-2">
+              Generation {generationID}
+            </h2>
           )}
         </div>
 
