@@ -22,9 +22,6 @@ function PostsComponent() {
   const generationsQuery = useSuspenseQuery(
     pokemonQueryGenerationsDetailsOptions()
   );
-  const dataPokedex = useSuspenseQuery(getEntirePokedexTyradexOptions());
-  console.log(dataPokedex);
-
   return (
     <div className="flex ">
       <ul className="text-xl border-r-2 border-b-2">

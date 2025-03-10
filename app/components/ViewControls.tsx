@@ -1,4 +1,10 @@
-import { Sparkle, Translate, Rows, SquaresFour } from "@phosphor-icons/react";
+import {
+  Sparkle,
+  Translate,
+  Rows,
+  SquaresFour,
+  Swap,
+} from "@phosphor-icons/react";
 import { ViewSettings } from "~/types/pokemonTypes";
 
 type ViewControlsProps = {
@@ -46,6 +52,22 @@ export function ViewControls({
         isGridView={viewSettings.isGridView}
         toggleSetting={toggleSetting}
       />
+
+      <span
+        className="cursor-pointer hover:bg-white/10 p-1 rounded-full transition-colors"
+        onClick={() => toggleSetting("isUserDatabase")}
+        title={
+          viewSettings.isUserDatabase
+            ? "Show the entire pokedex"
+            : "Show pokemons owned by the user"
+        }
+      >
+        <Swap
+          size={32}
+          weight="bold"
+          color={viewSettings.isUserDatabase ? "#FFD700" : undefined}
+        />
+      </span>
     </div>
   );
 }

@@ -10,9 +10,10 @@ export function PokemonGrid({
   generationData,
   viewSettings,
 }: PokemonGridProps) {
+  console.log(generationData);
   return (
     <div
-      className={`mt-4 grid gap-4 ${
+      className={`my-4 grid gap-4 ${
         viewSettings.isGridView
           ? "md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-6"
           : "md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3"

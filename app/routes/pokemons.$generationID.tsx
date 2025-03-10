@@ -33,21 +33,31 @@ export function PostErrorComponent({ error }: ErrorComponentProps) {
 }
 
 function PostComponent() {
-  const dataPokedex = useSuspenseQuery(getEntirePokedexTyradexOptions());
   const { generationID } = Route.useParams();
+  const dataPokedex = useSuspenseQuery(getEntirePokedexTyradexOptions());
   const { data } = useSuspenseQuery(
     pokemonsPerGenerationDetailsOptions(generationID)
   );
-
+  console.log(dataPokedex.data);
+  console.log(data);
   const arrayIndex = parseInt(generationID) - 1;
   const generationData = data?.[arrayIndex];
 
   if (!Array.isArray(generationData)) {
-    return (
-      <div className="p-8 text-center">
-        No data available for this generation
-      </div>
-    );
+    if (generationID === "0") {
+      return (
+        <PokemonGenerationView
+          generationID={generationID}
+          generationData={dataPokedex.data}
+        />
+      );
+    } else {
+      return (
+        <div className="p-8 text-center">
+          No data available for this generation
+        </div>
+      );
+    }
   }
 
   return (

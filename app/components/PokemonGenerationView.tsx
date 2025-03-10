@@ -13,6 +13,7 @@ export function PokemonGenerationView({
   generationData,
 }: PokemonGenerationViewProps) {
   const [viewSettings, setViewSettings] = useState<ViewSettings>({
+    isUserDatabase: false,
     isShiny: false,
     language: "en",
     isGridView: true,
@@ -36,7 +37,14 @@ export function PokemonGenerationView({
     <div className="space-y-2 flex-1 mx-8">
       <div>
         <div className="mb-6 border-b pb-4">
-          <h2 className="text-2xl font-bold">Generation {generationID}</h2>
+          {generationID === "0" ? (
+            <h2 className="text-2xl font-bold">
+              Toutes générations confondues
+            </h2>
+          ) : (
+            <h2 className="text-2xl font-bold">Generation {generationID}</h2>
+          )}
+
           <ViewControls
             viewSettings={viewSettings}
             toggleSetting={toggleSetting}
