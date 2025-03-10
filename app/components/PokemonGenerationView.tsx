@@ -44,11 +44,6 @@ export function PokemonGenerationView({
           ) : (
             <h2 className="text-2xl font-bold">Generation {generationID}</h2>
           )}
-
-          <ViewControls
-            viewSettings={viewSettings}
-            toggleSetting={toggleSetting}
-          />
         </div>
 
         <PokemonGrid
@@ -56,6 +51,7 @@ export function PokemonGenerationView({
           viewSettings={viewSettings}
         />
       </div>
+      <ViewControls viewSettings={viewSettings} toggleSetting={toggleSetting} />
     </div>
   );
 }
