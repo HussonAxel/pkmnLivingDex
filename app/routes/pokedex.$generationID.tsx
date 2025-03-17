@@ -38,8 +38,6 @@ function PostComponent() {
   const { data } = useSuspenseQuery(
     pokemonsPerGenerationDetailsOptions(generationID)
   );
-  console.log(dataPokedex.data);
-  console.log(data);
   const arrayIndex = parseInt(generationID) - 1;
   const generationData = data?.[arrayIndex];
 

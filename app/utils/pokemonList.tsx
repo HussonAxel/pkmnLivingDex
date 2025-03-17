@@ -124,7 +124,7 @@ export const fetchPokemon = createServerFn({ method: "GET" })
   .handler(async ({ data }) => {
     console.info("Fetching Pokemon Data");
     const pokemon = await axios
-      .get<PokemonListType>(`${pokeAPIRootURL}${data}`)
+      .get<PokemonListType>(`${pokeAPIRootURL}pokemon/${data}`)
       .then((response) => response.data)
       .catch((err) => {
         console.error(err);

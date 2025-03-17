@@ -20,9 +20,9 @@ import { Route as IndexImport } from './routes/index'
 import { Route as UsersIndexImport } from './routes/users.index'
 import { Route as PokedexIndexImport } from './routes/pokedex.index'
 import { Route as UsersUserIdImport } from './routes/users.$userId'
+import { Route as PokemonsPokemonNameImport } from './routes/pokemons.$pokemonName'
 import { Route as PokedexGenerationIDImport } from './routes/pokedex.$generationID'
 import { Route as PathlessLayoutNestedLayoutImport } from './routes/_pathlessLayout/_nested-layout'
-import { Route as PokedexPokemonNameDeepImport } from './routes/pokedex.$pokemonName.deep'
 import { Route as PathlessLayoutNestedLayoutRouteBImport } from './routes/_pathlessLayout/_nested-layout/route-b'
 import { Route as PathlessLayoutNestedLayoutRouteAImport } from './routes/_pathlessLayout/_nested-layout/route-a'
 
@@ -81,6 +81,12 @@ const UsersUserIdRoute = UsersUserIdImport.update({
   getParentRoute: () => UsersRouteRoute,
 } as any)
 
+const PokemonsPokemonNameRoute = PokemonsPokemonNameImport.update({
+  id: '/pokemons/$pokemonName',
+  path: '/pokemons/$pokemonName',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const PokedexGenerationIDRoute = PokedexGenerationIDImport.update({
   id: '/$generationID',
   path: '/$generationID',
@@ -93,12 +99,6 @@ const PathlessLayoutNestedLayoutRoute = PathlessLayoutNestedLayoutImport.update(
     getParentRoute: () => PathlessLayoutRoute,
   } as any,
 )
-
-const PokedexPokemonNameDeepRoute = PokedexPokemonNameDeepImport.update({
-  id: '/$pokemonName/deep',
-  path: '/$pokemonName/deep',
-  getParentRoute: () => PokedexRouteRoute,
-} as any)
 
 const PathlessLayoutNestedLayoutRouteBRoute =
   PathlessLayoutNestedLayoutRouteBImport.update({
@@ -174,6 +174,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PokedexGenerationIDImport
       parentRoute: typeof PokedexRouteImport
     }
+    '/pokemons/$pokemonName': {
+      id: '/pokemons/$pokemonName'
+      path: '/pokemons/$pokemonName'
+      fullPath: '/pokemons/$pokemonName'
+      preLoaderRoute: typeof PokemonsPokemonNameImport
+      parentRoute: typeof rootRoute
+    }
     '/users/$userId': {
       id: '/users/$userId'
       path: '/$userId'
@@ -209,13 +216,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PathlessLayoutNestedLayoutRouteBImport
       parentRoute: typeof PathlessLayoutNestedLayoutImport
     }
-    '/pokedex/$pokemonName/deep': {
-      id: '/pokedex/$pokemonName/deep'
-      path: '/$pokemonName/deep'
-      fullPath: '/pokedex/$pokemonName/deep'
-      preLoaderRoute: typeof PokedexPokemonNameDeepImport
-      parentRoute: typeof PokedexRouteImport
-    }
   }
 }
 
@@ -224,13 +224,11 @@ declare module '@tanstack/react-router' {
 interface PokedexRouteRouteChildren {
   PokedexGenerationIDRoute: typeof PokedexGenerationIDRoute
   PokedexIndexRoute: typeof PokedexIndexRoute
-  PokedexPokemonNameDeepRoute: typeof PokedexPokemonNameDeepRoute
 }
 
 const PokedexRouteRouteChildren: PokedexRouteRouteChildren = {
   PokedexGenerationIDRoute: PokedexGenerationIDRoute,
   PokedexIndexRoute: PokedexIndexRoute,
-  PokedexPokemonNameDeepRoute: PokedexPokemonNameDeepRoute,
 }
 
 const PokedexRouteRouteWithChildren = PokedexRouteRoute._addFileChildren(
@@ -289,12 +287,12 @@ export interface FileRoutesByFullPath {
   '/deferred': typeof DeferredRoute
   '/redirect': typeof RedirectRoute
   '/pokedex/$generationID': typeof PokedexGenerationIDRoute
+  '/pokemons/$pokemonName': typeof PokemonsPokemonNameRoute
   '/users/$userId': typeof UsersUserIdRoute
   '/pokedex/': typeof PokedexIndexRoute
   '/users/': typeof UsersIndexRoute
   '/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
-  '/pokedex/$pokemonName/deep': typeof PokedexPokemonNameDeepRoute
 }
 
 export interface FileRoutesByTo {
@@ -303,12 +301,12 @@ export interface FileRoutesByTo {
   '/deferred': typeof DeferredRoute
   '/redirect': typeof RedirectRoute
   '/pokedex/$generationID': typeof PokedexGenerationIDRoute
+  '/pokemons/$pokemonName': typeof PokemonsPokemonNameRoute
   '/users/$userId': typeof UsersUserIdRoute
   '/pokedex': typeof PokedexIndexRoute
   '/users': typeof UsersIndexRoute
   '/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
-  '/pokedex/$pokemonName/deep': typeof PokedexPokemonNameDeepRoute
 }
 
 export interface FileRoutesById {
@@ -321,12 +319,12 @@ export interface FileRoutesById {
   '/redirect': typeof RedirectRoute
   '/_pathlessLayout/_nested-layout': typeof PathlessLayoutNestedLayoutRouteWithChildren
   '/pokedex/$generationID': typeof PokedexGenerationIDRoute
+  '/pokemons/$pokemonName': typeof PokemonsPokemonNameRoute
   '/users/$userId': typeof UsersUserIdRoute
   '/pokedex/': typeof PokedexIndexRoute
   '/users/': typeof UsersIndexRoute
   '/_pathlessLayout/_nested-layout/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/_pathlessLayout/_nested-layout/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
-  '/pokedex/$pokemonName/deep': typeof PokedexPokemonNameDeepRoute
 }
 
 export interface FileRouteTypes {
@@ -339,12 +337,12 @@ export interface FileRouteTypes {
     | '/deferred'
     | '/redirect'
     | '/pokedex/$generationID'
+    | '/pokemons/$pokemonName'
     | '/users/$userId'
     | '/pokedex/'
     | '/users/'
     | '/route-a'
     | '/route-b'
-    | '/pokedex/$pokemonName/deep'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -352,12 +350,12 @@ export interface FileRouteTypes {
     | '/deferred'
     | '/redirect'
     | '/pokedex/$generationID'
+    | '/pokemons/$pokemonName'
     | '/users/$userId'
     | '/pokedex'
     | '/users'
     | '/route-a'
     | '/route-b'
-    | '/pokedex/$pokemonName/deep'
   id:
     | '__root__'
     | '/'
@@ -368,12 +366,12 @@ export interface FileRouteTypes {
     | '/redirect'
     | '/_pathlessLayout/_nested-layout'
     | '/pokedex/$generationID'
+    | '/pokemons/$pokemonName'
     | '/users/$userId'
     | '/pokedex/'
     | '/users/'
     | '/_pathlessLayout/_nested-layout/route-a'
     | '/_pathlessLayout/_nested-layout/route-b'
-    | '/pokedex/$pokemonName/deep'
   fileRoutesById: FileRoutesById
 }
 
@@ -384,6 +382,7 @@ export interface RootRouteChildren {
   PathlessLayoutRoute: typeof PathlessLayoutRouteWithChildren
   DeferredRoute: typeof DeferredRoute
   RedirectRoute: typeof RedirectRoute
+  PokemonsPokemonNameRoute: typeof PokemonsPokemonNameRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -393,6 +392,7 @@ const rootRouteChildren: RootRouteChildren = {
   PathlessLayoutRoute: PathlessLayoutRouteWithChildren,
   DeferredRoute: DeferredRoute,
   RedirectRoute: RedirectRoute,
+  PokemonsPokemonNameRoute: PokemonsPokemonNameRoute,
 }
 
 export const routeTree = rootRoute
@@ -410,7 +410,8 @@ export const routeTree = rootRoute
         "/users",
         "/_pathlessLayout",
         "/deferred",
-        "/redirect"
+        "/redirect",
+        "/pokemons/$pokemonName"
       ]
     },
     "/": {
@@ -420,8 +421,7 @@ export const routeTree = rootRoute
       "filePath": "pokedex.route.tsx",
       "children": [
         "/pokedex/$generationID",
-        "/pokedex/",
-        "/pokedex/$pokemonName/deep"
+        "/pokedex/"
       ]
     },
     "/users": {
@@ -455,6 +455,9 @@ export const routeTree = rootRoute
       "filePath": "pokedex.$generationID.tsx",
       "parent": "/pokedex"
     },
+    "/pokemons/$pokemonName": {
+      "filePath": "pokemons.$pokemonName.tsx"
+    },
     "/users/$userId": {
       "filePath": "users.$userId.tsx",
       "parent": "/users"
@@ -474,10 +477,6 @@ export const routeTree = rootRoute
     "/_pathlessLayout/_nested-layout/route-b": {
       "filePath": "_pathlessLayout/_nested-layout/route-b.tsx",
       "parent": "/_pathlessLayout/_nested-layout"
-    },
-    "/pokedex/$pokemonName/deep": {
-      "filePath": "pokedex.$pokemonName.deep.tsx",
-      "parent": "/pokedex"
     }
   }
 }

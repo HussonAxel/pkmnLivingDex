@@ -41,9 +41,9 @@ function PostsComponent() {
               }}
             >
               <li className="whitespace-nowrap w-full p-4 group-[.is-active]:hover:bg-gray-600/80 hover:bg-gray-600/40 hover:rounded-md">
-                <div className="capitalize flex text-center items-end justify-between w-[300px]">
+                <div className="capitalize flex text-center items-end justify-between w-[175px] md:w-[250px] text-md">
                   {`Generation ${generation.id} - ${generation.main_region?.name}`}
-                  <CaretRight size={24} weight="bold" />
+                  <CaretRight size={18} weight="bold" />
                 </div>
               </li>
             </Link>
@@ -61,9 +61,9 @@ function PostsComponent() {
           }}
         >
           <li className="whitespace-nowrap w-full p-4 group-[.is-active]:hover:bg-gray-600/80 hover:bg-gray-600/40 hover:rounded-md">
-            <div className="capitalize flex text-center items-end justify-between w-[300px]">
+            <div className="capitalize flex text-center items-end justify-between w-[175px] md:w-[250px] text-md">
               Toutes générations
-              <CaretRight size={24} weight="bold" />
+              <CaretRight size={18} weight="bold" />
             </div>
           </li>
         </Link>

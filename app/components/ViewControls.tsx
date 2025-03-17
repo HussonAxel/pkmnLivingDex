@@ -18,7 +18,7 @@ export function ViewControls({
 }: ViewControlsProps) {
   return (
     <div
-      className="flex justify-around py-4
+      className="flex justify-around
       backdrop-blur-md bg-black/30 shadow-lg w-1/4 m-auto
       fixed bottom-8 left-0 right-0 z-10 border rounded-full"
     >
