@@ -36,8 +36,6 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
     return `${baseUrl}${viewSettings.isShiny ? "/shiny" : ""}/${pokemonId}.png`;
   };
 
-  const getGenerationVariantsForm = ["Paldea", "Alola", "Hisui", "Galar"];
-
   return (
     <Link
       to="/pokemons/$pokemonName"
