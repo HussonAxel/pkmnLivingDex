@@ -13,6 +13,9 @@ import {
 } from "@phosphor-icons/react";
 
 export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
+  const formattedPokemonName = pokemon.name[viewSettings.language]
+    .replaceAll(" ", "-")
+    .toLowerCase();
   const dropdownPokemonCard = [
     { icon: PlusCircle, text: "Add to collection" },
     { icon: Sparkle, text: "Add to collection as shiny" },
@@ -40,7 +43,7 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
     <Link
       to="/pokemons/$pokemonName"
       params={{
-        pokemonName: pokemon.name[viewSettings.language].toLowerCase(),
+        pokemonName: formattedPokemonName,
       }}
       className="block"
     >
