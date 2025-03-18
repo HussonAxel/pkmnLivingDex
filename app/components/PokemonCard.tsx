@@ -3,41 +3,18 @@ import { DotsThreeVertical } from "@phosphor-icons/react";
 import { useState } from "react";
 import { PokemonCardMenu } from "./DropdownMenu";
 import { Link } from "@tanstack/react-router";
+import { dropdownPokemonCard } from "~/utils/pokemonUtils";
 import {
-  PlusCircle,
-  Sparkle,
-  Info,
-  Target,
-  Trash,
-  Share,
-} from "@phosphor-icons/react";
+  formatPokemonNameForUrl,
+  getOfficialArtworkUrl,
+} from "~/utils/pokemonUtils";
 
 export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
-  const formattedPokemonName = pokemon.name[viewSettings.language]
-    .replaceAll(" ", "-")
-    .toLowerCase();
-  const dropdownPokemonCard = [
-    { icon: PlusCircle, text: "Add to collection" },
-    { icon: Sparkle, text: "Add to collection as shiny" },
-    {
-      icon: Info,
-      text: "See more information",
-    },
-    { icon: Target, text: "Start Hunting" },
-    {
-      icon: Trash,
-      text: "Remove from collection",
-    },
-    { icon: Share, text: "Share pokemon's page" },
-  ];
+  const formattedPokemonName = formatPokemonNameForUrl(
+    pokemon.name[viewSettings.language]
+  );
+
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const getOfficialArtworkUrl = (pokemonId: number) => {
-    const baseUrl =
-      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork";
-
-    return `${baseUrl}${viewSettings.isShiny ? "/shiny" : ""}/${pokemonId}.png`;
-  };
 
   return (
     <Link
@@ -70,7 +47,10 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
             />
           </div>
           <img
-            src={getOfficialArtworkUrl(pokemon.pokedex_id)}
+            src={getOfficialArtworkUrl(
+              pokemon.pokedex_id,
+              viewSettings.isShiny
+            )}
             alt={pokemon.name[viewSettings.language]}
             className={`mx-auto object-contain ${viewSettings.isGridView ? "w-38 h-38" : "w-48 h-48 float-left mr-4"}`}
             onError={(e) => {

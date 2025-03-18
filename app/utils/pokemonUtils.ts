@@ -1,3 +1,11 @@
+import {
+  Info,
+  PlusCircle,
+  Share,
+  Sparkle,
+  Target,
+  Trash,
+} from "@phosphor-icons/react";
 import { Pokemon } from "~/types/pokemonTypes";
 
 export const getOfficialArtworkUrl = (pokemonId: number, isShiny: boolean) => {
@@ -9,8 +17,30 @@ export const getOfficialArtworkUrl = (pokemonId: number, isShiny: boolean) => {
 
 export const getGenerationVariantsForm = ["Paldea", "Alola", "Hisui", "Galar"];
 
+export const formatPokemonNameForUrl = (name: string): string => {
+  return name
+    .replace(/[\s\.]/g, "-")
+    .replace(/[\'\.]/g, "")
+    .toLowerCase();
+};
+
 export const hasPokemonRegionalVariant = (pokemon: Pokemon): boolean => {
   return getGenerationVariantsForm.some((variant) =>
     pokemon.name.en.includes(variant)
   );
 };
+
+export const dropdownPokemonCard = [
+  { icon: PlusCircle, text: "Add to collection" },
+  { icon: Sparkle, text: "Add to collection as shiny" },
+  {
+    icon: Info,
+    text: "See more information",
+  },
+  { icon: Target, text: "Start Hunting" },
+  {
+    icon: Trash,
+    text: "Remove from collection",
+  },
+  { icon: Share, text: "Share pokemon's page" },
+];
