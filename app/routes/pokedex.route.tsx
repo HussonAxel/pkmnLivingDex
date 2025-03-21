@@ -5,6 +5,7 @@ import {
   pokemonQueryGenerationsDetailsOptions,
 } from "~/utils/pokemonList";
 import { CaretRight } from "@phosphor-icons/react";
+import { SidebarPokedex } from "~/components/Sidebar";
 
 export const Route = createFileRoute("/pokedex")({
   loader: async ({ context }) => {
