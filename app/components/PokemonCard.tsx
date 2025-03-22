@@ -1,4 +1,4 @@
-import { ViewSettings, PokemonCardProps } from "~/types/pokemonTypes";
+import { PokemonCardProps } from "~/types/pokemonTypes";
 import { MoreVertical } from "lucide-react";
 import { useState } from "react";
 import { PokemonCardMenu } from "./DropdownMenu";
@@ -10,9 +10,7 @@ import {
 } from "~/utils/pokemonUtils";
 
 export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
-  const formattedPokemonName = formatPokemonNameForUrl(
-    pokemon.name[viewSettings.language]
-  );
+  const formattedPokemonName = formatPokemonNameForUrl(pokemon.name.en);
 
   const [menuOpen, setMenuOpen] = useState(false);
 

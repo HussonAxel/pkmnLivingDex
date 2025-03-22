@@ -18,10 +18,30 @@ export const getOfficialArtworkUrl = (pokemonId: number, isShiny: boolean) => {
 export const getGenerationVariantsForm = ["Paldea", "Alola", "Hisui", "Galar"];
 
 export const formatPokemonNameForUrl = (name: string): string => {
-  return name
-    .replace(/[\s\.]/g, "-")
-    .replace(/[\'\.]/g, "")
-    .toLowerCase();
+  // Create a mapping for regional forms
+  const regionMappings: Record<string, string> = {
+    Alolan: "alola",
+    Paldean: "paldea",
+    Hisuian: "hisui",
+    Galarian: "galar",
+  };
+
+  // First, replace special characters
+  let formattedName = name.replace(/[\s\.]/g, "-").replace(/[\'\.]/g, "");
+
+  // Handle regional forms with reordering
+  for (const [search, replace] of Object.entries(regionMappings)) {
+    if (formattedName.includes(search)) {
+      // Remove the regional form name and add it at the end
+      formattedName = formattedName
+        .replace(search, "")
+        .trim()
+        .replace(/^-|-$/g, ""); // Remove any leading/trailing hyphens
+      formattedName = `${formattedName}-${replace}`;
+    }
+  }
+
+  return formattedName.toLowerCase();
 };
 
 export const hasPokemonRegionalVariant = (pokemon: Pokemon): boolean => {
