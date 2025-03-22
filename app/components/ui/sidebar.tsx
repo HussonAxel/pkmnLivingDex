@@ -175,6 +175,9 @@ export const SidebarLink = ({
           "flex items-center justify-start gap-2 group/sidebar py-2",
           className
         )}
+        activeProps={{
+          className: "text-red-500",
+        }}
         onClick={() => link.sublinks && setIsExpanded(!isExpanded)}
         {...props}
       >
@@ -187,6 +190,9 @@ export const SidebarLink = ({
                 : "none"
               : "inline-block",
             opacity: animate ? (open ? 1 : 0) : 1,
+          }}
+          activeProps={{
+            className: "text-red-500",
           }}
           className="text-neutral-700 dark:text-neutral-200 text-md group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
         >
@@ -212,10 +218,14 @@ export const SidebarLink = ({
           <div className="pl-7">
             {link.sublinks.map((sublink, idx) => (
               <Link
+                activeProps={{
+                  className:
+                    "bg-gray-600/80 rounded-md group is-active font-bold underline",
+                }}
                 key={idx}
                 to={sublink.href}
                 className={cn(
-                  "flex items-center justify-start gap-2 group/sidebar py-2 text-md",
+                  "flex items-center justify-start gap-2 group/sidebar text-md rounded-md",
                   className
                 )}
               >
@@ -228,7 +238,7 @@ export const SidebarLink = ({
                       : "inline-block",
                     opacity: animate ? (open ? 1 : 0) : 1,
                   }}
-                  className="text-neutral-700 dark:text-neutral-200 group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0 capitalize"
+                  className="text-neutral-700 dark:text-neutral-200 transition-all duration-200 ease-in-out whitespace-pre inline-block py-2 px-4 w-full m-0 capitalize hover:bg-gray-600/40 rounded-md"
                 >
                   {sublink.label}
                 </motion.span>
