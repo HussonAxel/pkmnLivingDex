@@ -4,7 +4,6 @@ import { Sidebar, SidebarBody, SidebarLink } from "~/components/ui/sidebar";
 import { Home, BookOpen, Settings, LogOut } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { cn } from "~/lib/utils";
 
 export function SidebarDemo() {
   const links = [
