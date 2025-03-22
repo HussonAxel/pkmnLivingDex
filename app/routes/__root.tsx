@@ -81,27 +81,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <div className="p-2 flex gap-2 text-lg">
-          <Link
-            to="/"
-            activeProps={{
-              className: "font-bold",
-            }}
-            activeOptions={{ exact: true }}
-          >
-            Home
-          </Link>{" "}
-          <Link
-            to="/pokedex"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            Pokemons
-          </Link>{" "}
+        <div className="flex h-screen">
+          <SidebarDemo />
+          <main className="flex-1 overflow-auto p-4">{children}</main>
         </div>
-        <hr />
-        {children}
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />
         <Scripts />
