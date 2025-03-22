@@ -1,11 +1,20 @@
 "use client";
 import { useState } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "~/components/ui/sidebar";
-import { Home, BookOpen, Settings, LogOut } from "lucide-react";
+import { Home, BookOpen, Settings, LogOut, ChevronRight } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { pokemonQueryGenerationsDetailsOptions } from "~/utils/pokemonList";
+import type { GenerationsRoot } from "~/utils/types/pokemonList.types";
+
+type GenerationData = GenerationsRoot & { displayName: string };
 
 export function SidebarDemo() {
+  const generationsQuery = useSuspenseQuery(
+    pokemonQueryGenerationsDetailsOptions()
+  );
+
   const links = [
     {
       label: "Home",
@@ -20,6 +29,24 @@ export function SidebarDemo() {
       icon: (
         <BookOpen className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
+      sublinks: [
+        ...generationsQuery.data
+          .filter(
+            (gen): gen is GenerationData =>
+              "id" in gen &&
+              "main_region" in gen &&
+              "displayName" in gen &&
+              !("error" in gen)
+          )
+          .map((generation) => ({
+            label: `Generation ${generation.id} - ${generation.main_region.name}`,
+            href: `/pokedex/${generation.id}`,
+          })),
+        {
+          label: "Toutes générations",
+          href: "/pokedex/0",
+        },
+      ],
     },
     {
       label: "Settings",
@@ -36,6 +63,7 @@ export function SidebarDemo() {
       ),
     },
   ];
+
   const [open, setOpen] = useState(false);
   return (
     <div className="h-full">

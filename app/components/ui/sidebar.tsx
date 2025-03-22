@@ -4,12 +4,16 @@ import { cn } from "~/lib/utils";
 import { Link } from "@tanstack/react-router";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronRight } from "lucide-react";
 
 interface Links {
   label: string;
   href: string;
   icon: React.JSX.Element | React.ReactNode;
+  sublinks?: {
+    label: string;
+    href: string;
+  }[];
 }
 
 interface SidebarContextProps {
@@ -163,25 +167,78 @@ export const SidebarLink = ({
   className?: string;
 }) => {
   const { open, animate } = useSidebar();
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
-    <Link
-      to={link.href}
-      className={cn(
-        "flex items-center justify-start gap-2 group/sidebar py-2",
-        className
-      )}
-      {...props}
-    >
-      {link.icon}
-      <motion.span
-        animate={{
-          display: animate ? (open ? "inline-block" : "none") : "inline-block",
-          opacity: animate ? (open ? 1 : 0) : 1,
-        }}
-        className="text-neutral-700 dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
+    <div>
+      <Link
+        to={link.href}
+        className={cn(
+          "flex items-center justify-start gap-2 group/sidebar py-2",
+          className
+        )}
+        onClick={() => link.sublinks && setIsExpanded(!isExpanded)}
+        {...props}
       >
-        {link.label}
-      </motion.span>
-    </Link>
+        {link.icon}
+        <motion.span
+          animate={{
+            display: animate
+              ? open
+                ? "inline-block"
+                : "none"
+              : "inline-block",
+            opacity: animate ? (open ? 1 : 0) : 1,
+          }}
+          className="text-neutral-700 dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
+        >
+          {link.label}
+        </motion.span>
+        {link.sublinks && (
+          <motion.span
+            animate={{ rotate: isExpanded ? 90 : 0 }}
+            className="ml-auto"
+          >
+            <ChevronRight size={16} />
+          </motion.span>
+        )}
+      </Link>
+      {link.sublinks && (
+        <motion.div
+          animate={{
+            height: isExpanded ? "auto" : 0,
+            opacity: isExpanded ? 1 : 0,
+          }}
+          className="overflow-hidden"
+        >
+          <div className="pl-7">
+            {link.sublinks.map((sublink, idx) => (
+              <Link
+                key={idx}
+                to={sublink.href}
+                className={cn(
+                  "flex items-center justify-start gap-2 group/sidebar py-2 text-sm",
+                  className
+                )}
+              >
+                <motion.span
+                  animate={{
+                    display: animate
+                      ? open
+                        ? "inline-block"
+                        : "none"
+                      : "inline-block",
+                    opacity: animate ? (open ? 1 : 0) : 1,
+                  }}
+                  className="text-neutral-700 dark:text-neutral-200 group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
+                >
+                  {sublink.label}
+                </motion.span>
+              </Link>
+            ))}
+          </div>
+        </motion.div>
+      )}
+    </div>
   );
 };
