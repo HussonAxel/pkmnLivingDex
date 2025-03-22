@@ -1,5 +1,3 @@
-"use client";
-
 import { cn } from "~/lib/utils";
 import { Link } from "@tanstack/react-router";
 import React, { useState, createContext, useContext } from "react";
@@ -93,7 +91,7 @@ export const DesktopSidebar = ({
   return (
     <motion.div
       className={cn(
-        "h-full px-4 py-4 hidden md:flex md:flex-col bg-neutral-100 dark:bg-neutral-800 w-[300px] flex-shrink-0",
+        "h-full px-4 py-4 hidden md:flex md:flex-col border-r-2 w-[300px] flex-shrink-0",
         className
       )}
       animate={{

@@ -1,10 +1,10 @@
 import {
-  Sparkle,
-  Translate,
-  Rows,
-  SquaresFour,
-  Swap,
-} from "@phosphor-icons/react";
+  Sparkles,
+  Languages,
+  List,
+  LayoutGrid,
+  ArrowLeftRight,
+} from "lucide-react";
 import { ViewSettings } from "~/types/pokemonTypes";
 
 type ViewControlsProps = {
@@ -29,9 +29,8 @@ export function ViewControls({
           viewSettings.isShiny ? "Show normal sprites" : "Show shiny sprites"
         }
       >
-        <Sparkle
+        <Sparkles
           size={28}
-          weight="bold"
           color={viewSettings.isShiny ? "#FFD700" : undefined}
         />
       </span>
@@ -45,10 +44,9 @@ export function ViewControls({
             : "Switch to English"
         }
       >
-        <Translate
+        <Languages
           size={28}
-          weight="bold"
-          color={viewSettings.language === "fr" ? "#0055A4" : undefined}
+          color={viewSettings.language === "fr" ? "#FFD700" : undefined}
         />
       </span>
 
@@ -66,9 +64,8 @@ export function ViewControls({
             : "Show pokemons owned by the user"
         }
       >
-        <Swap
+        <ArrowLeftRight
           size={28}
-          weight="bold"
           color={viewSettings.isUserDatabase ? "#FFD700" : undefined}
         />
       </span>
@@ -89,11 +86,7 @@ function ViewToggleButton({
       onClick={() => toggleSetting("isGridView")}
       title={isGridView ? "Show as a list" : "Show as a grid"}
     >
-      {isGridView ? (
-        <Rows size={28} weight="bold" />
-      ) : (
-        <SquaresFour size={28} weight="bold" />
-      )}
+      {isGridView ? <List size={28} /> : <LayoutGrid size={28} />}
     </span>
   );
 }

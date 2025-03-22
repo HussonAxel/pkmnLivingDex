@@ -1,11 +1,11 @@
 import {
   PlusCircle,
-  Sparkle,
+  Sparkles,
   Info,
   Target,
-  Trash,
+  Trash2,
   Share,
-} from "@phosphor-icons/react";
+} from "lucide-react";
 import { useRef, useEffect } from "react";
 
 export function PokemonCardMenu({

@@ -1,5 +1,5 @@
 import { ViewSettings, PokemonCardProps } from "~/types/pokemonTypes";
-import { DotsThreeVertical } from "@phosphor-icons/react";
+import { MoreVertical } from "lucide-react";
 import { useState } from "react";
 import { PokemonCardMenu } from "./DropdownMenu";
 import { Link } from "@tanstack/react-router";
@@ -30,9 +30,8 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
           className={`${viewSettings.isUserDatabase ? "opacity-30" : "opacity-100"}`}
         >
           <div className="relative z-50">
-            <DotsThreeVertical
+            <MoreVertical
               size={24}
-              weight="bold"
               className="absolute right-0 mr-8 md:mr-0 cursor-pointer group-hover:visible menu-trigger"
               onClick={(e) => {
                 e.preventDefault();

@@ -2,10 +2,10 @@ import {
   Info,
   PlusCircle,
   Share,
-  Sparkle,
+  Sparkles,
   Target,
-  Trash,
-} from "@phosphor-icons/react";
+  Trash2,
+} from "lucide-react";
 import { Pokemon } from "~/types/pokemonTypes";
 
 export const getOfficialArtworkUrl = (pokemonId: number, isShiny: boolean) => {
@@ -32,14 +32,14 @@ export const hasPokemonRegionalVariant = (pokemon: Pokemon): boolean => {
 
 export const dropdownPokemonCard = [
   { icon: PlusCircle, text: "Add to collection" },
-  { icon: Sparkle, text: "Add to collection as shiny" },
+  { icon: Sparkles, text: "Add to collection as shiny" },
   {
     icon: Info,
     text: "See more information",
   },
   { icon: Target, text: "Start Hunting" },
   {
-    icon: Trash,
+    icon: Trash2,
     text: "Remove from collection",
   },
   { icon: Share, text: "Share pokemon's page" },

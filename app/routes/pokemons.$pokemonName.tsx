@@ -2,7 +2,7 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { NotFound } from "~/components/NotFound";
 import { pokemonDetailsQueryOptions } from "~/utils/pokemonList";
-import { Waveform } from "@phosphor-icons/react";
+import { Volume2 } from "lucide-react";
 import useSound from "use-sound";
 
 export const Route = createFileRoute("/pokemons/$pokemonName")({
@@ -37,7 +37,7 @@ function pokemonDeepComponent() {
     <div className="p-2 space-y-2">
       <h1>{data.name}</h1>
       {artworkUrl && <img src={artworkUrl} alt={data.name} />}
-      <Waveform onClick={() => play()} />
+      <Volume2 onClick={() => play()} />
     </div>
   );
 }
