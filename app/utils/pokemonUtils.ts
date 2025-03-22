@@ -18,6 +18,9 @@ export const getOfficialArtworkUrl = (pokemonId: number, isShiny: boolean) => {
 export const getGenerationVariantsForm = ["Paldea", "Alola", "Hisui", "Galar"];
 
 export const formatPokemonNameForUrl = (name: string): string => {
+  if (name === "Galarian Mr. Mime") {
+    return "mr-mime-galar";
+  }
   // Create a mapping for regional forms
   const regionMappings: Record<string, string> = {
     Alolan: "alola",
@@ -27,7 +30,10 @@ export const formatPokemonNameForUrl = (name: string): string => {
   };
 
   // First, replace special characters
-  let formattedName = name.replace(/[\s\.]/g, "-").replace(/[\'\.]/g, "");
+  let formattedName = name
+    .replace(/[\s \.]/g, "-")
+    .replace(/[\'\.]/g, "")
+    .replace("mr--mime-galar", "mr-mime-galar");
 
   // Handle regional forms with reordering
   for (const [search, replace] of Object.entries(regionMappings)) {
