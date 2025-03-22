@@ -3,7 +3,10 @@ import { MoreVertical } from "lucide-react";
 import { useState } from "react";
 import { PokemonCardMenu } from "./DropdownMenu";
 import { Link } from "@tanstack/react-router";
-import { dropdownPokemonCard } from "~/utils/pokemonUtils";
+import {
+  dropdownPokemonCard,
+  getGenerationVariantsForm,
+} from "~/utils/pokemonUtils";
 import {
   formatPokemonNameForUrl,
   getOfficialArtworkUrl,
@@ -13,6 +16,18 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
   const formattedPokemonName = formatPokemonNameForUrl(pokemon.name.en);
 
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Check if the pokemon is a regional variant
+  const isRegionalVariant = getGenerationVariantsForm.some((region) =>
+    pokemon.name.en.toLowerCase().includes(region.toLowerCase())
+  );
+
+  const getSpriteUrl = () => {
+    if (isRegionalVariant) {
+      return `/assets/static/regionalForms/${formattedPokemonName}.png`;
+    }
+    return getOfficialArtworkUrl(pokemon.pokedex_id, viewSettings.isShiny);
+  };
 
   return (
     <Link
@@ -44,10 +59,7 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
             />
           </div>
           <img
-            src={getOfficialArtworkUrl(
-              pokemon.pokedex_id,
-              viewSettings.isShiny
-            )}
+            src={getSpriteUrl()}
             alt={pokemon.name[viewSettings.language]}
             className={`mx-auto object-contain ${viewSettings.isGridView ? "w-38 h-38" : "w-48 h-48 float-left mr-4"}`}
             onError={(e) => {
