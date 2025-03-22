@@ -1,11 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, Outlet, createFileRoute } from "@tanstack/react-router";
-import {
-  getEntirePokedexTyradexOptions,
-  pokemonQueryGenerationsDetailsOptions,
-} from "~/utils/pokemonList";
+import { pokemonQueryGenerationsDetailsOptions } from "~/utils/pokemonList";
 import { CaretRight } from "@phosphor-icons/react";
-import { SidebarPokedex } from "~/components/Sidebar";
 
 export const Route = createFileRoute("/pokedex")({
   loader: async ({ context }) => {
@@ -25,7 +21,7 @@ function PostsComponent() {
   );
   return (
     <div className="flex ">
-      <ul className="text-xl border-r-2 border-b-2 max-w-[333px]">
+      <ul className="text-xl border-r-2 border-b-2 md:border-b-0  w-full md:w-[300px] lg:w-[350px] md:h-screen md:sticky md:top-0 overflow-y-auto">
         {generationsQuery.data.map((generation) => {
           if (!("id" in generation)) return null;
           return (
