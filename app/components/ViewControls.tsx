@@ -30,7 +30,7 @@ export function ViewControls({
         }
       >
         <Sparkles
-          size={28}
+          size={22}
           color={viewSettings.isShiny ? "#FFD700" : undefined}
         />
       </span>
@@ -45,7 +45,7 @@ export function ViewControls({
         }
       >
         <Languages
-          size={28}
+          size={22}
           color={viewSettings.language === "fr" ? "#FFD700" : undefined}
         />
       </span>
@@ -65,7 +65,7 @@ export function ViewControls({
         }
       >
         <ArrowLeftRight
-          size={28}
+          size={22}
           color={viewSettings.isUserDatabase ? "#FFD700" : undefined}
         />
       </span>
@@ -86,7 +86,7 @@ function ViewToggleButton({
       onClick={() => toggleSetting("isGridView")}
       title={isGridView ? "Show as a list" : "Show as a grid"}
     >
-      {isGridView ? <List size={28} /> : <LayoutGrid size={28} />}
+      {isGridView ? <List size={22} /> : <LayoutGrid size={22} />}
     </span>
   );
 }
