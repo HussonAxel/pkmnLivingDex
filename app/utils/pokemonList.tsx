@@ -71,7 +71,7 @@ export const pokemonsPerGenerationDetails = createServerFn({
     .then((response) => response.data.results);
 
   const pokemonsPerGeneration = await Promise.all(
-    generationsList.map(async (gen) => {
+    generationsList.map(async (gen, index) => {
       const genId = gen.url.split("/").filter(Boolean).pop();
       try {
         const pokemonListPerGen = await axios
@@ -80,6 +80,12 @@ export const pokemonsPerGenerationDetails = createServerFn({
           )
           .then((response) => response.data);
 
+        // Filter out MissingNo from the first generation
+        if (index === 0) {
+          return pokemonListPerGen.filter(
+            (pokemon) => pokemon.pokedex_id !== 0
+          );
+        }
         return pokemonListPerGen;
       } catch (error) {
         console.error(
@@ -172,7 +178,9 @@ export const getEntirePokedexTyradex = createServerFn({
   console.info("Fetching pokemon list from Tyradex");
   return axios
     .get<RootpokemonDetailsPerGenerations>(`${tyradexAPIRootURL}pokemon`)
-    .then((response) => response.data);
+    .then((response) =>
+      response.data.filter((pokemon) => pokemon.pokedex_id !== 0)
+    );
 });
 
 export const getEntirePokedexTyradexOptions = () =>
