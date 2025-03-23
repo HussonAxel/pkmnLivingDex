@@ -21,6 +21,12 @@ export const formatPokemonNameForUrl = (name: string): string => {
   if (name === "Galarian Mr. Mime") {
     return "mr-mime-galar";
   }
+  if (name === "Mime Jr.") {
+    return "mime-jr";
+  }
+  if (name === "Mr. Mime") {
+    return "mr-mime";
+  }
   // Create a mapping for regional forms
   const regionMappings: Record<string, string> = {
     Alolan: "alola",
@@ -30,10 +36,7 @@ export const formatPokemonNameForUrl = (name: string): string => {
   };
 
   // First, replace special characters
-  let formattedName = name
-    .replace(/[\s \.]/g, "-")
-    .replace(/[\'\.]/g, "")
-    .replace("mr--mime-galar", "mr-mime-galar");
+  let formattedName = name.replace(/[\s \.]/g, "-").replace(/[\'\.]/g, "");
 
   // Handle regional forms with reordering
   for (const [search, replace] of Object.entries(regionMappings)) {
