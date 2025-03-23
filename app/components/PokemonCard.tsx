@@ -37,7 +37,7 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
       }}
       className="block"
     >
-      <div className="p-4 border rounded-lg shadow hover:shadow-md transition-all group hover:bg-white/20 hover:border-white/40 hover:scale-[1.02] relative">
+      <div className="h-full p-4 border rounded-lg shadow hover:shadow-md transition-all group hover:bg-white/20 hover:border-white/40 hover:scale-[1.02] relative">
         <div
           key={pokemon.pokedex_id}
           className={`${viewSettings.isUserDatabase ? "opacity-30" : "opacity-100"}`}
@@ -59,9 +59,10 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
             />
           </div>
           <img
+            loading="lazy"
             src={getSpriteUrl()}
             alt={pokemon.name[viewSettings.language]}
-            className={`mx-auto object-contain ${viewSettings.isGridView ? "w-38 h-38" : "w-48 h-48 float-left mr-4"}`}
+            className={`mx-auto object-contain ${viewSettings.isGridView ? "w-4/5 h-4/5" : "w-44 h-44 float-left mr-4"}`}
             onError={(e) => {
               (e.target as HTMLImageElement).src = pokemon.sprites.regular;
             }}
