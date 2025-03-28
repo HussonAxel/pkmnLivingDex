@@ -1,9 +1,13 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { NotFound } from "~/components/NotFound";
-import { pokemonDetailsQueryOptions } from "~/utils/pokemonList";
+import {
+  pokemonDetailsQueryOptions,
+  pokemonSpeciesQueryOptions,
+} from "~/utils/pokemonList";
 import { Volume2 } from "lucide-react";
 import useSound from "use-sound";
+import { PokemonBioData } from "~/components/PokemonBiodata";
 
 export const Route = createFileRoute("/pokemons/$pokemonName")({
   loader: async ({ params: { pokemonName }, context }) => {
@@ -27,7 +31,14 @@ function pokemonDeepComponent() {
   const pokemonQuery = useSuspenseQuery(
     pokemonDetailsQueryOptions(pokemonName)
   );
+  const pokemonSpeciesQuery = useSuspenseQuery(
+    pokemonSpeciesQueryOptions(pokemonName)
+  );
   const data = pokemonQuery.data;
+  const dataSpecies = pokemonSpeciesQuery.data;
+
+  console.log(dataSpecies);
+
   const artworkUrl = data.sprites.other["official-artwork"].front_default;
 
   const crySound = data.cries.latest ?? "";
@@ -35,9 +46,19 @@ function pokemonDeepComponent() {
 
   return (
     <div className="p-2 space-y-2">
-      <h1>{data.name}</h1>
-      {artworkUrl && <img src={artworkUrl} alt={data.name} />}
-      <Volume2 onClick={() => play()} />
+      <PokemonBioData
+        name={pokemonName}
+        id={data.id}
+        picture={artworkUrl ?? ""}
+        biodata={[
+          "position",
+          "timeline",
+          "capital",
+          "contro",
+          "power",
+          "legacy",
+        ]}
+      />
     </div>
   );
 }

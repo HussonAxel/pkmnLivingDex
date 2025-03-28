@@ -17,6 +17,49 @@ type GenerationData =
   | (GenerationsRoot & { displayName: string })
   | { name: string; displayName: string; error?: boolean };
 
+interface PokemonSpeciesType {
+  base_happiness: number;
+  capture_rate: number;
+  color: { name: string };
+  egg_groups: Array<{ name: string }>;
+  evolution_chain: { url: string };
+  evolves_from_species: { name: string } | null;
+  flavor_text_entries: Array<{
+    flavor_text: string;
+    language: { name: string };
+    version: { name: string };
+  }>;
+  form_descriptions: Array<any>;
+  forms_switchable: boolean;
+  gender_rate: number;
+  genera: Array<{
+    genus: string;
+    language: { name: string };
+  }>;
+  generation: { name: string };
+  growth_rate: { name: string };
+  habitat: { name: string } | null;
+  has_gender_differences: boolean;
+  hatch_counter: number;
+  id: number;
+  is_baby: boolean;
+  is_legendary: boolean;
+  is_mythical: boolean;
+  name: string;
+  names: Array<{
+    language: { name: string };
+    name: string;
+  }>;
+  order: number;
+  pal_park_encounters: Array<any>;
+  pokedex_numbers: Array<any>;
+  shape: { name: string };
+  varieties: Array<{
+    is_default: boolean;
+    pokemon: { name: string; url: string };
+  }>;
+}
+
 export const fetchGenerationsDetails = createServerFn({
   method: "GET",
 }).handler(async () => {
@@ -187,4 +230,28 @@ export const getEntirePokedexTyradexOptions = () =>
   queryOptions({
     queryKey: ["pokedex"],
     queryFn: () => getEntirePokedexTyradex(),
+  });
+
+export const fetchPokemonSpecies = createServerFn({ method: "GET" })
+  .validator((name: string) => name)
+  .handler(async ({ data: name }) => {
+    console.info(`Fetching ${name} species data...`);
+    const species = await axios
+      .get<PokemonSpeciesType>(`${pokeAPIRootURL}pokemon-species/${name}`)
+      .then((r) => r.data)
+      .catch((err) => {
+        console.error(err);
+        if (err.status === 404) {
+          throw notFound();
+        }
+        throw err;
+      });
+    return species;
+  });
+
+export const pokemonSpeciesQueryOptions = (pokemonName: string) =>
+  queryOptions({
+    queryKey: ["pokemon", "species", pokemonName],
+    queryFn: () => fetchPokemonSpecies({ data: pokemonName }),
+    staleTime: 1000 * 60 * 10, // 10 minutes
   });
