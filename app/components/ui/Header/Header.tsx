@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import OpenedHeaderSection from "~/components/OpenedHeaderSections/OpenedHeaderSection";
-import { OpenedHeaderSectionsData } from "~/components/OpenedHeaderSections/OpenedHeaderSectionData";
 
 export default function Header() {
   const [isActive, setIsActive] = useState(false);
@@ -35,7 +34,7 @@ export default function Header() {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            <OpenedHeaderSection sections={OpenedHeaderSectionsData} />
+            <OpenedHeaderSection />
           </motion.div>
         )}
       </AnimatePresence>
