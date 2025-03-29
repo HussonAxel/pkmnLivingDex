@@ -1,7 +1,7 @@
 export type ViewSettings = {
   isShiny: boolean;
   isUserDatabase: boolean;
-  language: "en" | "fr";
+  language: "fr" | "en";
   isGridView: boolean;
 };
 
