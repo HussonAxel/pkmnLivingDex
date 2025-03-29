@@ -5,11 +5,13 @@ import { getGenerationVariantsForm } from "~/utils/pokemonUtils";
 type PokemonGridProps = {
   generationData: any[];
   viewSettings: ViewSettings;
+  generationID: string;
 };
 
 export function PokemonGrid({
   generationData,
   viewSettings,
+  generationID,
 }: PokemonGridProps) {
   const isRegionalForm = (pokemonName: string): boolean => {
     return getGenerationVariantsForm.some((region) =>
@@ -25,12 +27,23 @@ export function PokemonGrid({
   );
 
   return (
-    <div className="space-y-8">
+    <div>
+      {generationID === "0" ? (
+        <h2 className="text-[64px] py-2 font-anton uppercase">
+          Toutes générations confondues
+        </h2>
+      ) : (
+        <h2 className="text-[64px] py-2 font-anton uppercase">
+          Generation {generationID}
+        </h2>
+      )}
       {basicForms.length > 0 && (
         <div>
-          <h3 className="text-xl font-semibold mb-4 font-worksans">
-            Basic Forms
-          </h3>
+          {generationID !== "0" && (
+            <h3 className="text-xl font-semibold mb-4 font-worksans">
+              Basic Forms
+            </h3>
+          )}
           <div
             className={`grid gap-8 ${
               viewSettings.isGridView

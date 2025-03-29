@@ -36,21 +36,10 @@ export function PokemonGenerationView({
   return (
     <div className="space-y-2 flex-1 mx-8">
       <div>
-        <div className="mb-6 border-b pb-4">
-          {generationID === "0" ? (
-            <h2 className="text-2xl font-bold">
-              Toutes générations confondues
-            </h2>
-          ) : (
-            <h2 className="text-[64px] py-2 font-anton uppercase">
-              Generation {generationID}
-            </h2>
-          )}
-        </div>
-
         <PokemonGrid
           generationData={generationData}
           viewSettings={viewSettings}
+          generationID={generationID}
         />
       </div>
       <ViewControls viewSettings={viewSettings} toggleSetting={toggleSetting} />
