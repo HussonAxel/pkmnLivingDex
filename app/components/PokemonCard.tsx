@@ -37,7 +37,7 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
       }}
       className="block"
     >
-      <div className="h-full p-4 border rounded-lg shadow hover:shadow-md transition-all group hover:bg-white/20 hover:border-white/40 hover:scale-[1.02] relative">
+      <div className="h-full p-4 border rounded-lg shadow hover:shadow-md transition-all group hover:bg-white/20 hover:border-white/40 hover:scale-[1.02] relative font-worksans">
         <div
           key={pokemon.pokedex_id}
           className={`${viewSettings.isUserDatabase ? "opacity-30" : "opacity-100"}`}

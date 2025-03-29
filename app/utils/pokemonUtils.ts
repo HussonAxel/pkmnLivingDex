@@ -27,7 +27,6 @@ export const formatPokemonNameForUrl = (name: string): string => {
   if (name === "Mr. Mime") {
     return "mr-mime";
   }
-  // Create a mapping for regional forms
   const regionMappings: Record<string, string> = {
     Alolan: "alola",
     Paldean: "paldea",
@@ -35,17 +34,14 @@ export const formatPokemonNameForUrl = (name: string): string => {
     Galarian: "galar",
   };
 
-  // First, replace special characters
   let formattedName = name.replace(/[\s \.]/g, "-").replace(/[\'\.]/g, "");
 
-  // Handle regional forms with reordering
   for (const [search, replace] of Object.entries(regionMappings)) {
     if (formattedName.includes(search)) {
-      // Remove the regional form name and add it at the end
       formattedName = formattedName
         .replace(search, "")
         .trim()
-        .replace(/^-|-$/g, ""); // Remove any leading/trailing hyphens
+        .replace(/^-|-$/g, "");
       formattedName = `${formattedName}-${replace}`;
     }
   }
@@ -73,3 +69,15 @@ export const dropdownPokemonCard = [
   },
   { icon: Share, text: "Share pokemon's page" },
 ];
+
+export const generationToRegion = {
+  "generation-i": "Kanto",
+  "generation-ii": "Johto",
+  "generation-iii": "Hoenn",
+  "generation-iv": "Sinnoh",
+  "generation-v": "Unova",
+  "generation-vi": "Kalos",
+  "generation-vii": "Alola",
+  "generation-viii": "Galar",
+  "generation-ix": "Paldea",
+};

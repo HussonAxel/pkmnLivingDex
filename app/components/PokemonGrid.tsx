@@ -28,7 +28,9 @@ export function PokemonGrid({
     <div className="space-y-8">
       {basicForms.length > 0 && (
         <div>
-          <h3 className="text-xl font-semibold mb-4">Basic Forms</h3>
+          <h3 className="text-xl font-semibold mb-4 font-worksans">
+            Basic Forms
+          </h3>
           <div
             className={`grid gap-8 ${
               viewSettings.isGridView
@@ -49,7 +51,9 @@ export function PokemonGrid({
 
       {regionalVariants.length > 0 && (
         <div>
-          <h3 className="text-xl font-semibold mb-4">Regional Variants</h3>
+          <h3 className="text-xl font-semibold mb-4 font-worksans">
+            Regional Variants
+          </h3>
           <div
             className={`grid gap-8 ${
               viewSettings.isGridView

@@ -1,13 +1,12 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { NotFound } from "~/components/NotFound";
 import {
   pokemonDetailsQueryOptions,
   pokemonSpeciesQueryOptions,
 } from "~/utils/pokemonList";
-import { Volume2 } from "lucide-react";
-import useSound from "use-sound";
 import { PokemonBioData } from "~/components/PokemonBiodata";
+import { generationToRegion } from "~/utils/pokemonUtils";
 
 export const Route = createFileRoute("/pokemons/$pokemonName")({
   loader: async ({ params: { pokemonName }, context }) => {
@@ -37,27 +36,31 @@ function pokemonDeepComponent() {
   const data = pokemonQuery.data;
   const dataSpecies = pokemonSpeciesQuery.data;
 
-  console.log(dataSpecies);
-
   const artworkUrl = data.sprites.other["official-artwork"].front_default;
-
-  const crySound = data.cries.latest ?? "";
-  const [play] = useSound(crySound);
 
   return (
     <div className="p-2 space-y-2">
       <PokemonBioData
         name={pokemonName}
-        id={data.id}
+        desc={
+          dataSpecies.genera?.find((entry) => entry?.language?.name === "en")
+            ?.genus || ""
+        }
         picture={artworkUrl ?? ""}
-        biodata={[
-          "position",
-          "timeline",
-          "capital",
-          "contro",
-          "power",
-          "legacy",
-        ]}
+        pokemonBiodata={{
+          species: dataSpecies.name,
+          height: `${data.height / 10}m`,
+          weight: `${data.weight / 10}kg`,
+          gender:
+            dataSpecies.gender_rate === -1
+              ? "Genderless"
+              : `${(dataSpecies.gender_rate / 8) * 100}% ♀ - ${100 - (dataSpecies.gender_rate / 8) * 100}% ♂`,
+          region:
+            generationToRegion[
+              dataSpecies.generation.name as keyof typeof generationToRegion
+            ],
+          abilities: data.abilities,
+        }}
       />
     </div>
   );
