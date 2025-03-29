@@ -6,4 +6,5 @@ export interface OpenedHeaderSectionDataProps {
   mainTitle: string;
   subTitle: string;
   available: boolean;
+  route?: string;
 }

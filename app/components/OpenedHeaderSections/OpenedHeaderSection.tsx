@@ -1,9 +1,8 @@
 import { OpenedHeaderSectionProps } from "./OpenedHeaderSection.type";
 import { motion } from "framer-motion";
+import { Link } from "@tanstack/react-router";
 
-export default function OpenedHeaderSection({
-  sections,
-}: OpenedHeaderSectionProps) {
+export default function OpenedHeaderSection() {
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -13,7 +12,6 @@ export default function OpenedHeaderSection({
       },
     },
   };
-
   const item = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 },
@@ -27,11 +25,10 @@ export default function OpenedHeaderSection({
         initial="hidden"
         animate="show"
       >
-        {sections.map((section, index) => (
+        <Link to="/pokedex" className="">
           <motion.div
-            key={index}
             variants={item}
-            className={`border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red ${section.available ? "hover:bg-cream cursor-pointer" : "hover:bg-cream/50  hover:text-red text-cream cursor-not-allowed "}`}
+            className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream cursor-pointer"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -40,17 +37,209 @@ export default function OpenedHeaderSection({
               initial={{ opacity: 1 }}
               animate={{ opacity: 1 }}
             >
-              {section.mainTitle}
+              Pokedex
             </motion.h2>
             <motion.p
-              className={`font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block group-hover:text-red`}
+              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block group-hover:text-red"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              {section.available ? section.subTitle : "Coming Soon..."}
+              Browse all Pokémon
             </motion.p>
           </motion.div>
-        ))}
+        </Link>
+
+        <Link to="/pokedex" className="">
+          <motion.div
+            variants={item}
+            className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream cursor-pointer"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <motion.h2
+              className="font-anton uppercase transition-opacity duration-500 text-3xl group-hover:hidden text-cream"
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+            >
+              Mini Games
+            </motion.h2>
+            <motion.p
+              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block group-hover:text-red"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              Fun Pokémon mini-games
+            </motion.p>
+          </motion.div>
+        </Link>
+
+        <Link to="/pokedex" className="">
+          <motion.div
+            variants={item}
+            className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream cursor-pointer"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <motion.h2
+              className="font-anton uppercase transition-opacity duration-500 text-3xl group-hover:hidden text-cream"
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+            >
+              Random Of The Day
+            </motion.h2>
+            <motion.p
+              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block group-hover:text-red"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              Daily random Pokémon
+            </motion.p>
+          </motion.div>
+        </Link>
+
+        <Link to="/pokedex" className="">
+          <motion.div
+            variants={item}
+            className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream cursor-pointer"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <motion.h2
+              className="font-anton uppercase transition-opacity duration-500 text-3xl group-hover:hidden text-cream"
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+            >
+              Pokemon Data
+            </motion.h2>
+            <motion.p
+              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block group-hover:text-red"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              Detailed Pokémon information
+            </motion.p>
+          </motion.div>
+        </Link>
+
+        <Link to="/pokedex" className="pointer-events-none">
+          <motion.div
+            variants={item}
+            className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream/50 hover:text-red text-cream cursor-not-allowed"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <motion.h2
+              className="font-anton uppercase transition-opacity duration-500 text-3xl group-hover:hidden text-cream"
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+            >
+              Collection
+            </motion.h2>
+            <motion.p
+              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block group-hover:text-red"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              Coming Soon...
+            </motion.p>
+          </motion.div>
+        </Link>
+
+        <Link to="/pokedex" className="pointer-events-none">
+          <motion.div
+            variants={item}
+            className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream/50 hover:text-red text-cream cursor-not-allowed"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <motion.h2
+              className="font-anton uppercase transition-opacity duration-500 text-3xl group-hover:hidden text-cream"
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+            >
+              About
+            </motion.h2>
+            <motion.p
+              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block group-hover:text-red"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              Coming Soon...
+            </motion.p>
+          </motion.div>
+        </Link>
+
+        <Link to="/pokedex" className="pointer-events-none">
+          <motion.div
+            variants={item}
+            className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream/50 hover:text-red text-cream cursor-not-allowed"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <motion.h2
+              className="font-anton uppercase transition-opacity duration-500 text-3xl group-hover:hidden text-cream"
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+            >
+              Team Builder
+            </motion.h2>
+            <motion.p
+              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block group-hover:text-red"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              Coming Soon...
+            </motion.p>
+          </motion.div>
+        </Link>
+
+        <Link to="/pokedex" className="pointer-events-none">
+          <motion.div
+            variants={item}
+            className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream/50 hover:text-red text-cream cursor-not-allowed"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <motion.h2
+              className="font-anton uppercase transition-opacity duration-500 text-3xl group-hover:hidden text-cream"
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+            >
+              Comparator
+            </motion.h2>
+            <motion.p
+              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block group-hover:text-red"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              Coming Soon...
+            </motion.p>
+          </motion.div>
+        </Link>
+
+        <Link to="/pokedex" className="pointer-events-none">
+          <motion.div
+            variants={item}
+            className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream/50 hover:text-red text-cream cursor-not-allowed"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <motion.h2
+              className="font-anton uppercase transition-opacity duration-500 text-3xl group-hover:hidden text-cream"
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+            >
+              Shiny Hunting Tools
+            </motion.h2>
+            <motion.p
+              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block group-hover:text-red"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              Coming Soon...
+            </motion.p>
+          </motion.div>
+        </Link>
       </motion.section>
     </div>
   );
