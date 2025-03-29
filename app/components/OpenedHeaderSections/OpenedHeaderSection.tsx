@@ -32,7 +32,7 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
         <Link to="/pokedex" className="" onClick={() => setIsActive(false)}>
           <motion.div
             variants={item}
-            className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream cursor-pointer"
+            className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40 cursor-pointer"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -44,7 +44,7 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
               Pokedex
             </motion.h2>
             <motion.p
-              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block group-hover:text-red"
+              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block "
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
@@ -56,7 +56,7 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
         <Link to="/pokedex" className="" onClick={() => setIsActive(false)}>
           <motion.div
             variants={item}
-            className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream cursor-pointer"
+            className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40 cursor-pointer"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -68,7 +68,7 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
               Mini Games
             </motion.h2>
             <motion.p
-              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block group-hover:text-red"
+              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
@@ -80,7 +80,7 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
         <Link to="/pokedex" className="" onClick={() => setIsActive(false)}>
           <motion.div
             variants={item}
-            className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream cursor-pointer"
+            className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40 cursor-pointer"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -92,7 +92,7 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
               Random Of The Day
             </motion.h2>
             <motion.p
-              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block group-hover:text-red"
+              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block "
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
@@ -104,7 +104,7 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
         <Link to="/pokedex" className="" onClick={() => setIsActive(false)}>
           <motion.div
             variants={item}
-            className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream cursor-pointer"
+            className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40 cursor-pointer"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -116,7 +116,7 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
               Pokemon Data
             </motion.h2>
             <motion.p
-              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block group-hover:text-red"
+              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block "
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
@@ -132,7 +132,7 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
         >
           <motion.div
             variants={item}
-            className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream/50 hover:text-red text-cream cursor-not-allowed"
+            className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40/20 hover:text-red text-cream cursor-not-allowed"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -144,7 +144,7 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
               Collection
             </motion.h2>
             <motion.p
-              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block group-hover:text-red"
+              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block "
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
@@ -160,7 +160,7 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
         >
           <motion.div
             variants={item}
-            className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream/50 hover:text-red text-cream cursor-not-allowed"
+            className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40/20 hover:text-red text-cream cursor-not-allowed"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -172,7 +172,7 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
               About
             </motion.h2>
             <motion.p
-              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block group-hover:text-red"
+              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block "
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
@@ -188,7 +188,7 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
         >
           <motion.div
             variants={item}
-            className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream/50 hover:text-red text-cream cursor-not-allowed"
+            className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40/20 hover:text-red text-cream cursor-not-allowed"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -200,7 +200,7 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
               Team Builder
             </motion.h2>
             <motion.p
-              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block group-hover:text-red"
+              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block "
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
@@ -216,7 +216,7 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
         >
           <motion.div
             variants={item}
-            className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream/50 hover:text-red text-cream cursor-not-allowed"
+            className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40/20 hover:text-red text-cream cursor-not-allowed"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -228,7 +228,7 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
               Comparator
             </motion.h2>
             <motion.p
-              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block group-hover:text-red"
+              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block "
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
@@ -244,7 +244,7 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
         >
           <motion.div
             variants={item}
-            className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream/50 hover:text-red text-cream cursor-not-allowed"
+            className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40/20 hover:text-red text-cream cursor-not-allowed"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -256,7 +256,7 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
               Shiny Hunting Tools
             </motion.h2>
             <motion.p
-              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block group-hover:text-red"
+              className="font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block "
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
