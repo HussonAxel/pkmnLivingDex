@@ -42,7 +42,7 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
           key={pokemon.pokedex_id}
           className={`${viewSettings.isUserDatabase ? "opacity-30" : "opacity-100"}`}
         >
-          <div className="relative z-50">
+          <div className="relative">
             <MoreVertical
               size={24}
               className="absolute right-0 mr-8 md:mr-0 cursor-pointer group-hover:visible menu-trigger"

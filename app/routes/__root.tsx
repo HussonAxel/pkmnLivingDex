@@ -1,6 +1,5 @@
 import {
   HeadContent,
-  Link,
   Outlet,
   Scripts,
   createRootRouteWithContext,
@@ -13,7 +12,7 @@ import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary";
 import { NotFound } from "~/components/NotFound";
 import appCss from "~/styles/app.css?url";
 import { seo } from "~/utils/seo";
-import { SidebarDemo } from "~/components/Sidebar";
+import Header from "~/components/ui/Header/Header";
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
 }>()({
@@ -94,9 +93,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body>
-        <div className="flex h-screen">
-          <SidebarDemo />
+      <body className="min-h-screen flex flex-col">
+        <Header />
+
+        <div className="flex h-screen pt-[80px]">
           <main className="flex-1 overflow-auto">{children}</main>
         </div>
         <TanStackRouterDevtools position="bottom-right" />
