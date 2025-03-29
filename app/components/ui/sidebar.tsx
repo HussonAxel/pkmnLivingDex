@@ -235,7 +235,7 @@ export const SidebarLink = ({
                       : "inline-block",
                     opacity: animate ? (open ? 1 : 0) : 1,
                   }}
-                  className="text-neutral-700 dark:text-neutral-200 transition-all duration-200 ease-in-out whitespace-pre inline-block py-2 px-4 w-full m-0 capitalize hover:bg-gray-600/40 rounded-md"
+                  className="text-neutral-700 dark:text-neutral-200 transition-all duration-200 ease-in-out whitespace-pre inline-block py-2 px-4 w-full m-0 capitalize hover:bg-gray-600/40 rounded-md font-worksans"
                 >
                   {sublink.label}
                 </motion.span>

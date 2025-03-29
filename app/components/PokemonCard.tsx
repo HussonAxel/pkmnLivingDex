@@ -70,13 +70,10 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
           <div
             className={`${viewSettings.isGridView ? "flex flex-col text-center gap-2 " : "flex flex-col justify-center h-24"}`}
           >
-            <h2 className="font-bold text-xl xl:text-2xl truncate w-full">
-              {" "}
+            <h2 className="font-bold text-xl xl:text-2xl truncate w-full ">
               {pokemon.name[viewSettings.language]}
             </h2>
-            <span className={viewSettings.isGridView ? "" : "text-sm"}>
-              {pokemon.category}
-            </span>
+            <span className="opacity-60 text-sm">{pokemon.category}</span>
 
             <div
               className={`flex gap-2 mt-1 ${viewSettings.isGridView ? "justify-center" : ""}`}

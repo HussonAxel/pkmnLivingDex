@@ -7,6 +7,7 @@ import {
 } from "~/utils/pokemonList";
 import { PokemonBioData } from "~/components/PokemonBiodata";
 import { generationToRegion } from "~/utils/pokemonUtils";
+import { SideData } from "~/components/ui/SideData";
 
 export const Route = createFileRoute("/pokemons/$pokemonName")({
   loader: async ({ params: { pokemonName }, context }) => {
@@ -39,29 +40,31 @@ function pokemonDeepComponent() {
   const artworkUrl = data.sprites.other["official-artwork"].front_default;
 
   return (
-    <div className="p-2 space-y-2">
-      <PokemonBioData
-        name={pokemonName}
-        desc={
-          dataSpecies.genera?.find((entry) => entry?.language?.name === "en")
-            ?.genus || ""
-        }
-        picture={artworkUrl ?? ""}
-        pokemonBiodata={{
-          species: dataSpecies.name,
-          height: `${data.height / 10}m`,
-          weight: `${data.weight / 10}kg`,
-          gender:
-            dataSpecies.gender_rate === -1
-              ? "Genderless"
-              : `${(dataSpecies.gender_rate / 8) * 100}% ♀ - ${100 - (dataSpecies.gender_rate / 8) * 100}% ♂`,
-          region:
-            generationToRegion[
-              dataSpecies.generation.name as keyof typeof generationToRegion
-            ],
-          abilities: data.abilities,
-        }}
-      />
+    <div className="space-y-2">
+      <SideData dataName={pokemonName} dataPage={`#${data.id}`}>
+        <PokemonBioData
+          name={pokemonName}
+          desc={
+            dataSpecies.genera?.find((entry) => entry?.language?.name === "en")
+              ?.genus || ""
+          }
+          picture={artworkUrl ?? ""}
+          pokemonBiodata={{
+            species: dataSpecies.name,
+            height: `${data.height / 10}m`,
+            weight: `${data.weight / 10}kg`,
+            gender:
+              dataSpecies.gender_rate === -1
+                ? "Genderless"
+                : `${(dataSpecies.gender_rate / 8) * 100}% ♀ - ${100 - (dataSpecies.gender_rate / 8) * 100}% ♂`,
+            region:
+              generationToRegion[
+                dataSpecies.generation.name as keyof typeof generationToRegion
+              ],
+            abilities: data.abilities,
+          }}
+        />
+      </SideData>
     </div>
   );
 }
