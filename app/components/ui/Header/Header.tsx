@@ -34,7 +34,7 @@ export default function Header() {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            <OpenedHeaderSection />
+            <OpenedHeaderSection setIsActive={setIsActive} />
           </motion.div>
         )}
       </AnimatePresence>

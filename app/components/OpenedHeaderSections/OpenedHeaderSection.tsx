@@ -2,7 +2,11 @@ import { OpenedHeaderSectionProps } from "./OpenedHeaderSection.type";
 import { motion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
 
-export default function OpenedHeaderSection() {
+type Props = {
+  setIsActive: (value: boolean) => void;
+};
+
+export default function OpenedHeaderSection({ setIsActive }: Props) {
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -25,7 +29,7 @@ export default function OpenedHeaderSection() {
         initial="hidden"
         animate="show"
       >
-        <Link to="/pokedex" className="">
+        <Link to="/pokedex" className="" onClick={() => setIsActive(false)}>
           <motion.div
             variants={item}
             className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream cursor-pointer"
@@ -49,7 +53,7 @@ export default function OpenedHeaderSection() {
           </motion.div>
         </Link>
 
-        <Link to="/pokedex" className="">
+        <Link to="/pokedex" className="" onClick={() => setIsActive(false)}>
           <motion.div
             variants={item}
             className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream cursor-pointer"
@@ -73,7 +77,7 @@ export default function OpenedHeaderSection() {
           </motion.div>
         </Link>
 
-        <Link to="/pokedex" className="">
+        <Link to="/pokedex" className="" onClick={() => setIsActive(false)}>
           <motion.div
             variants={item}
             className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream cursor-pointer"
@@ -97,7 +101,7 @@ export default function OpenedHeaderSection() {
           </motion.div>
         </Link>
 
-        <Link to="/pokedex" className="">
+        <Link to="/pokedex" className="" onClick={() => setIsActive(false)}>
           <motion.div
             variants={item}
             className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream cursor-pointer"
@@ -121,7 +125,11 @@ export default function OpenedHeaderSection() {
           </motion.div>
         </Link>
 
-        <Link to="/pokedex" className="pointer-events-none">
+        <Link
+          to="/pokedex"
+          className="pointer-events-none"
+          onClick={() => setIsActive(false)}
+        >
           <motion.div
             variants={item}
             className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream/50 hover:text-red text-cream cursor-not-allowed"
@@ -145,7 +153,11 @@ export default function OpenedHeaderSection() {
           </motion.div>
         </Link>
 
-        <Link to="/pokedex" className="pointer-events-none">
+        <Link
+          to="/pokedex"
+          className="pointer-events-none"
+          onClick={() => setIsActive(false)}
+        >
           <motion.div
             variants={item}
             className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream/50 hover:text-red text-cream cursor-not-allowed"
@@ -169,7 +181,11 @@ export default function OpenedHeaderSection() {
           </motion.div>
         </Link>
 
-        <Link to="/pokedex" className="pointer-events-none">
+        <Link
+          to="/pokedex"
+          className="pointer-events-none"
+          onClick={() => setIsActive(false)}
+        >
           <motion.div
             variants={item}
             className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream/50 hover:text-red text-cream cursor-not-allowed"
@@ -193,7 +209,11 @@ export default function OpenedHeaderSection() {
           </motion.div>
         </Link>
 
-        <Link to="/pokedex" className="pointer-events-none">
+        <Link
+          to="/pokedex"
+          className="pointer-events-none"
+          onClick={() => setIsActive(false)}
+        >
           <motion.div
             variants={item}
             className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream/50 hover:text-red text-cream cursor-not-allowed"
@@ -217,7 +237,11 @@ export default function OpenedHeaderSection() {
           </motion.div>
         </Link>
 
-        <Link to="/pokedex" className="pointer-events-none">
+        <Link
+          to="/pokedex"
+          className="pointer-events-none"
+          onClick={() => setIsActive(false)}
+        >
           <motion.div
             variants={item}
             className="border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red hover:bg-cream/50 hover:text-red text-cream cursor-not-allowed"
