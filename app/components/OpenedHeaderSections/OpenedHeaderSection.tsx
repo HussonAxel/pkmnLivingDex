@@ -22,7 +22,7 @@ export default function OpenedHeaderSection({
   return (
     <div className="h-full">
       <motion.section
-        className="bg-cream h-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-items-center place-items-center p-8"
+        className="bg-[#030712] h-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-items-center place-items-center p-8"
         variants={container}
         initial="hidden"
         animate="show"
