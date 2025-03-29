@@ -31,19 +31,19 @@ export default function OpenedHeaderSection({
           <motion.div
             key={index}
             variants={item}
-            className={`border-[1.66px] shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red ${section.available ? "hover:bg-cream cursor-pointer" : "hover:bg-cream/50  hover:text-red text-cream cursor-not-allowed "}`}
+            className={`border shadow-md rounded-sm border-cream bg-red font-Anton group text-center content-center w-[440px] h-[220px] max-w-[440px] max-h-[220px] transition-colors duration-500 hover:border-red ${section.available ? "hover:bg-cream cursor-pointer" : "hover:bg-cream/50  hover:text-red text-cream cursor-not-allowed "}`}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
             <motion.h2
-              className="uppercase transition-opacity duration-500 text-3xl group-hover:hidden text-cream"
+              className="font-anton uppercase transition-opacity duration-500 text-3xl group-hover:hidden text-cream"
               initial={{ opacity: 1 }}
               animate={{ opacity: 1 }}
             >
               {section.mainTitle}
             </motion.h2>
             <motion.p
-              className={`hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block group-hover:text-red`}
+              className={`font-worksans hidden text-xl transition-opacity duration-500 px-8 text-cream group-hover:block group-hover:text-red`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >

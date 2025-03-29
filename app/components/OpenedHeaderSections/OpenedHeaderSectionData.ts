@@ -2,6 +2,12 @@ import { OpenedHeaderSectionDataProps } from "./OpenedHeaderSection.type";
 
 export const OpenedHeaderSectionsData: OpenedHeaderSectionDataProps[] = [
   {
+    mainTitle: "Pokedex",
+    subTitle:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    available: true,
+  },
+  {
     mainTitle: "Mini Games",
     subTitle:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
@@ -9,12 +15,6 @@ export const OpenedHeaderSectionsData: OpenedHeaderSectionDataProps[] = [
   },
   {
     mainTitle: "Randoms Of The Day",
-    subTitle:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
-    available: true,
-  },
-  {
-    mainTitle: "Pokedex",
     subTitle:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
     available: true,
