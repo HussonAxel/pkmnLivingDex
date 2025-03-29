@@ -19,7 +19,7 @@ export function ViewControls({
   return (
     <div
       className="flex justify-around
-      backdrop-blur-md bg-black/30 shadow-lg w-1/4 m-auto
+      backdrop-blur-sm bg-black/30 shadow-lg w-1/4 m-auto
       fixed bottom-8 left-0 right-0 z-10 border rounded-full"
     >
       <span
