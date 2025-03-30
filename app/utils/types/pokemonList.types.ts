@@ -433,3 +433,41 @@ export interface Pokemon {
   stats?: any;
   resistances?: any[];
 }
+
+// Evolution chain interfaces
+
+export interface PokemonForm {
+  id?: string;
+  pokedex_id?: number;
+  name?: string;
+  condition?: string;
+  sprites?: {
+    regular?: string;
+  };
+}
+
+export interface MegaForm extends PokemonForm {
+  name?: string;
+}
+
+export interface PokemonData {
+  pokedex_id?: number;
+  name?: {
+    en?: string;
+  };
+  evolution?: {
+    pre?: PokemonForm[];
+    next?: PokemonForm[];
+    mega?: MegaForm[];
+  };
+  formes?: any[];
+  sprites?: {
+    gmax?: string;
+  };
+}
+
+export interface GmaxQueryResult {
+  success: boolean;
+  image?: string;
+  sprites?: any;
+}

@@ -7,6 +7,7 @@ import {
   PokemonsListType,
   GenerationsRoot,
   RootpokemonDetailsPerGenerations,
+  GmaxQueryResult,
 } from "./types/pokemonList.types";
 import axios from "redaxios";
 
@@ -253,5 +254,71 @@ export const pokemonSpeciesQueryOptions = (pokemonName: string) =>
   queryOptions({
     queryKey: ["pokemon", "species", pokemonName],
     queryFn: () => fetchPokemonSpecies({ data: pokemonName }),
-    staleTime: 1000 * 60 * 10, // 10 minutes
+    staleTime: 1000 * 60 * 10,
+  });
+
+// New query functions for Pokemon Evolution Chain
+
+export const fetchPokemonTyradex = createServerFn({ method: "GET" })
+  .validator((name: string) => name)
+  .handler(async ({ data: name }) => {
+    console.info(`Fetching ${name} data from Tyradex...`);
+    return fetch(`${tyradexAPIRootURL}pokemon/${name}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw notFound();
+        }
+        return res.json();
+      })
+      .catch((err) => {
+        console.error(err);
+        throw err;
+      });
+  });
+
+export const pokemonTyradexQueryOptions = (pokemonName: string) =>
+  queryOptions({
+    queryKey: ["pokemon-tyradex", pokemonName],
+    queryFn: () => fetchPokemonTyradex({ data: pokemonName }),
+    staleTime: 1000 * 60 * 10,
+  });
+
+// GMax form data query
+// Using GmaxQueryResult imported from types file
+
+export const fetchPokemonGmax = createServerFn({ method: "GET" })
+  .validator((name: string) => name)
+  .handler(async ({ data: name }): Promise<GmaxQueryResult> => {
+    try {
+      console.info(`Fetching G-Max form for ${name}...`);
+      const formattedName = `${name.toLowerCase().replace(/\s+/g, "-")}-gmax`;
+      const response = await fetch(`${pokeAPIRootURL}pokemon/${formattedName}`);
+
+      if (!response.ok) {
+        return { success: false };
+      }
+
+      const data = await response.json();
+      return {
+        success: true,
+        image:
+          data.sprites.other?.["official-artwork"]?.front_default ||
+          data.sprites.other?.home?.front_default ||
+          data.sprites.front_default,
+        sprites: data.sprites,
+      };
+    } catch (error) {
+      console.error("Error fetching G-Max form:", error);
+      return { success: false };
+    }
+  });
+
+export const pokemonGmaxQueryOptions = (
+  pokemonName: string,
+  enabled: boolean
+) =>
+  queryOptions({
+    queryKey: ["pokemon-gmax", pokemonName],
+    queryFn: () => fetchPokemonGmax({ data: pokemonName }),
+    enabled,
   });
