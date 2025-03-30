@@ -13,7 +13,7 @@ import { PokemonEvolutionChain } from "~/components/PokemonEvolutionChain";
 export const Route = createFileRoute("/pokemons/$pokemonName")({
   loader: async ({ params: { pokemonName }, context }) => {
     await context.queryClient.ensureQueryData(
-      pokemonDetailsQueryOptions(pokemonName),
+      pokemonDetailsQueryOptions(pokemonName)
     );
     return { title: pokemonName };
   },
@@ -28,7 +28,7 @@ function PokemonDetail() {
   const { pokemonName } = Route.useParams();
   const { data } = useSuspenseQuery(pokemonDetailsQueryOptions(pokemonName));
   const { data: dataSpecies } = useSuspenseQuery(
-    pokemonSpeciesQueryOptions(pokemonName),
+    pokemonSpeciesQueryOptions(pokemonName)
   );
 
   const artworkUrl = data.sprites.other["official-artwork"].front_default;
@@ -46,7 +46,7 @@ function PokemonDetail() {
       : `${(dataSpecies.gender_rate / 8) * 100}% ♀ - ${100 - (dataSpecies.gender_rate / 8) * 100}% ♂`;
 
   return (
-    <div className="space-y-2">
+    <div>
       <SideData dataName="BIODATA" dataPage="01 / 05">
         <PokemonBioData
           name={pokemonName}
@@ -62,7 +62,7 @@ function PokemonDetail() {
           }}
         />
       </SideData>
-      <SideData dataName="EVOLUTION CHAIN & FORMS" dataPage="02 / 05">
+      <SideData dataName="POKEMON FORMS" dataPage="02 / 05">
         <PokemonEvolutionChain />
       </SideData>
     </div>

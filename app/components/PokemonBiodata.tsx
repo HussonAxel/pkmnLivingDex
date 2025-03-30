@@ -14,7 +14,7 @@ interface PokemonBioDataTypes {
 
 export function PokemonBioData(props: PokemonBioDataTypes) {
   return (
-    <section className="flex-grow grid grid-cols-1 md:grid-cols-3 gap-8 p-6 backdrop-blur-sm">
+    <section className="flex-grow grid grid-cols-1 md:grid-cols-3 gap-8 p-24 backdrop-blur-sm">
       <div className="flex flex-col items-center justify-center space-y-4">
         <p className="text-center uppercase font-anton text-2xl md:text-3xl text-white/90 tracking-wider">
           {props.name}

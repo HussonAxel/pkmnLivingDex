@@ -24,9 +24,8 @@ const PokemonCard: React.FC<{
   onImageError?: (e: React.SyntheticEvent<HTMLImageElement>) => void;
 }> = ({ name, imageUrl, condition, type, className = "", onImageError }) => (
   <div
-    className={`flex flex-col items-center p-8 bg-white/5 rounded-lg ${className}`}
+    className={`flex flex-col items-center p-8 bg-white/5 rounded-lg  max-h-[353px] ${className}`}
   >
-    {type && <div className="text-white/70 text-sm mb-1">{type}</div>}
     <img
       src={imageUrl}
       alt={name}
@@ -47,6 +46,7 @@ export function PokemonEvolutionChain() {
   );
 
   const currentPokemon: PokemonData = tyradexQuery.data || {};
+  console.log(currentPokemon);
   const previousForms = currentPokemon?.evolution?.pre || [];
   const nextForms = currentPokemon?.evolution?.next || [];
   const formsData = currentPokemon?.formes || [];
@@ -70,6 +70,7 @@ export function PokemonEvolutionChain() {
     const baseName = (currentPokemon?.name?.en || pokemonName)
       .toLowerCase()
       .replace(/\s+/g, "-");
+    console.log(baseName);
 
     return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${baseName}${megaType}.png`;
   };
@@ -87,9 +88,7 @@ export function PokemonEvolutionChain() {
   };
 
   return (
-    <section className="flex flex-col items-center w-full p-4">
-      <h2 className="text-2xl font-bold text-white mb-6">Evolution Chain</h2>
-
+    <section className="flex flex-col items-center w-full p-24">
       <div className="flex flex-wrap items-center justify-center gap-4">
         {previousForms.length > 0 && (
           <div className="flex flex-col items-center">

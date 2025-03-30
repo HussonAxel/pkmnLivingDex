@@ -34,7 +34,7 @@ export function PokemonGenerationView({
   };
 
   return (
-    <div className="space-y-2 flex-1 mx-8">
+    <div className="flex-1 mx-8">
       <div>
         <PokemonGrid
           generationData={generationData}

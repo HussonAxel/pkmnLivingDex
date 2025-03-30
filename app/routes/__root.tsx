@@ -96,7 +96,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body className="min-h-screen flex flex-col">
         <Header />
 
-        <div className="flex h-screen pt-[80px]">
+        <div className="flex h-screen pt-[69px]">
           <main className="flex-1 overflow-auto">{children}</main>
         </div>
         <TanStackRouterDevtools position="bottom-right" />
