@@ -62,7 +62,7 @@ function PokemonDetail() {
           }}
         />
       </SideData>
-      <SideData dataName="POKEMON FORMS" dataPage="02 / 05">
+      <SideData dataName="FORMS" dataPage="02 / 05">
         <PokemonEvolutionChain />
       </SideData>
     </div>
