@@ -11,6 +11,7 @@ import {
   pokemonGmaxQueryOptions,
 } from "~/utils/pokemonList";
 import { PokemonData } from "~/utils/types/pokemonList.types";
+import { Link } from "@tanstack/react-router";
 
 const PokemonCard: React.FC<{
   name: string;
@@ -21,24 +22,31 @@ const PokemonCard: React.FC<{
   onImageError?: (e: React.SyntheticEvent<HTMLImageElement>) => void;
 }> = ({ name, imageUrl, condition, type, className = "", onImageError }) => (
   <>
-    <div
-      className={`flex flex-col items-center p-8 bg-white/5 rounded-lg  max-h-[353px] ${className}`}
+    <Link
+      to="/pokemons/$pokemonName"
+      params={{
+        pokemonName: translatePokemonName(name),
+      }}
     >
-      {type && <div className="text-white/70 text-sm mb-1">{type}</div>}
-      <img
-        src={imageUrl}
-        alt={name}
-        className="w-64 h-64 object-contain"
-        onError={onImageError}
-      />
-      <div className="text-white text-center mt-2">
-        {name
-          ? name.includes("Mega") || name.includes("Gigantamax")
-            ? name
-            : translatePokemonName(name) || name
-          : ""}
+      <div
+        className={`flex flex-col items-center p-8 bg-white/5 rounded-lg  max-h-[353px] ${className}`}
+      >
+        {type && <div className="text-white/70 text-sm mb-1">{type}</div>}
+        <img
+          src={imageUrl}
+          alt={name}
+          className="w-64 h-64 object-contain"
+          onError={onImageError}
+        />
+        <div className="text-white text-center mt-2">
+          {name
+            ? name.includes("Mega") || name.includes("Gigantamax")
+              ? name
+              : translatePokemonName(name) || name
+            : ""}
+        </div>
       </div>
-    </div>
+    </Link>
     {condition && (
       <p className="relative content-center h-fit m-auto">{condition}</p>
     )}
