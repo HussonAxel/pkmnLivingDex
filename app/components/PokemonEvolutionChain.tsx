@@ -89,13 +89,13 @@ export function PokemonEvolutionChain() {
 
   return (
     <section className="flex flex-col items-center w-full p-24">
-      <h3 className="text-2xl font-semibold text-white/80 mb-4 text-center">
+      <h3 className="text-3xl font-semibold text-white/80 mb-4 text-center">
         Evolution chain
       </h3>{" "}
-      <div className="flex flex-wrap items-center justify-center gap-6">
+      <div className="flex flex-wrap items-center justify-center gap-12">
         {previousForms.length > 0 && (
           <div className="flex flex-col items-center">
-            <div className="flex flex-wrap justify-center gap-6">
+            <div className="flex flex-wrap justify-center gap-12">
               {previousForms.map((form) => (
                 <PokemonCard
                   key={form.id}
@@ -123,7 +123,7 @@ export function PokemonEvolutionChain() {
 
         {nextForms.length > 0 && (
           <div className="flex flex-col items-center">
-            <div className="flex flex-wrap justify-center gap-6">
+            <div className="flex flex-wrap justify-center gap-12">
               {nextForms.map((form) => (
                 <PokemonCard
                   key={form.id}
@@ -138,10 +138,10 @@ export function PokemonEvolutionChain() {
       </div>
       {(formsData.length > 0 || megaForms.length > 0 || gmaxForms) && (
         <div className="mt-16 w-full">
-          <h3 className="text-2xl font-semibold text-white/80 mb-4 text-center">
+          <h3 className="text-3xl font-semibold text-white/80 mb-4 text-center">
             Special Forms
           </h3>
-          <div className="flex flex-wrap justify-center gap-6">
+          <div className="flex flex-wrap justify-center gap-12">
             {formsData.length > 0 &&
               formsData.map((form, index) => (
                 <PokemonCard
