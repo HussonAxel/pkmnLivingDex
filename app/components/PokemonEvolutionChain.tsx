@@ -1,6 +1,8 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { Currency } from "lucide-react";
 import { Route as PokemonRoute } from "~/routes/pokemons.$pokemonName";
 import { getOfficialArtworkUrl } from "~/utils/pokemonUtils";
+import { translatePokemonName } from "~/utils/pokemonUtils";
 
 interface dataSpeciesTypes {
   dataSpecies: string;
@@ -8,7 +10,6 @@ interface dataSpeciesTypes {
 
 export function PokemonEvolutionChain() {
   const { pokemonName } = PokemonRoute.useParams();
-  console.log(pokemonName);
 
   const evolutionChainQuery = useSuspenseQuery({
     queryKey: ["evolution-chain"],
@@ -26,21 +27,10 @@ export function PokemonEvolutionChain() {
   const gmaxForms = evolutionChainQuery.data.sprites.gmax;
   const sprite = evolutionChainQuery.data.pokedex_id;
 
-  if (previousForms) {
-    console.log("previousForms", previousForms);
-  }
-  if (nextForms) {
-    console.log("nextForms", nextForms);
-  }
-  if (formsData) {
-    console.log("alternatives forms", formsData);
-  }
-  if (megaForms) {
-    console.log("megaForms", megaForms);
-  }
-  if (gmaxForms) {
-    console.log("gmaxForms", gmaxForms);
-  }
+  const translatedName = translatePokemonName(pokemonName);
+  console.log(translatedName);
+
+  console.log(currentPokemon);
 
   return (
     <section className="flex flex-col items-center w-full p-4">
@@ -57,14 +47,16 @@ export function PokemonEvolutionChain() {
               {previousForms.map((form) => (
                 <div
                   key={form.id}
-                  className="flex flex-col items-center p-3 bg-white/5 rounded-lg"
+                  className="flex flex-col items-center p-8 bg-white/5 rounded-lg "
                 >
                   <img
                     src={getOfficialArtworkUrl(form.pokedex_id, false)}
-                    alt={form.name}
-                    className="w-40 h-40 object-contain"
+                    alt={translatePokemonName(form.name)}
+                    className="w-64 h-64 object-contain"
                   />
-                  <div className="text-white text-center mt-2">{form.name}</div>
+                  <div className="text-white text-center mt-2 text-md">
+                    {translatePokemonName(form.name)}
+                  </div>
                 </div>
               ))}
             </div>
@@ -74,11 +66,11 @@ export function PokemonEvolutionChain() {
         {/* Current Pokémon */}
         <div className="flex flex-col items-center mx-4">
           <h3 className="text-lg font-semibold text-white/80 mb-2">Current</h3>
-          <div className="flex flex-col items-center p-3 bg-white/10 rounded-lg border border-white/20">
+          <div className="flex flex-col items-center p-8 bg-white/10 rounded-lg  border border-white/20">
             <img
               src={getOfficialArtworkUrl(currentPokemon.pokedex_id, false)}
               alt={currentPokemon.name.en}
-              className="w-40 h-40 object-contain"
+              className="w-64 h-64 object-contain"
             />
             <div className="text-white font-bold text-center mt-2">
               {currentPokemon.name.en}
@@ -94,14 +86,16 @@ export function PokemonEvolutionChain() {
               {nextForms.map((form) => (
                 <div
                   key={form.id}
-                  className="flex flex-col items-center p-3 bg-white/5 rounded-lg"
+                  className="flex flex-col items-center p-8 bg-white/5 rounded-lg "
                 >
                   <img
                     src={getOfficialArtworkUrl(form.pokedex_id, false)}
-                    alt={form.name}
-                    className="w-40 h-40 object-contain"
+                    alt={translatePokemonName(form.name)}
+                    className="w-64 h-64 object-contain"
                   />
-                  <div className="text-white text-center mt-2">{form.name}</div>
+                  <div className="text-white text-center mt-2">
+                    {translatePokemonName(form.name)}
+                  </div>
                 </div>
               ))}
             </div>
@@ -122,7 +116,7 @@ export function PokemonEvolutionChain() {
               formsData.map((form, index) => (
                 <div
                   key={index}
-                  className="flex flex-col items-center p-3 bg-white/5 rounded-lg"
+                  className="flex flex-col items-center p-8 bg-white/5 rounded-lg "
                 >
                   <div className="text-white/70 text-sm mb-1">Form</div>
                   <img
@@ -134,7 +128,7 @@ export function PokemonEvolutionChain() {
                       )
                     }
                     alt={form.name?.en || `Alternative form ${index}`}
-                    className="w-40 h-40 object-contain"
+                    className="w-64 h-64 object-contain"
                   />
                   <div className="text-white text-center mt-2">
                     {form.name?.en || `Form ${index + 1}`}
@@ -148,7 +142,7 @@ export function PokemonEvolutionChain() {
               megaForms.map((form, index) => (
                 <div
                   key={`mega-${index}`}
-                  className="flex flex-col items-center p-3 bg-white/5 rounded-lg"
+                  className="flex flex-col items-center p-8 bg-white/5 rounded-lg "
                 >
                   <div className="text-white/70 text-sm mb-1">Mega</div>
                   <img
@@ -160,7 +154,7 @@ export function PokemonEvolutionChain() {
                       )
                     }
                     alt={form.name || `Mega form ${index}`}
-                    className="w-40 h-40 object-contain"
+                    className="w-64 h-64 object-contain"
                   />
                   <div className="text-white text-center mt-2">
                     {form.name || `Mega ${index + 1}`}
@@ -170,12 +164,12 @@ export function PokemonEvolutionChain() {
 
             {/* Gigantamax Forms */}
             {gmaxForms && (
-              <div className="flex flex-col items-center p-3 bg-white/5 rounded-lg">
+              <div className="flex flex-col items-center p-8 bg-white/5 rounded-lg ">
                 <div className="text-white/70 text-sm mb-1">G-Max</div>
                 <img
                   src={gmaxForms}
                   alt="Gigantamax form"
-                  className="w-40 h-40 object-contain"
+                  className="w-64 h-64 object-contain"
                 />
                 <div className="text-white text-center mt-2">Gigantamax</div>
               </div>

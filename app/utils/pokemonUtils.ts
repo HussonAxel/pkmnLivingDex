@@ -7,6 +7,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { Pokemon } from "~/types/pokemonTypes";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 export const getOfficialArtworkUrl = (pokemonId: number, isShiny: boolean) => {
   const baseUrl =
@@ -84,4 +85,16 @@ export const generationToRegion = {
 
 export const formatPokedexID = (id: number): string => {
   return id.toString().padStart(4, "0");
+};
+
+export const translatePokemonName = (pokemonName: string): string => {
+  const translatePokemonNameQuery = useSuspenseQuery({
+    queryKey: ["pokemonName-translation", pokemonName],
+    queryFn: () =>
+      fetch(`https://tyradex.vercel.app/api/v1/pokemon/${pokemonName}`).then(
+        (res) => res.json(),
+      ),
+  });
+
+  return translatePokemonNameQuery.data?.name.en || pokemonName;
 };
