@@ -4,16 +4,13 @@ import React from "react";
 import {
   getOfficialArtworkUrl,
   formatPokemonNameForUrl,
+  translatePokemonName,
 } from "~/utils/pokemonUtils";
 import {
   pokemonTyradexQueryOptions,
   pokemonGmaxQueryOptions,
 } from "~/utils/pokemonList";
-import {
-  PokemonForm,
-  MegaForm,
-  PokemonData,
-} from "~/utils/types/pokemonList.types";
+import { PokemonData } from "~/utils/types/pokemonList.types";
 
 const PokemonCard: React.FC<{
   name: string;
@@ -23,18 +20,29 @@ const PokemonCard: React.FC<{
   className?: string;
   onImageError?: (e: React.SyntheticEvent<HTMLImageElement>) => void;
 }> = ({ name, imageUrl, condition, type, className = "", onImageError }) => (
-  <div
-    className={`flex flex-col items-center p-8 bg-white/5 rounded-lg  max-h-[353px] ${className}`}
-  >
-    <img
-      src={imageUrl}
-      alt={name}
-      className="w-64 h-64 object-contain"
-      onError={onImageError}
-    />
-    <div className="text-white text-center mt-2">{name}</div>
-    {condition && <p className="relative">{condition}</p>}
-  </div>
+  <>
+    <div
+      className={`flex flex-col items-center p-8 bg-white/5 rounded-lg  max-h-[353px] ${className}`}
+    >
+      {type && <div className="text-white/70 text-sm mb-1">{type}</div>}
+      <img
+        src={imageUrl}
+        alt={name}
+        className="w-64 h-64 object-contain"
+        onError={onImageError}
+      />
+      <div className="text-white text-center mt-2">
+        {name
+          ? name.includes("Mega") || name.includes("Gigantamax")
+            ? name
+            : translatePokemonName(name) || name
+          : ""}
+      </div>
+    </div>
+    {condition && (
+      <p className="relative content-center h-fit m-auto">{condition}</p>
+    )}
+  </>
 );
 
 export function PokemonEvolutionChain() {
