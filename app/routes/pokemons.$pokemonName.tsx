@@ -6,14 +6,14 @@ import {
   pokemonSpeciesQueryOptions,
 } from "~/utils/pokemonList";
 import { PokemonBioData } from "~/components/PokemonBiodata";
-import { generationToRegion } from "~/utils/pokemonUtils";
+import { generationToRegion, formatPokedexID } from "~/utils/pokemonUtils";
 import { SideData } from "~/components/ui/SideData";
 import { PokemonEvolutionChain } from "~/components/PokemonEvolutionChain";
 
 export const Route = createFileRoute("/pokemons/$pokemonName")({
   loader: async ({ params: { pokemonName }, context }) => {
     await context.queryClient.ensureQueryData(
-      pokemonDetailsQueryOptions(pokemonName)
+      pokemonDetailsQueryOptions(pokemonName),
     );
     return { title: pokemonName };
   },
@@ -28,7 +28,7 @@ function PokemonDetail() {
   const { pokemonName } = Route.useParams();
   const { data } = useSuspenseQuery(pokemonDetailsQueryOptions(pokemonName));
   const { data: dataSpecies } = useSuspenseQuery(
-    pokemonSpeciesQueryOptions(pokemonName)
+    pokemonSpeciesQueryOptions(pokemonName),
   );
 
   const artworkUrl = data.sprites.other["official-artwork"].front_default;
@@ -53,17 +53,17 @@ function PokemonDetail() {
           desc={genus}
           picture={artworkUrl ?? ""}
           pokemonBiodata={{
-            species: genus,
-            height: `${data.height / 10}m`,
-            weight: `${data.weight / 10}kg`,
-            gender: genderRatio,
             region: `${region} - ${formattedGeneration}`,
-            abilities: data.abilities,
+            species: genus,
+            gender: genderRatio,
+            weight: `${data.weight / 10}kg`,
+            ID: `#${formatPokedexID(data.id)}`,
+            height: `${data.height / 10}m`,
           }}
         />
       </SideData>
       <SideData dataName="EVOLUTION CHAIN & FORMS" dataPage="02 / 05">
-        <PokemonEvolutionChain dataSpecies={dataSpecies.evolution_chain.url} />
+        <PokemonEvolutionChain />
       </SideData>
     </div>
   );

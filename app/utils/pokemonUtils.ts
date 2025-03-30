@@ -51,7 +51,7 @@ export const formatPokemonNameForUrl = (name: string): string => {
 
 export const hasPokemonRegionalVariant = (pokemon: Pokemon): boolean => {
   return getGenerationVariantsForm.some((variant) =>
-    pokemon.name.en.includes(variant)
+    pokemon.name.en.includes(variant),
   );
 };
 
@@ -80,4 +80,8 @@ export const generationToRegion = {
   "generation-vii": "Alola",
   "generation-viii": "Galar",
   "generation-ix": "Paldea",
+};
+
+export const formatPokedexID = (id: number): string => {
+  return id.toString().padStart(4, "0");
 };

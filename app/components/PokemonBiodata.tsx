@@ -8,18 +8,8 @@ interface PokemonBioDataTypes {
     weight: string;
     gender: string;
     region: string;
-    abilities: Ability[];
+    ID: string;
   };
-}
-export interface Ability {
-  ability: Ability2;
-  is_hidden: boolean;
-  slot: number;
-}
-
-export interface Ability2 {
-  name: string;
-  url: string;
 }
 
 export function PokemonBioData(props: PokemonBioDataTypes) {
