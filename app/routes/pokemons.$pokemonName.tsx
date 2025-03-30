@@ -15,63 +15,55 @@ export const Route = createFileRoute("/pokemons/$pokemonName")({
     await context.queryClient.ensureQueryData(
       pokemonDetailsQueryOptions(pokemonName)
     );
-
-    return {
-      title: pokemonName,
-    };
+    return { title: pokemonName };
   },
   head: ({ loaderData }) => ({
     meta: loaderData ? [{ title: loaderData.title }] : undefined,
   }),
   errorComponent: NotFound,
-  component: pokemonDeepComponent,
+  component: PokemonDetail,
 });
 
-function pokemonDeepComponent() {
+function PokemonDetail() {
   const { pokemonName } = Route.useParams();
-  const pokemonQuery = useSuspenseQuery(
-    pokemonDetailsQueryOptions(pokemonName)
-  );
-  const pokemonSpeciesQuery = useSuspenseQuery(
+  const { data } = useSuspenseQuery(pokemonDetailsQueryOptions(pokemonName));
+  const { data: dataSpecies } = useSuspenseQuery(
     pokemonSpeciesQueryOptions(pokemonName)
   );
-  const data = pokemonQuery.data;
-  const dataSpecies = pokemonSpeciesQuery.data;
 
   const artworkUrl = data.sprites.other["official-artwork"].front_default;
+  const genus =
+    dataSpecies.genera?.find((entry) => entry?.language?.name === "en")
+      ?.genus || "";
+  const generationName = dataSpecies.generation.name;
+  const region =
+    generationToRegion[generationName as keyof typeof generationToRegion];
+  const formattedGeneration = generationName.replace("generation-", "GEN ");
+
+  const genderRatio =
+    dataSpecies.gender_rate === -1
+      ? "Genderless"
+      : `${(dataSpecies.gender_rate / 8) * 100}% ♀ - ${100 - (dataSpecies.gender_rate / 8) * 100}% ♂`;
 
   return (
     <div className="space-y-2">
-      <SideData dataName={"BIODATA"} dataPage="01 / 05">
+      <SideData dataName="BIODATA" dataPage="01 / 05">
         <PokemonBioData
           name={pokemonName}
-          desc={
-            dataSpecies.genera?.find((entry) => entry?.language?.name === "en")
-              ?.genus || ""
-          }
+          desc={genus}
           picture={artworkUrl ?? ""}
           pokemonBiodata={{
-            species:
-              dataSpecies.genera?.find(
-                (entry) => entry?.language?.name === "en"
-              )?.genus || "",
+            species: genus,
             height: `${data.height / 10}m`,
             weight: `${data.weight / 10}kg`,
-            gender:
-              dataSpecies.gender_rate === -1
-                ? "Genderless"
-                : `${(dataSpecies.gender_rate / 8) * 100}% ♀ - ${100 - (dataSpecies.gender_rate / 8) * 100}% ♂`,
-            region: `${
-              generationToRegion[
-                dataSpecies.generation.name as keyof typeof generationToRegion
-              ]
-            } - ${dataSpecies.generation.name.replace("generation-", "GEN ")}`,
+            gender: genderRatio,
+            region: `${region} - ${formattedGeneration}`,
             abilities: data.abilities,
           }}
         />
       </SideData>
       <SideData dataName="EVOLUTION CHAIN & FORMS" dataPage="02 / 05">
-        <PokemonEvolutionChain />
+        <PokemonEvolutionChain dataSpecies={dataSpecies.evolution_chain.url} />
       </SideData>
     </div>
   );
