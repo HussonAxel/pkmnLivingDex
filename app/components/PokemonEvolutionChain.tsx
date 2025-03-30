@@ -1,36 +1,82 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Currency } from "lucide-react";
 import { Route as PokemonRoute } from "~/routes/pokemons.$pokemonName";
-import { getOfficialArtworkUrl } from "~/utils/pokemonUtils";
-import { translatePokemonName } from "~/utils/pokemonUtils";
-
-interface dataSpeciesTypes {
-  dataSpecies: string;
-}
+import {
+  getOfficialArtworkUrl,
+  translatePokemonName,
+  formatPokemonNameForUrl,
+} from "~/utils/pokemonUtils";
 
 export function PokemonEvolutionChain() {
   const { pokemonName } = PokemonRoute.useParams();
 
-  const evolutionChainQuery = useSuspenseQuery({
-    queryKey: ["evolution-chain"],
+  // Fetch Pokémon data from Tyradex API
+  const tyradexQuery = useSuspenseQuery({
+    queryKey: ["pokemon-tyradex", pokemonName],
     queryFn: () =>
       fetch(`https://tyradex.vercel.app/api/v1/pokemon/${pokemonName}`).then(
         (res) => res.json(),
       ),
   });
 
-  const currentPokemon = evolutionChainQuery.data;
-  const previousForms = evolutionChainQuery.data.evolution.pre;
-  const nextForms = evolutionChainQuery.data.evolution.next;
-  const formsData = evolutionChainQuery.data.formes;
-  const megaForms = evolutionChainQuery.data.evolution.mega;
-  const gmaxForms = evolutionChainQuery.data.sprites.gmax;
-  const sprite = evolutionChainQuery.data.pokedex_id;
+  // Extract data from Tyradex response with safety checks
+  const currentPokemon = tyradexQuery.data || {};
+  const previousForms = currentPokemon?.evolution?.pre || [];
+  const nextForms = currentPokemon?.evolution?.next || [];
+  const formsData = currentPokemon?.formes || [];
+  const megaForms = currentPokemon?.evolution?.mega || [];
+  const gmaxForms = currentPokemon?.sprites?.gmax;
 
-  const translatedName = translatePokemonName(pokemonName);
-  console.log(translatedName);
+  // Fetch G-Max form data if it exists and we don't have a proper image
+  const gmaxQuery = useSuspenseQuery({
+    queryKey: ["pokemon-gmax", pokemonName],
+    queryFn: async () => {
+      try {
+        const formattedName = `${pokemonName.toLowerCase().replace(/\s+/g, "-")}-gmax`;
+        const response = await fetch(
+          `https://pokeapi.co/api/v2/pokemon/${formattedName}`,
+        );
 
-  console.log(currentPokemon);
+        if (!response.ok) {
+          return { success: false };
+        }
+
+        const data = await response.json();
+        return {
+          success: true,
+          image:
+            data.sprites.other?.["official-artwork"]?.front_default ||
+            data.sprites.other?.home?.front_default ||
+            data.sprites.front_default,
+          sprites: data.sprites,
+        };
+      } catch (error) {
+        console.error("Error fetching G-Max form:", error);
+        return { success: false };
+      }
+    },
+    enabled: !!gmaxForms, // Only run this query if gmaxForms exists from the Tyradex API
+  });
+
+  // Function to get mega form image
+  const getMegaFormUrl = (formIndex) => {
+    // Determine if it's a specific mega form (X/Y)
+    const megaForm = megaForms[formIndex] || {};
+
+    // Format the mega reference name
+    const megaType = megaForm.name?.includes("X")
+      ? "-mega-x"
+      : megaForm.name?.includes("Y")
+        ? "-mega-y"
+        : "-mega";
+
+    // Construct the base URL from the PokeAPI format
+    const baseName = (currentPokemon?.name?.en || pokemonName)
+      .toLowerCase()
+      .replace(/\s+/g, "-");
+
+    // Return the constructed URL to the official artwork for the mega form
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${baseName}${megaType}.png`;
+  };
 
   return (
     <section className="flex flex-col items-center w-full p-4">
@@ -51,12 +97,13 @@ export function PokemonEvolutionChain() {
                 >
                   <img
                     src={getOfficialArtworkUrl(form.pokedex_id, false)}
-                    alt={translatePokemonName(form.name)}
+                    alt={form.name}
                     className="w-64 h-64 object-contain"
                   />
                   <div className="text-white text-center mt-2 text-md">
-                    {translatePokemonName(form.name)}
+                    {form.name}
                   </div>
+                  <p className="relative">{form.condition}</p>
                 </div>
               ))}
             </div>
@@ -66,7 +113,7 @@ export function PokemonEvolutionChain() {
         {/* Current Pokémon */}
         <div className="flex flex-col items-center mx-4">
           <h3 className="text-lg font-semibold text-white/80 mb-2">Current</h3>
-          <div className="flex flex-col items-center p-8 bg-white/10 rounded-lg  border border-white/20">
+          <div className="flex flex-col items-center p-8 bg-white/10 rounded-lg border border-white/20">
             <img
               src={getOfficialArtworkUrl(currentPokemon.pokedex_id, false)}
               alt={currentPokemon.name.en}
@@ -86,16 +133,14 @@ export function PokemonEvolutionChain() {
               {nextForms.map((form) => (
                 <div
                   key={form.id}
-                  className="flex flex-col items-center p-8 bg-white/5 rounded-lg "
+                  className="flex flex-col items-center p-8 bg-white/5 rounded-lg"
                 >
                   <img
                     src={getOfficialArtworkUrl(form.pokedex_id, false)}
-                    alt={translatePokemonName(form.name)}
+                    alt={form.name}
                     className="w-64 h-64 object-contain"
                   />
-                  <div className="text-white text-center mt-2">
-                    {translatePokemonName(form.name)}
-                  </div>
+                  <div className="text-white text-center mt-2">{form.name}</div>
                 </div>
               ))}
             </div>
@@ -116,17 +161,13 @@ export function PokemonEvolutionChain() {
               formsData.map((form, index) => (
                 <div
                   key={index}
-                  className="flex flex-col items-center p-8 bg-white/5 rounded-lg "
+                  className="flex flex-col items-center p-8 bg-white/5 rounded-lg"
                 >
                   <div className="text-white/70 text-sm mb-1">Form</div>
                   <img
-                    src={
-                      form.sprites?.regular ||
-                      getOfficialArtworkUrl(
-                        form.pokedex_id || currentPokemon.pokedex_id,
-                        false,
-                      )
-                    }
+                    src={`/assets/static/regionalForms/${formatPokemonNameForUrl(
+                      form.name?.en || `Form ${index + 1}`,
+                    )}.png`}
                     alt={form.name?.en || `Alternative form ${index}`}
                     className="w-64 h-64 object-contain"
                   />
@@ -142,36 +183,52 @@ export function PokemonEvolutionChain() {
               megaForms.map((form, index) => (
                 <div
                   key={`mega-${index}`}
-                  className="flex flex-col items-center p-8 bg-white/5 rounded-lg "
+                  className="flex flex-col items-center p-8 bg-white/5 rounded-lg"
                 >
                   <div className="text-white/70 text-sm mb-1">Mega</div>
                   <img
-                    src={
-                      form.sprites?.regular ||
-                      getOfficialArtworkUrl(
-                        form.pokedex_id || currentPokemon.pokedex_id,
-                        false,
-                      )
+                    src={form.sprites?.regular || getMegaFormUrl(index)}
+                    alt={
+                      form.name ||
+                      `Mega ${currentPokemon?.name?.en || pokemonName}`
                     }
-                    alt={form.name || `Mega form ${index}`}
                     className="w-64 h-64 object-contain"
+                    onError={(e) => {
+                      // Fallback if the constructed URL fails
+                      e.target.src = getOfficialArtworkUrl(
+                        form.pokedex_id || currentPokemon?.pokedex_id,
+                        false,
+                      );
+                    }}
                   />
                   <div className="text-white text-center mt-2">
-                    {form.name || `Mega ${index + 1}`}
+                    {form.name ||
+                      `Mega ${currentPokemon?.name?.en || pokemonName}`}
                   </div>
                 </div>
               ))}
 
             {/* Gigantamax Forms */}
             {gmaxForms && (
-              <div className="flex flex-col items-center p-8 bg-white/5 rounded-lg ">
+              <div className="flex flex-col items-center p-8 bg-white/5 rounded-lg">
                 <div className="text-white/70 text-sm mb-1">G-Max</div>
                 <img
-                  src={gmaxForms}
-                  alt="Gigantamax form"
+                  src={
+                    gmaxQuery.data?.success ? gmaxQuery.data.image : gmaxForms
+                  }
+                  alt={`Gigantamax ${currentPokemon?.name?.en || pokemonName}`}
                   className="w-64 h-64 object-contain"
+                  onError={(e) => {
+                    // Fallback if the G-Max image fails to load
+                    e.target.src = getOfficialArtworkUrl(
+                      currentPokemon?.pokedex_id,
+                      false,
+                    );
+                  }}
                 />
-                <div className="text-white text-center mt-2">Gigantamax</div>
+                <div className="text-white text-center mt-2">
+                  Gigantamax {currentPokemon?.name?.en || pokemonName}
+                </div>
               </div>
             )}
           </div>
