@@ -169,28 +169,6 @@ export const pokemonQueryOptions = () =>
     queryFn: () => fetchPokemonList(),
   });
 
-export const fetchPokemon = createServerFn({ method: "GET" })
-  .validator((d: string) => d)
-  .handler(async ({ data }) => {
-    console.info("Fetching Pokemon Data");
-    const pokemon = await axios
-      .get<PokemonListType>(`${pokeAPIRootURL}pokemon/${data}`)
-      .then((response) => response.data)
-      .catch((err) => {
-        console.error(err);
-        if (err.status === 404) {
-          throw notFound();
-        }
-        throw err;
-      });
-    return pokemon;
-  });
-
-export const pokemonListQueryOptions = (pokemonName: string) =>
-  queryOptions({
-    queryKey: ["pokemon", pokemonName],
-    queryFn: () => fetchPokemon({ data: pokemonName }),
-  });
 
 export const fetchPokemonDetails = createServerFn({ method: "GET" })
   .validator((name: string) => name)

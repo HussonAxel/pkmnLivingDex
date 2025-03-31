@@ -16,11 +16,10 @@ import { Link } from "@tanstack/react-router";
 const PokemonCard: React.FC<{
   name: string;
   imageUrl: string;
-  condition?: string;
   type?: string;
   className?: string;
   onImageError?: (e: React.SyntheticEvent<HTMLImageElement>) => void;
-}> = ({ name, imageUrl, condition, type, className = "", onImageError }) => (
+}> = ({ name, imageUrl, type, className = "", onImageError }) => (
   <>
     <Link
       to="/pokemon/$pokemonName"
@@ -47,9 +46,6 @@ const PokemonCard: React.FC<{
         </div>
       </div>
     </Link>
-    {condition && (
-      <p className="relative content-center h-fit m-auto">{condition}</p>
-    )}
   </>
 );
 
@@ -117,7 +113,6 @@ export function PokemonEvolutionChain() {
                   key={form.id}
                   name={form.name || ""}
                   imageUrl={getOfficialArtworkUrl(form.pokedex_id || 0, false)}
-                  condition={form.condition}
                   onImageError={(e) => handleImageError(e, form.pokedex_id)}
                 />
               ))}
