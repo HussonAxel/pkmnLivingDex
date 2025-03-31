@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Route as PokemonRoute } from "~/routes/pokemons.$pokemonName";
+import { Route as PokemonRoute } from "~/routes/pokemon.$pokemonName";
 import React from "react";
 import {
   getOfficialArtworkUrl,
@@ -23,7 +23,7 @@ const PokemonCard: React.FC<{
 }> = ({ name, imageUrl, condition, type, className = "", onImageError }) => (
   <>
     <Link
-      to="/pokemons/$pokemonName"
+      to="/pokemon/$pokemonName"
       params={{
         pokemonName: translatePokemonName(name),
       }}

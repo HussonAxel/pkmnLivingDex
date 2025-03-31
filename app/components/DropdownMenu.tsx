@@ -1,11 +1,3 @@
-import {
-  PlusCircle,
-  Sparkles,
-  Info,
-  Target,
-  Trash2,
-  Share,
-} from "lucide-react";
 import { useRef, useEffect } from "react";
 
 export function PokemonCardMenu({
@@ -26,10 +18,10 @@ export function PokemonCardMenu({
       }
     }
     if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("click", handleClickOutside);
     }
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, [isOpen, onClose]);
 

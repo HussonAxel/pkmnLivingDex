@@ -31,7 +31,7 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
 
   return (
     <Link
-      to="/pokemons/$pokemonName"
+      to="/pokemon/$pokemonName"
       params={{
         pokemonName: formattedPokemonName,
       }}

@@ -10,7 +10,7 @@ import { generationToRegion, formatPokedexID } from "~/utils/pokemonUtils";
 import { SideData } from "~/components/ui/SideData";
 import { PokemonEvolutionChain } from "~/components/PokemonEvolutionChain";
 
-export const Route = createFileRoute("/pokemons/$pokemonName")({
+export const Route = createFileRoute("/pokemon/$pokemonName")({
   loader: async ({ params: { pokemonName }, context }) => {
     await context.queryClient.ensureQueryData(
       pokemonDetailsQueryOptions(pokemonName)

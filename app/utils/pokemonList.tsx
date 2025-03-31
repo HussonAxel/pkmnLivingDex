@@ -237,8 +237,11 @@ export const fetchPokemonSpecies = createServerFn({ method: "GET" })
   .validator((name: string) => name)
   .handler(async ({ data: name }) => {
     console.info(`Fetching ${name} species data...`);
+    const formattedName = name.split("-")[0];
     const species = await axios
-      .get<PokemonSpeciesType>(`${pokeAPIRootURL}pokemon-species/${name}`)
+      .get<PokemonSpeciesType>(
+        `${pokeAPIRootURL}pokemon-species/${formattedName}`
+      )
       .then((r) => r.data)
       .catch((err) => {
         console.error(err);
