@@ -10,7 +10,7 @@ import { Pokemon } from "~/types/pokemonTypes";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 export const getOfficialArtworkUrl = (pokemonId: number, isShiny: boolean) => {
-  const baseUrl = "/public/assets/static/sprites";
+  const baseUrl = "/assets/static/sprites";
 
   return `${baseUrl}${isShiny ? "/shiny" : "/base"}/${pokemonId}.webp`;
 };
