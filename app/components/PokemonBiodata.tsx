@@ -8,17 +8,14 @@ interface PokemonBioDataTypes {
     weight: string;
     gender: string;
     region: string;
-    ID: string;
   };
+  ID: string;
 }
 
 export function PokemonBioData(props: PokemonBioDataTypes) {
   return (
     <section className="flex-grow grid grid-cols-1 md:grid-cols-3 gap-8 p-24 backdrop-blur-sm">
-      <div className="flex flex-col items-center justify-center space-y-4">
-        <p className="text-center uppercase font-anton text-2xl md:text-3xl text-white/90 tracking-wider">
-          {props.name}
-        </p>
+      <div className="flex flex-col items-center justify-center p-8 bg-white/5 rounded-lg">
         <div className="relative group">
           <img
             src={props.picture}
@@ -26,6 +23,10 @@ export function PokemonBioData(props: PokemonBioDataTypes) {
             className="w-64 h-64 object-contain transition-transform duration-300"
           />
         </div>
+        <p className="text-center uppercase font-anton text-2xl md:text-3xl text-white/90 tracking-wider">
+          {props.name}
+        </p>
+        <span>{props.ID}</span>
       </div>
       <div className="grid grid-cols-2 gap-6 md:col-span-2">
         {Object.entries(props.pokemonBiodata).map(([key, value]) => (

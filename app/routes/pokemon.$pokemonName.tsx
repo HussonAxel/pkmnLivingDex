@@ -50,6 +50,7 @@ function PokemonDetail() {
       <SideData dataName="BIODATA" dataPage="01 / 05">
         <PokemonBioData
           name={pokemonName}
+          ID={`#${formatPokedexID(data.id)}`}
           desc={genus}
           picture={artworkUrl ?? ""}
           pokemonBiodata={{
@@ -57,7 +58,6 @@ function PokemonDetail() {
             species: genus,
             gender: genderRatio,
             weight: `${data.weight / 10}kg`,
-            ID: `#${formatPokedexID(data.id)}`,
             height: `${data.height / 10}m`,
           }}
         />
