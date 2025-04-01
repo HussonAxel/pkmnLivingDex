@@ -51,14 +51,28 @@ function PokemonDetail() {
         <PokemonBioData
           name={pokemonName}
           ID={`#${formatPokedexID(data.id)}`}
-          desc={genus}
+          description={
+            dataSpecies.flavor_text_entries
+              .find((entry) => entry.language.name === "en")
+              ?.flavor_text.replace(/[\n\r]/g, " ") || ""
+          }
+          genus={genus}
           picture={artworkUrl ?? ""}
           pokemonBiodata={{
             region: `${region} - ${formattedGeneration}`,
             species: genus,
             gender: genderRatio,
-            weight: `${data.weight / 10}kg`,
-            height: `${data.height / 10}m`,
+            weight: `${data.weight / 10}kg - ${Math.round(
+              (data.weight / 10) * 2.20462
+            )} pounds`,
+            height: `${data.height / 10}m - ${Math.round(
+              (data.height / 10) * 3.2808
+            )} ft`,
+            abilities: data.abilities.map((ability) =>
+              ability.is_hidden
+                ? `${ability.ability.name} (Hidden)`
+                : ability.ability.name
+            ),
           }}
         />
       </SideData>
