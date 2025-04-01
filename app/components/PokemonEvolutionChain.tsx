@@ -8,7 +8,6 @@ import {
 } from "~/utils/pokemonUtils";
 import {
   pokemonTyradexQueryOptions,
-  pokemonGmaxQueryOptions,
 } from "~/utils/pokemonList";
 import { PokemonData } from "~/utils/types/pokemonList.types";
 import { Link } from "@tanstack/react-router";
@@ -38,11 +37,7 @@ const PokemonCard: React.FC<{
           onError={onImageError}
         />
         <div className="text-white text-center mt-2">
-          {name
-            ? name.includes("Mega") || name.includes("Gigantamax")
-              ? name
-              : translatePokemonName(name) || name
-            : ""}
+          {translatePokemonName(name)}
         </div>
       </div>
     </Link>
@@ -52,42 +47,15 @@ const PokemonCard: React.FC<{
 export function PokemonEvolutionChain() {
   const { pokemonName } = PokemonRoute.useParams();
 
-  // Use the extracted query options from pokemonList.tsx
   const tyradexQuery = useSuspenseQuery(
     pokemonTyradexQueryOptions(pokemonName)
   );
 
   const currentPokemon: PokemonData = tyradexQuery.data || {};
-  console.log(currentPokemon);
   const previousForms = currentPokemon?.evolution?.pre || [];
   const nextForms = currentPokemon?.evolution?.next || [];
   const formsData = currentPokemon?.formes || [];
-  const megaForms = currentPokemon?.evolution?.mega || [];
-  const gmaxForms = currentPokemon?.sprites?.gmax;
 
-  // Use the extracted Gmax query options
-  const gmaxQuery = useSuspenseQuery(
-    pokemonGmaxQueryOptions(pokemonName, !!gmaxForms)
-  );
-
-  const getMegaFormUrl = (formIndex: number): string => {
-    const megaForm = megaForms[formIndex] || {};
-
-    const megaType = megaForm.name?.includes("X")
-      ? "-mega-x"
-      : megaForm.name?.includes("Y")
-        ? "-mega-y"
-        : "-mega";
-
-    const baseName = (currentPokemon?.name?.en || pokemonName)
-      .toLowerCase()
-      .replace(/\s+/g, "-");
-    console.log(baseName);
-
-    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${baseName}${megaType}.png`;
-  };
-
-  // Handle image error by providing a fallback
   const handleImageError = (
     e: React.SyntheticEvent<HTMLImageElement>,
     fallbackId?: number
@@ -103,7 +71,7 @@ export function PokemonEvolutionChain() {
     <section className="flex flex-col items-center p-24 min-w-[1600px] max-w-[1600px] w-full">
       <h3 className="text-3xl font-semibold text-white/80 mb-4 text-center">
         Evolution chain
-      </h3>{" "}
+      </h3>
       <div className="flex flex-wrap items-center justify-center gap-12">
         {previousForms.length > 0 && (
           <div className="flex flex-col items-center">
@@ -147,7 +115,7 @@ export function PokemonEvolutionChain() {
           </div>
         )}
       </div>
-      {(formsData.length > 0 || megaForms.length > 0 || gmaxForms) && (
+      {(formsData.length > 0 ) && (
         <div className="mt-16 w-full">
           <h3 className="text-3xl font-semibold text-white/80 mb-4 text-center">
             Special Forms
@@ -164,40 +132,6 @@ export function PokemonEvolutionChain() {
                   )}.png`}
                 />
               ))}
-
-            {megaForms.length > 0 &&
-              megaForms.map((form, index) => (
-                <PokemonCard
-                  key={`mega-${index}`}
-                  type="Mega"
-                  name={
-                    form.name ||
-                    `Mega ${currentPokemon?.name?.en || pokemonName}`
-                  }
-                  imageUrl={form.sprites?.regular || getMegaFormUrl(index)}
-                  onImageError={(e) =>
-                    handleImageError(
-                      e,
-                      form.pokedex_id || currentPokemon?.pokedex_id
-                    )
-                  }
-                />
-              ))}
-
-            {gmaxForms && (
-              <PokemonCard
-                type="G-Max"
-                name={`Gigantamax ${currentPokemon?.name?.en || pokemonName}`}
-                imageUrl={
-                  gmaxQuery.data?.success
-                    ? gmaxQuery.data.image || ""
-                    : gmaxForms
-                }
-                onImageError={(e) =>
-                  handleImageError(e, currentPokemon?.pokedex_id)
-                }
-              />
-            )}
           </div>
         </div>
       )}

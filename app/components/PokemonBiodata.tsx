@@ -1,10 +1,9 @@
-import React from "react"; // Import React if not already globally available
+import { PokemonType } from "./PokemonCard";
 
 interface PokemonBioDataTypes {
   name: string;
-  // genus: string; // Removed if not used directly here
   picture: string;
-  description: string; // Description is now a top-level prop
+  description: string;
   pokemonBiodata: {
     species: string;
     height: string;

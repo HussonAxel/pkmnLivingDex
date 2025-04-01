@@ -17,7 +17,6 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
 
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Check if the pokemon is a regional variant
   const isRegionalVariant = getGenerationVariantsForm.some((region) =>
     pokemon.name.en.toLowerCase().includes(region.toLowerCase())
   );
@@ -73,8 +72,9 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
             <h2 className="font-bold text-xl xl:text-2xl truncate w-full ">
               {pokemon.name[viewSettings.language]}
             </h2>
-            <span className="opacity-60 text-sm">{pokemon.category}</span>
-
+            <span className="font-worksans text-lg text-white/70 tracking-wide">
+              #{pokemon.pokedex_id}
+            </span>
             <div
               className={`flex gap-2 mt-1 ${viewSettings.isGridView ? "justify-center" : ""}`}
             >
@@ -93,7 +93,7 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
   );
 }
 
-function PokemonType({ type }: { type: { name: string } }) {
+export function PokemonType({ type }: { type: { name: string } }) {
   return (
     <div className={`text-md rounded-full p-2 ${type.name}`} title={type.name}>
       <img
