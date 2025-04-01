@@ -10,10 +10,9 @@ import { Pokemon } from "~/types/pokemonTypes";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 export const getOfficialArtworkUrl = (pokemonId: number, isShiny: boolean) => {
-  const baseUrl =
-    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork";
+  const baseUrl = "/public/assets/static/sprites";
 
-  return `${baseUrl}${isShiny ? "/shiny" : ""}/${pokemonId}.png`;
+  return `${baseUrl}${isShiny ? "/shiny" : "/base"}/${pokemonId}.webp`;
 };
 
 export const getGenerationVariantsForm = ["Paldea", "Alola", "Hisui", "Galar"];
@@ -52,7 +51,7 @@ export const formatPokemonNameForUrl = (name: string): string => {
 
 export const hasPokemonRegionalVariant = (pokemon: Pokemon): boolean => {
   return getGenerationVariantsForm.some((variant) =>
-    pokemon.name.en.includes(variant)
+    pokemon.name.en.includes(variant),
   );
 };
 
@@ -89,18 +88,18 @@ export const formatPokedexID = (id: number): string => {
 
 export const translatePokemonName = (pokemonName: string): string => {
   try {
-    const normalizeString = (str: string) => {  
-      return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const normalizeString = (str: string) => {
+      return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     };
-    
+
     const normalizedPokemonName = normalizeString(pokemonName);
-    
+
     const translatePokemonNameQuery = useSuspenseQuery({
       queryKey: ["pokemonName-translation", pokemonName],
       queryFn: () =>
-      fetch(`https://tyradex.vercel.app/api/v1/pokemon/${normalizedPokemonName}`).then(
-        (res) => res.json()
-      ),
+        fetch(
+          `https://tyradex.vercel.app/api/v1/pokemon/${normalizedPokemonName}`,
+        ).then((res) => res.json()),
     });
 
     return translatePokemonNameQuery.data?.name?.en || pokemonName;

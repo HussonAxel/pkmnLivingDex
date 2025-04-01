@@ -18,7 +18,7 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const isRegionalVariant = getGenerationVariantsForm.some((region) =>
-    pokemon.name.en.toLowerCase().includes(region.toLowerCase())
+    pokemon.name.en.toLowerCase().includes(region.toLowerCase()),
   );
 
   const getSpriteUrl = () => {

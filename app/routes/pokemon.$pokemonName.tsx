@@ -9,11 +9,12 @@ import { PokemonBioData } from "~/components/PokemonBiodata";
 import { generationToRegion, formatPokedexID } from "~/utils/pokemonUtils";
 import { SideData } from "~/components/ui/SideData";
 import { PokemonEvolutionChain } from "~/components/PokemonEvolutionChain";
+import { getOfficialArtworkUrl } from "~/utils/pokemonUtils";
 
 export const Route = createFileRoute("/pokemon/$pokemonName")({
   loader: async ({ params: { pokemonName }, context }) => {
     await context.queryClient.ensureQueryData(
-      pokemonDetailsQueryOptions(pokemonName)
+      pokemonDetailsQueryOptions(pokemonName),
     );
     return { title: pokemonName };
   },
@@ -28,7 +29,7 @@ function PokemonDetail() {
   const { pokemonName } = Route.useParams();
   const { data } = useSuspenseQuery(pokemonDetailsQueryOptions(pokemonName));
   const { data: dataSpecies } = useSuspenseQuery(
-    pokemonSpeciesQueryOptions(pokemonName)
+    pokemonSpeciesQueryOptions(pokemonName),
   );
 
   const artworkUrl = data.sprites.other["official-artwork"].front_default;
@@ -38,7 +39,9 @@ function PokemonDetail() {
   const generationName = dataSpecies.generation.name;
   const region =
     generationToRegion[generationName as keyof typeof generationToRegion];
-  const formattedGeneration = generationName.replace("generation-", "GEN ").toUpperCase();
+  const formattedGeneration = generationName
+    .replace("generation-", "GEN ")
+    .toUpperCase();
 
   const genderRatio =
     dataSpecies.gender_rate === -1
@@ -51,25 +54,27 @@ function PokemonDetail() {
         <PokemonBioData
           name={pokemonName}
           ID={`#${formatPokedexID(data.id)}`}
-          picture={artworkUrl ?? ""}
-          description = {dataSpecies.flavor_text_entries
-            .find((entry) => entry.language.name === "en")
-            ?.flavor_text.replace(/[\n\r]/g, " ") || "" }
+          picture={getOfficialArtworkUrl(data.id, false) ?? ""}
+          description={
+            dataSpecies.flavor_text_entries
+              .find((entry) => entry.language.name === "en")
+              ?.flavor_text.replace(/[\n\r]/g, " ") || ""
+          }
           pokemonBiodata={{
             region: `${region} - ${formattedGeneration}`,
             species: genus,
             gender: genderRatio,
             weight: `${data.weight / 10}kg - ${Math.round(
-              (data.weight / 10) * 2.20462
+              (data.weight / 10) * 2.20462,
             )} pounds`,
             abilities: data.abilities.map((ability) =>
               ability.is_hidden
-            ? `${ability.ability.name} (Hidden)`
-            : ability.ability.name
-          ),
-          height: `${data.height / 10}m - ${Math.round(
-            (data.height / 10) * 3.2808
-          )} ft`,
+                ? `${ability.ability.name} (Hidden)`
+                : ability.ability.name,
+            ),
+            height: `${data.height / 10}m - ${Math.round(
+              (data.height / 10) * 3.2808,
+            )} ft`,
           }}
         />
       </SideData>
