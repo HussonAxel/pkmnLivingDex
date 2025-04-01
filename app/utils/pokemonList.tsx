@@ -3,63 +3,17 @@ import { notFound, NotFoundError } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import {
   PokemonDetailsType,
-  PokemonListType,
   PokemonsListType,
   GenerationsRoot,
   RootpokemonDetailsPerGenerations,
-  GmaxQueryResult,
 } from "./types/pokemonList.types";
 import axios from "redaxios";
+import { PokemonSpeciesType, GenerationData } from "./types/pokemonList.types";
+
 
 const pokeAPIRootURL = "https://pokeapi.co/api/v2/";
 const tyradexAPIRootURL = "https://tyradex.vercel.app/api/v1/";
 
-type GenerationData =
-  | (GenerationsRoot & { displayName: string })
-  | { name: string; displayName: string; error?: boolean };
-
-interface PokemonSpeciesType {
-  base_happiness: number;
-  capture_rate: number;
-  color: { name: string };
-  egg_groups: Array<{ name: string }>;
-  evolution_chain: { url: string };
-  evolves_from_species: { name: string } | null;
-  flavor_text_entries: Array<{
-    flavor_text: string;
-    language: { name: string };
-    version: { name: string };
-  }>;
-  form_descriptions: Array<any>;
-  forms_switchable: boolean;
-  gender_rate: number;
-  genera: Array<{
-    genus: string;
-    language: { name: string };
-  }>;
-  generation: { name: string };
-  growth_rate: { name: string };
-  habitat: { name: string } | null;
-  has_gender_differences: boolean;
-  hatch_counter: number;
-  id: number;
-  is_baby: boolean;
-  is_legendary: boolean;
-  is_mythical: boolean;
-  name: string;
-  names: Array<{
-    language: { name: string };
-    name: string;
-  }>;
-  order: number;
-  pal_park_encounters: Array<any>;
-  pokedex_numbers: Array<any>;
-  shape: { name: string };
-  varieties: Array<{
-    is_default: boolean;
-    pokemon: { name: string; url: string };
-  }>;
-}
 
 export const fetchGenerationsDetails = createServerFn({
   method: "GET",
@@ -194,22 +148,6 @@ export const pokemonDetailsQueryOptions = (pokemonName: string) =>
     staleTime: 1000 * 60 * 10,
   });
 
-export const getEntirePokedexTyradex = createServerFn({
-  method: "GET",
-}).handler(async () => {
-  console.info("Fetching pokemon list from Tyradex");
-  return axios
-    .get<RootpokemonDetailsPerGenerations>(`${tyradexAPIRootURL}pokemon`)
-    .then((response) =>
-      response.data.filter((pokemon) => pokemon.pokedex_id !== 0)
-    );
-});
-
-export const getEntirePokedexTyradexOptions = () =>
-  queryOptions({
-    queryKey: ["pokedex"],
-    queryFn: () => getEntirePokedexTyradex(),
-  });
 
 export const fetchPokemonSpecies = createServerFn({ method: "GET" })
   .validator((name: string) => name)
@@ -237,30 +175,3 @@ export const pokemonSpeciesQueryOptions = (pokemonName: string) =>
     queryFn: () => fetchPokemonSpecies({ data: pokemonName }),
     staleTime: 1000 * 60 * 10,
   });
-
-// New query functions for Pokemon Evolution Chain
-
-export const fetchPokemonTyradex = createServerFn({ method: "GET" })
-  .validator((name: string) => name)
-  .handler(async ({ data: name }) => {
-    console.info(`Fetching ${name} data from Tyradex...`);
-    return fetch(`${tyradexAPIRootURL}pokemon/${name}`)
-      .then((res) => {
-        if (!res.ok) {
-          throw notFound();
-        }
-        return res.json();
-      })
-      .catch((err) => {
-        console.error(err);
-        throw err;
-      });
-  });
-
-export const pokemonTyradexQueryOptions = (pokemonName: string) =>
-  queryOptions({
-    queryKey: ["pokemon-tyradex", pokemonName],
-    queryFn: () => fetchPokemonTyradex({ data: pokemonName }),
-    staleTime: 1000 * 60 * 10,
-  });
-

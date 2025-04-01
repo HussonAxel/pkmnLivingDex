@@ -7,22 +7,154 @@ export type ViewSettings = {
 
 export type PokemonType = {
   name: string;
+  url?: string;
+  image?: string;
+};
+
+export type PokemonSprites = {
+  regular: string;
+  shiny?: string;
+  gmax?: string;
+  back_default?: string | null;
+  back_female?: string | null;
+  back_shiny?: string | null;
+  back_shiny_female?: string | null;
+  front_default?: string | null;
+  front_female?: string | null;
+  front_shiny?: string | null;
+  front_shiny_female?: string | null;
 };
 
 export type Pokemon = {
   pokedex_id: number;
+  generation: number;
+  category: string;
   name: {
     en: string;
     fr: string;
-    [key: string]: string;
+    jp?: string;
+    [key: string]: string | undefined;
   };
   types: PokemonType[];
-  sprites: {
-    regular: string;
+  sprites: PokemonSprites;
+  evolution?: {
+    pre?: PokemonForm[];
+    next?: PokemonForm[];
+    mega?: MegaForm[];
+  };
+  talents?: Talent[];
+  stats?: Stats;
+  resistances?: Resistance[];
+  height?: string;
+  weight?: string;
+  egg_groups?: string[];
+  sexe?: Sexe;
+  catch_rate?: number;
+  level_100?: number;
+  formes?: Forme[];
+};
+
+export type PokemonForm = {
+  id?: string;
+  pokedex_id?: number;
+  name?: string;
+  condition?: string;
+  sprites?: {
+    regular?: string;
+  };
+};
+
+export type MegaForm = PokemonForm & {
+  name?: string;
+};
+
+export type Talent = {
+  name: string;
+  tc: boolean;
+};
+
+export type Stats = {
+  hp: number;
+  atk: number;
+  def: number;
+  spe_atk: number;
+  spe_def: number;
+  vit: number;
+};
+
+export type Resistance = {
+  name: string;
+  multiplier: number;
+};
+
+export type Sexe = {
+  male: number;
+  female: number;
+};
+
+export type Forme = {
+  region: string;
+  name: {
+    fr: string;
+    en: string;
+    jp: string;
   };
 };
 
 export type PokemonCardProps = {
-  pokemon: any;
+  pokemon: Pokemon;
   viewSettings: ViewSettings;
+};
+
+export type PokemonListResponse = {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Array<{
+    name: string;
+    url: string;
+  }>;
+};
+
+export type PokemonSpeciesType = {
+  base_happiness: number;
+  capture_rate: number;
+  color: { name: string };
+  egg_groups: Array<{ name: string }>;
+  evolution_chain: { url: string };
+  evolves_from_species: { name: string } | null;
+  flavor_text_entries: Array<{
+    flavor_text: string;
+    language: { name: string };
+    version: { name: string };
+  }>;
+  form_descriptions: Array<any>;
+  forms_switchable: boolean;
+  gender_rate: number;
+  genera: Array<{
+    genus: string;
+    language: { name: string };
+  }>;
+  generation: { name: string };
+  growth_rate: { name: string };
+  habitat: { name: string } | null;
+  has_gender_differences: boolean;
+  hatch_counter: number;
+  id: number;
+  is_baby: boolean;
+  is_legendary: boolean;
+  is_mythical: boolean;
+  name: string;
+  names: Array<{
+    language: { name: string };
+    name: string;
+  }>;
+  order: number;
+  pal_park_encounters: Array<any>;
+  pokedex_numbers: Array<any>;
+  shape: { name: string };
+  varieties: Array<{
+    is_default: boolean;
+    pokemon: { name: string; url: string };
+  }>;
 };

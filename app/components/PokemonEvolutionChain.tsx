@@ -1,140 +1,25 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Route as PokemonRoute } from "~/routes/pokemon.$pokemonName";
-import React from "react";
-import {
-  getOfficialArtworkUrl,
-  formatPokemonNameForUrl,
-  translatePokemonName,
-} from "~/utils/pokemonUtils";
-import {
-  pokemonTyradexQueryOptions,
-} from "~/utils/pokemonList";
-import { PokemonData } from "~/utils/types/pokemonList.types";
-import { Link } from "@tanstack/react-router";
 
-const PokemonCard: React.FC<{
-  name: string;
-  imageUrl: string;
-  type?: string;
-  className?: string;
-  onImageError?: (e: React.SyntheticEvent<HTMLImageElement>) => void;
-}> = ({ name, imageUrl, type, className = "", onImageError }) => (
-  <>
-    <Link
-      to="/pokemon/$pokemonName"
-      params={{
-        pokemonName: translatePokemonName(name),
-      }}
-    >
-      <div
-        className={`flex flex-col items-center p-8 bg-white/5 rounded-lg  max-h-[353px] ${className}`}
-      >
-        {type && <div className="text-white/70 text-sm mb-1">{type}</div>}
-        <img
-          src={imageUrl}
-          alt={name}
-          className="w-64 h-64 object-contain"
-          onError={onImageError}
-        />
-        <div className="text-white text-center mt-2">
-          {translatePokemonName(name)}
-        </div>
-      </div>
-    </Link>
-  </>
-);
+import {
+  pokemonSpeciesQueryOptions,
+  pokemonDetailsQueryOptions,
+} from "~/utils/pokemonList";
 
 export function PokemonEvolutionChain() {
   const { pokemonName } = PokemonRoute.useParams();
 
-  const tyradexQuery = useSuspenseQuery(
-    pokemonTyradexQueryOptions(pokemonName)
+  const pokemonData = useSuspenseQuery(pokemonDetailsQueryOptions(pokemonName));
+  const pokemonSpeciesData = useSuspenseQuery(
+    pokemonSpeciesQueryOptions(pokemonName)
   );
 
-  const currentPokemon: PokemonData = tyradexQuery.data || {};
-  const previousForms = currentPokemon?.evolution?.pre || [];
-  const nextForms = currentPokemon?.evolution?.next || [];
-  const formsData = currentPokemon?.formes || [];
 
-  const handleImageError = (
-    e: React.SyntheticEvent<HTMLImageElement>,
-    fallbackId?: number
-  ) => {
-    const imgElement = e.currentTarget;
-    imgElement.src = getOfficialArtworkUrl(
-      fallbackId || currentPokemon?.pokedex_id || 0,
-      false
-    );
-  };
+  const fetchedSpeciesData = pokemonSpeciesData.data;
+  const fetchedPokemonData = pokemonData.data;
 
-  return (
-    <section className="flex flex-col items-center p-24 min-w-[1600px] max-w-[1600px] w-full">
-      <h3 className="text-3xl font-semibold text-white/80 mb-4 text-center">
-        Evolution chain
-      </h3>
-      <div className="flex flex-wrap items-center justify-center gap-12">
-        {previousForms.length > 0 && (
-          <div className="flex flex-col items-center">
-            <div className="flex flex-wrap justify-center gap-12">
-              {previousForms.map((form) => (
-                <PokemonCard
-                  key={form.id}
-                  name={form.name || ""}
-                  imageUrl={getOfficialArtworkUrl(form.pokedex_id || 0, false)}
-                  onImageError={(e) => handleImageError(e, form.pokedex_id)}
-                />
-              ))}
-            </div>
-          </div>
-        )}
+  console.log("Fetched Species Data:", fetchedSpeciesData);
+  console.log("Fetched Pokemon Data:", fetchedPokemonData);
 
-        <div className="flex flex-col items-center">
-          <PokemonCard
-            name={currentPokemon.name?.en || pokemonName}
-            imageUrl={getOfficialArtworkUrl(
-              currentPokemon.pokedex_id || 0,
-              false
-            )}
-            className="border border-white/20 bg-white/10"
-            onImageError={(e) => handleImageError(e, currentPokemon.pokedex_id)}
-          />
-        </div>
-
-        {nextForms.length > 0 && (
-          <div className="flex flex-col items-center">
-            <div className="flex flex-wrap justify-center gap-12">
-              {nextForms.map((form) => (
-                <PokemonCard
-                  key={form.id}
-                  name={form.name || ""}
-                  imageUrl={getOfficialArtworkUrl(form.pokedex_id || 0, false)}
-                  onImageError={(e) => handleImageError(e, form.pokedex_id)}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-      {(formsData.length > 0 ) && (
-        <div className="mt-16 w-full">
-          <h3 className="text-3xl font-semibold text-white/80 mb-4 text-center">
-            Special Forms
-          </h3>
-          <div className="flex flex-wrap justify-center gap-12">
-            {formsData.length > 0 &&
-              formsData.map((form, index) => (
-                <PokemonCard
-                  key={`form-${index}`}
-                  type="Form"
-                  name={form.name?.en || `Form ${index + 1}`}
-                  imageUrl={`/assets/static/regionalForms/${formatPokemonNameForUrl(
-                    form.name?.en || `Form ${index + 1}`
-                  )}.png`}
-                />
-              ))}
-          </div>
-        </div>
-      )}
-    </section>
-  );
+  return <div> Je suis un test </div>;
 }

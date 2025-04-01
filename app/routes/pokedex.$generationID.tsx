@@ -1,9 +1,6 @@
 import { ErrorComponent, createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import {
-  getEntirePokedexTyradexOptions,
-  pokemonsPerGenerationDetailsOptions,
-} from "~/utils/pokemonList";
+import { pokemonsPerGenerationDetailsOptions } from "~/utils/pokemonList";
 import type { ErrorComponentProps } from "@tanstack/react-router";
 import { NotFound } from "~/components/NotFound";
 import { PokemonGenerationView } from "~/components/PokemonGenerationView";
@@ -34,7 +31,6 @@ export function PostErrorComponent({ error }: ErrorComponentProps) {
 
 function PostComponent() {
   const { generationID } = Route.useParams();
-  const dataPokedex = useSuspenseQuery(getEntirePokedexTyradexOptions());
   const { data } = useSuspenseQuery(
     pokemonsPerGenerationDetailsOptions(generationID)
   );
@@ -46,7 +42,7 @@ function PostComponent() {
       return (
         <PokemonGenerationView
           generationID={generationID}
-          generationData={dataPokedex.data}
+          generationData={data.flat()}
         />
       );
     } else {
