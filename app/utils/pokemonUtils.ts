@@ -89,12 +89,18 @@ export const formatPokedexID = (id: number): string => {
 
 export const translatePokemonName = (pokemonName: string): string => {
   try {
+    const normalizeString = (str: string) => {  
+      return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    };
+    
+    const normalizedPokemonName = normalizeString(pokemonName);
+    
     const translatePokemonNameQuery = useSuspenseQuery({
       queryKey: ["pokemonName-translation", pokemonName],
       queryFn: () =>
-        fetch(`https://tyradex.vercel.app/api/v1/pokemon/${pokemonName}`).then(
-          (res) => res.json()
-        ),
+      fetch(`https://tyradex.vercel.app/api/v1/pokemon/${normalizedPokemonName}`).then(
+        (res) => res.json()
+      ),
     });
 
     return translatePokemonNameQuery.data?.name?.en || pokemonName;

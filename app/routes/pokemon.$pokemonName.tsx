@@ -38,7 +38,7 @@ function PokemonDetail() {
   const generationName = dataSpecies.generation.name;
   const region =
     generationToRegion[generationName as keyof typeof generationToRegion];
-  const formattedGeneration = generationName.replace("generation-", "GEN ");
+  const formattedGeneration = generationName.replace("generation-", "GEN ").toUpperCase();
 
   const genderRatio =
     dataSpecies.gender_rate === -1
@@ -51,13 +51,10 @@ function PokemonDetail() {
         <PokemonBioData
           name={pokemonName}
           ID={`#${formatPokedexID(data.id)}`}
-          description={
-            dataSpecies.flavor_text_entries
-              .find((entry) => entry.language.name === "en")
-              ?.flavor_text.replace(/[\n\r]/g, " ") || ""
-          }
-          genus={genus}
           picture={artworkUrl ?? ""}
+          description = {dataSpecies.flavor_text_entries
+            .find((entry) => entry.language.name === "en")
+            ?.flavor_text.replace(/[\n\r]/g, " ") || "" }
           pokemonBiodata={{
             region: `${region} - ${formattedGeneration}`,
             species: genus,
@@ -65,14 +62,14 @@ function PokemonDetail() {
             weight: `${data.weight / 10}kg - ${Math.round(
               (data.weight / 10) * 2.20462
             )} pounds`,
-            height: `${data.height / 10}m - ${Math.round(
-              (data.height / 10) * 3.2808
-            )} ft`,
             abilities: data.abilities.map((ability) =>
               ability.is_hidden
-                ? `${ability.ability.name} (Hidden)`
-                : ability.ability.name
-            ),
+            ? `${ability.ability.name} (Hidden)`
+            : ability.ability.name
+          ),
+          height: `${data.height / 10}m - ${Math.round(
+            (data.height / 10) * 3.2808
+          )} ft`,
           }}
         />
       </SideData>

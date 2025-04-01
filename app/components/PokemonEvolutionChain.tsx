@@ -100,7 +100,7 @@ export function PokemonEvolutionChain() {
   };
 
   return (
-    <section className="flex flex-col items-center w-full p-24">
+    <section className="flex flex-col items-center p-24 min-w-[1600px] max-w-[1600px] w-full">
       <h3 className="text-3xl font-semibold text-white/80 mb-4 text-center">
         Evolution chain
       </h3>{" "}

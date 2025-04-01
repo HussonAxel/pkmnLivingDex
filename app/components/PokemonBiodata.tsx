@@ -1,7 +1,10 @@
+import React from "react"; // Import React if not already globally available
+
 interface PokemonBioDataTypes {
   name: string;
-  genus: string;
+  // genus: string; // Removed if not used directly here
   picture: string;
+  description: string; // Description is now a top-level prop
   pokemonBiodata: {
     species: string;
     height: string;
@@ -11,37 +14,49 @@ interface PokemonBioDataTypes {
     abilities: string[];
   };
   ID: string;
-  description: string;
 }
 
 export function PokemonBioData(props: PokemonBioDataTypes) {
+  const { name, ID, picture, description, pokemonBiodata } = props;
+
   return (
-    <section className="flex-grow grid grid-cols-1 md:grid-cols-3 gap-8 p-24 backdrop-blur-sm">
-      <div className="flex flex-col items-center justify-center bg-white/5 rounded-md">
-        <div className="relative group">
+    <section className="flex-grow grid grid-cols-1 md:grid-cols-3 gap-8 md:p-24 backdrop-blur-sm p-24 min-w-[1600px] max-w-[1600px] w-full">
+      <div className="flex flex-col items-center justify-center bg-white/5 rounded-lg p-6 text-center">
+        <div className="relative group mb-4">
           <img
-            src={props.picture}
-            alt={props.name}
-            className="w-64 h-64 object-contain transition-transform duration-300"
+            src={picture}
+            alt={name}
+            className="w-64 h-64 md:w-80 md:h-80 object-contain transition-transform duration-300 group-hover:scale-105"
           />
         </div>
-        <p>{props.description}</p>
-        <p className="text-center uppercase font-anton text-2xl md:text-3xl text-white/90 tracking-wider">
-          {props.name}
+        <p className="text-center uppercase font-anton text-2xl md:text-3xl text-white/90 tracking-wider mb-1">
+          {name}
         </p>
-        <span>{props.ID}</span>
+        <span className="font-worksans text-lg text-white/70 tracking-wide">
+          {ID}
+        </span>
       </div>
-      <div className="grid grid-cols-2 gap-6 md:col-span-2">
-        {Object.entries(props.pokemonBiodata).map(([key, value]) => (
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:col-span-2 content-start">
+        <div className="p-4 col-span-1 sm:col-span-2">
+          <span className="capitalize text-md text-white/60 tracking-wider mb-1 block">
+            Description
+          </span>
+          <p className="text-lg md:text-xl text-white/90 tracking-wider whitespace-pre-line font-worksans">
+            {description}
+          </p>
+        </div>
+
+        {Object.entries(pokemonBiodata).map(([key, value]) => (
           <div
             key={key}
             className="flex flex-col p-4 rounded-lg transition-colors duration-300 font-worksans"
           >
-            <span className="capitalize text-sm text-white/60 tracking-wider mb-2">
+            <span className="capitalize text-md text-white/60 tracking-wider mb-1">
               {key}
             </span>
-            <span className="capitalize text-xl md:text-2xl text-white/90 tracking-wider whitespace-pre">
-              {Array.isArray(value) ? value.join("\r\n") : value}
+            <span className="text-xl md:text-2xl text-white/90 capitalize ">
+              {Array.isArray(value) ? value.join(", ") : value}
             </span>
           </div>
         ))}
