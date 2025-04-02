@@ -58,7 +58,6 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
             />
           </div>
           <img
-            loading="lazy"
             src={getSpriteUrl()}
             alt={pokemon.name[viewSettings.language]}
             className={`mx-auto object-contain ${viewSettings.isGridView ? "w-4/5 h-4/5" : "w-44 h-44 float-left mr-4"}`}
@@ -73,7 +72,7 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
               {pokemon.name[viewSettings.language]}
             </h2>
             <span className="font-worksans text-lg text-white/70 tracking-wide">
-              #{pokemon.pokedex_id}
+              #{isRegionalVariant ? `${pokemon.pokedex_id} (Variant Form)` : pokemon.pokedex_id}
             </span>
             <div
               className={`flex gap-2 mt-1 ${viewSettings.isGridView ? "justify-center" : ""}`}
