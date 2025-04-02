@@ -32,7 +32,6 @@ function PokemonDetail() {
     pokemonSpeciesQueryOptions(pokemonName),
   );
 
-  const artworkUrl = data.sprites.other["official-artwork"].front_default;
   const genus =
     dataSpecies.genera?.find((entry) => entry?.language?.name === "en")
       ?.genus || "";

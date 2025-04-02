@@ -2,7 +2,6 @@ import { ErrorComponent, createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { pokemonsPerGenerationDetailsOptions } from "~/utils/pokemonList";
 import type { ErrorComponentProps } from "@tanstack/react-router";
-import { NotFound } from "~/components/NotFound";
 import { PokemonGenerationView } from "~/components/PokemonGenerationView";
 
 export const Route = createFileRoute("/pokedex/$generationID")({
@@ -20,14 +19,9 @@ export const Route = createFileRoute("/pokedex/$generationID")({
     meta: loaderData ? [{ title: loaderData.title }] : undefined,
   }),
 
-  errorComponent: PostErrorComponent,
-  notFoundComponent: () => <NotFound>Pokémon not found</NotFound>,
   component: PostComponent,
 });
 
-export function PostErrorComponent({ error }: ErrorComponentProps) {
-  return <ErrorComponent error={error} />;
-}
 
 function PostComponent() {
   const { generationID } = Route.useParams();

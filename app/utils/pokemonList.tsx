@@ -2,13 +2,13 @@ import { queryOptions } from "@tanstack/react-query";
 import { notFound, NotFoundError } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import {
+  Pokemon,
   PokemonDetailsType,
-  PokemonsListType,
-  GenerationsRoot,
-  RootpokemonDetailsPerGenerations,
-} from "./types/pokemonList.types";
+  PokemonSpeciesType,
+  PokemonListType,
+  MainRegionsTypes,
+} from "../types/pokemonTypes";
 import axios from "redaxios";
-import { PokemonSpeciesType, GenerationData } from "./types/pokemonList.types";
 
 
 const pokeAPIRootURL = "https://pokeapi.co/api/v2/";
@@ -21,7 +21,7 @@ export const fetchGenerationsDetails = createServerFn({
   console.info("Fetching generations with full data...");
 
   const generationsList = await axios
-    .get<PokemonsListType>(`${pokeAPIRootURL}generation/`)
+    .get<PokemonListType>(`${pokeAPIRootURL}generation/`)
     .then((response) => response.data.results);
 
   const generationsData = await Promise.all(
@@ -30,13 +30,13 @@ export const fetchGenerationsDetails = createServerFn({
 
       try {
         const fullData = await axios
-          .get<GenerationsRoot>(`${pokeAPIRootURL}generation/${genId}`)
+          .get<MainRegionsTypes>(`${pokeAPIRootURL}generation/${genId}`)
           .then((response) => response.data);
 
         return {
           ...fullData,
           displayName: fullData.name,
-        } as GenerationData;
+        } as MainRegionsTypes;
       } catch (error) {
         console.error(
           `Error fetching details for generation ${gen.name}:`,
@@ -46,7 +46,7 @@ export const fetchGenerationsDetails = createServerFn({
           ...gen,
           displayName: gen.name,
           error: true,
-        } as GenerationData;
+        };
       }
     })
   );
@@ -65,7 +65,7 @@ export const pokemonsPerGenerationDetails = createServerFn({
   console.info("Fetching generations with full data...");
 
   const generationsList = await axios
-    .get<PokemonsListType>(`${pokeAPIRootURL}generation/`)
+    .get<PokemonListType>(`${pokeAPIRootURL}generation/`)
     .then((response) => response.data.results);
 
   const pokemonsPerGeneration = await Promise.all(
@@ -73,15 +73,13 @@ export const pokemonsPerGenerationDetails = createServerFn({
       const genId = gen.url.split("/").filter(Boolean).pop();
       try {
         const pokemonListPerGen = await axios
-          .get<RootpokemonDetailsPerGenerations>(
-            `${tyradexAPIRootURL}gen/${genId}`
-          )
+          .get<Pokemon[]>(`${tyradexAPIRootURL}gen/${genId}`)
           .then((response) => response.data);
 
         // Filter out MissingNo from the first generation
         if (index === 0) {
           return pokemonListPerGen.filter(
-            (pokemon) => pokemon.pokedex_id !== 0
+            (pokemon: Pokemon) => pokemon.pokedex_id !== 0
           );
         }
         return pokemonListPerGen;
@@ -112,7 +110,7 @@ export const fetchPokemonList = createServerFn({ method: "GET" }).handler(
   async () => {
     console.info("Fetching pokemon list...");
     return axios
-      .get<PokemonsListType>(`${pokeAPIRootURL}pokemon?limit=-1`)
+      .get<PokemonListType>(`${pokeAPIRootURL}pokemon?limit=-1`)
       .then((response) => response.data.results);
   }
 );
@@ -133,7 +131,7 @@ export const fetchPokemonDetails = createServerFn({ method: "GET" })
       .then((r) => r.data)
       .catch((err) => {
         console.error(err);
-        if (err.status === 404) {
+        if (err.response?.status === 404) {
           throw notFound();
         }
         throw err;
