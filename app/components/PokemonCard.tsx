@@ -36,7 +36,7 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
       }}
       className="block"
     >
-      <div className="h-full p-4 border rounded-lg shadow hover:shadow-md transition-all group hover:bg-white/20 hover:border-white/40 hover:scale-[1.02] relative font-worksans">
+      <div className="h-full p-8 border rounded-lg shadow hover:shadow-md transition-all group hover:bg-white/20 hover:border-white/40 hover:scale-[1.02] relative font-worksans">
         <div
           key={pokemon.pokedex_id}
           className={`${viewSettings.isUserDatabase ? "opacity-30" : "opacity-100"}`}
@@ -69,11 +69,14 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
             className={`${viewSettings.isGridView ? "flex flex-col text-center gap-2 " : "flex flex-col justify-center h-24"}`}
           >
             <h2 className="font-bold text-xl xl:text-2xl truncate w-full ">
-              {pokemon.name[viewSettings.language]}
+              {pokemon.name[viewSettings.language]}{" "}
+              <span className="text-md text-gray-500">
+                #
+                {isRegionalVariant
+                  ? `${pokemon.pokedex_id} (Variant Form)`
+                  : pokemon.pokedex_id}
+              </span>
             </h2>
-            <span className="font-worksans text-lg text-white/70 tracking-wide">
-              #{isRegionalVariant ? `${pokemon.pokedex_id} (Variant Form)` : pokemon.pokedex_id}
-            </span>
             <div
               className={`flex gap-2 mt-1 ${viewSettings.isGridView ? "justify-center" : ""}`}
             >
@@ -94,7 +97,7 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
 
 export function PokemonType({ type }: { type: { name: string } }) {
   return (
-    <div className={`text-md rounded-full p-2 ${type.name}`} title={type.name}>
+    <div className={`text-sm rounded-full py-2 px-4 flex gap-2 items-center w-fit ${type.name}`} title={type.name}>
       <img
         src={`/assets/static/pkmnsTypes/${type.name}.svg`}
         alt={type.name}
@@ -103,6 +106,7 @@ export function PokemonType({ type }: { type: { name: string } }) {
           (e.target as HTMLImageElement).src = "/assets/static/placeholder.svg";
         }}
       />
+      <p className="font-semibold font-worksans drop-shadow-md">{type.name}</p>
     </div>
   );
 }
