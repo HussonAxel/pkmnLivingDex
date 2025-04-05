@@ -11,15 +11,47 @@ export function PokemonEvolutionChain() {
 
   const pokemonData = useSuspenseQuery(pokemonDetailsQueryOptions(pokemonName));
   const pokemonSpeciesData = useSuspenseQuery(
-    pokemonSpeciesQueryOptions(pokemonName)
+    pokemonSpeciesQueryOptions(pokemonName),
   );
-
 
   const fetchedSpeciesData = pokemonSpeciesData.data;
   const fetchedPokemonData = pokemonData.data;
+  const evolutionChainUrl = fetchedSpeciesData.evolution_chain.url;
 
-  console.log("Fetched Species Data:", fetchedSpeciesData);
-  console.log("Fetched Pokemon Data:", fetchedPokemonData);
+  const evolutionChainData = useSuspenseQuery({
+    queryKey: ["evolutionChain", evolutionChainUrl],
+    queryFn: async () => {
+      const response = await fetch(evolutionChainUrl);
+      return response.json();
+    },
+  });
 
-  return <div> Je suis un test </div>;
+  const fetchedEvolutionBasedPokemon =
+    evolutionChainData.data.chain.species.name;
+  const fetchedEvolutionEvolvesTo = evolutionChainData.data.chain.evolves_to;
+  console.log("Fetched Species Data:", evolutionChainData.data.chain);
+  console.log("Fetched Evolution Based Pokemon:", fetchedEvolutionBasedPokemon);
+
+  return (
+    <>
+      <div> Base pokemon : {fetchedEvolutionBasedPokemon}</div>
+      <div className="test">
+        {fetchedEvolutionEvolvesTo.map((evolution) => {
+          const currentEvolutionEvolvesTo = evolution.evolves_to;
+          return (
+            <p key={evolution.species.name}>
+              Next Pokemon : {evolution.species.name}
+              {currentEvolutionEvolvesTo.map((evolution) => {
+                return (
+                  <p key={evolution.species.name}>
+                    Next next pokemon : {evolution.species.name} {}
+                  </p>
+                );
+              })}
+            </p>
+          );
+        })}
+      </div>
+    </>
+  );
 }

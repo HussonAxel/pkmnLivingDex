@@ -10,10 +10,8 @@ import {
 } from "../types/pokemonTypes";
 import axios from "redaxios";
 
-
 const pokeAPIRootURL = "https://pokeapi.co/api/v2/";
 const tyradexAPIRootURL = "https://tyradex.vercel.app/api/v1/";
-
 
 export const fetchGenerationsDetails = createServerFn({
   method: "GET",
@@ -40,7 +38,7 @@ export const fetchGenerationsDetails = createServerFn({
       } catch (error) {
         console.error(
           `Error fetching details for generation ${gen.name}:`,
-          error
+          error,
         );
         return {
           ...gen,
@@ -48,7 +46,7 @@ export const fetchGenerationsDetails = createServerFn({
           error: true,
         };
       }
-    })
+    }),
   );
   return generationsData;
 });
@@ -79,14 +77,14 @@ export const pokemonsPerGenerationDetails = createServerFn({
         // Filter out MissingNo from the first generation
         if (index === 0) {
           return pokemonListPerGen.filter(
-            (pokemon: Pokemon) => pokemon.pokedex_id !== 0
+            (pokemon: Pokemon) => pokemon.pokedex_id !== 0,
           );
         }
         return pokemonListPerGen;
       } catch (error) {
         console.error(
           `Error fetching details for generation ${gen.name}:`,
-          error
+          error,
         );
         return {
           name: gen.name,
@@ -94,7 +92,7 @@ export const pokemonsPerGenerationDetails = createServerFn({
           error: true,
         };
       }
-    })
+    }),
   );
   return pokemonsPerGeneration;
 });
@@ -112,7 +110,7 @@ export const fetchPokemonList = createServerFn({ method: "GET" }).handler(
     return axios
       .get<PokemonListType>(`${pokeAPIRootURL}pokemon?limit=-1`)
       .then((response) => response.data.results);
-  }
+  },
 );
 
 export const pokemonQueryOptions = () =>
@@ -120,7 +118,6 @@ export const pokemonQueryOptions = () =>
     queryKey: ["pokemons"],
     queryFn: () => fetchPokemonList(),
   });
-
 
 export const fetchPokemonDetails = createServerFn({ method: "GET" })
   .validator((name: string) => name)
@@ -146,14 +143,11 @@ export const pokemonDetailsQueryOptions = (pokemonName: string) =>
     staleTime: 1000 * 60 * 10,
   });
 
-
 export const fetchPokemonSpecies = createServerFn({ method: "GET" })
   .validator((name: string) => name)
   .handler(async ({ data: name }) => {
     const species = await axios
-      .get<PokemonSpeciesType>(
-        `${pokeAPIRootURL}pokemon-species/${name}`
-      )
+      .get<PokemonSpeciesType>(`${pokeAPIRootURL}pokemon-species/${name}`)
       .then((r) => r.data)
       .catch((err) => {
         console.error(err);

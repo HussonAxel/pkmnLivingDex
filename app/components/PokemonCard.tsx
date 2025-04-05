@@ -68,7 +68,7 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
           <div
             className={`${viewSettings.isGridView ? "flex flex-col text-center gap-2 " : "flex flex-col justify-center h-24"}`}
           >
-            <h2 className="font-bold text-xl xl:text-2xl truncate w-full ">
+            <h2 className="font-semibold text-lg xl:text-xl truncate w-full ">
               {pokemon.name[viewSettings.language]}{" "}
               <span className="text-md text-gray-500">
                 #
@@ -97,7 +97,10 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
 
 export function PokemonType({ type }: { type: { name: string } }) {
   return (
-    <div className={`text-sm rounded-full py-2 px-4 flex gap-2 items-center w-fit ${type.name}`} title={type.name}>
+    <div
+      className={`text-sm rounded-full py-2 px-4 flex gap-2 items-center w-fit ${type.name}`}
+      title={type.name}
+    >
       <img
         src={`/assets/static/pkmnsTypes/${type.name}.svg`}
         alt={type.name}
