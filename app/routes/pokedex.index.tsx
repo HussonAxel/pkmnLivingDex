@@ -26,11 +26,8 @@ function PokemonsIndexComponent() {
                 <img
                   src={standardizeImagePath(region.img) || "/placeholder.svg"}
                   alt={`${formatRegionName(region.name)} region`}
-                  className="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-72 object-cover transform group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold px-2 py-1 m-2 rounded-full">
-                  Gen {region.id === "0" ? "All" : region.id}
-                </div>
               </div>
 
               <div className="p-4 flex-grow flex flex-col">
