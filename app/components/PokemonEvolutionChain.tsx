@@ -1,5 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Route as PokemonRoute } from "~/routes/pokemon.$pokemonName";
+import { getOfficialArtworkUrl, getIdFromUrl } from "~/utils/pokemonUtils";
 
 import {
   pokemonSpeciesQueryOptions,
@@ -28,27 +29,49 @@ export function PokemonEvolutionChain() {
 
   const fetchedEvolutionBasedPokemon =
     evolutionChainData.data.chain.species.name;
+
   const fetchedEvolutionEvolvesTo = evolutionChainData.data.chain.evolves_to;
-  console.log("Fetched Species Data:", evolutionChainData.data.chain);
-  console.log("Fetched Evolution Based Pokemon:", fetchedEvolutionBasedPokemon);
 
   return (
     <>
       <div> Base pokemon : {fetchedEvolutionBasedPokemon}</div>
+      <img
+        src={getOfficialArtworkUrl(
+          getIdFromUrl(evolutionChainData.data.chain.species.url),
+          false,
+        )}
+        alt={"sqdqdsqfqsf"}
+      />
       <div className="test">
         {fetchedEvolutionEvolvesTo.map((evolution) => {
           const currentEvolutionEvolvesTo = evolution.evolves_to;
           return (
-            <p key={evolution.species.name}>
-              Next Pokemon : {evolution.species.name}
-              {currentEvolutionEvolvesTo.map((evolution) => {
-                return (
-                  <p key={evolution.species.name}>
-                    Next next pokemon : {evolution.species.name} {}
-                  </p>
-                );
-              })}
-            </p>
+            <>
+              <p key={evolution.species.name}>
+                Next Pokemon : {evolution.species.name}
+                <img
+                  src={getOfficialArtworkUrl(
+                    getIdFromUrl(evolution.species.url),
+                    false,
+                  )}
+                  alt={"sqdqdsqfqsf"}
+                />
+                {currentEvolutionEvolvesTo.map((evolution) => {
+                  return (
+                    <p key={evolution.species.name}>
+                      Next next pokemon : {evolution.species.name} {}
+                      <img
+                        src={getOfficialArtworkUrl(
+                          getIdFromUrl(evolution.species.url),
+                          false,
+                        )}
+                        alt={"sqdqdsqfqsf"}
+                      />
+                    </p>
+                  );
+                })}
+              </p>
+            </>
           );
         })}
       </div>

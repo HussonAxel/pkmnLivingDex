@@ -108,3 +108,17 @@ export const translatePokemonName = (pokemonName: string): string => {
     return pokemonName;
   }
 };
+
+export const getIdFromUrl = (urlString: string): string | null => {
+  if (!urlString) return null;
+  // Split by '/', filter out empty strings resulting from trailing/leading/double slashes
+  const parts = urlString.split("/").filter((part) => part.length > 0);
+  // Get the last element from the filtered array
+  const potentialId = parts.pop(); // or parts[parts.length - 1]
+
+  // Check if the last part is actually a number
+  if (potentialId && /^\d+$/.test(potentialId)) {
+    return potentialId;
+  }
+  return null; // Return null if the last part isn't a number
+};
