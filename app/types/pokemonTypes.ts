@@ -159,7 +159,6 @@ export type PokemonSpeciesType = {
   }>;
 };
 
-
 export interface PokemonListType {
   count: number;
   next: null;
@@ -171,7 +170,6 @@ export interface pokemonListPerGenType {
   name: string;
   url: string;
 }
-
 
 export interface MainRegionsTypes {
   abilities: any[];
@@ -194,7 +192,6 @@ export interface Name {
   language: MainRegion;
   name: string;
 }
-
 
 export interface PokemonDetailsType {
   abilities: Ability[];

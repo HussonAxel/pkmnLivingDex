@@ -20,7 +20,7 @@ export function PokemonBioData(props: PokemonBioDataTypes) {
 
   return (
     <section className="flex-grow grid grid-cols-1 md:grid-cols-3 gap-8 md:p-24 backdrop-blur-sm p-24 min-w-[1600px] max-w-[1600px] w-full">
-      <div className="flex flex-col items-center justify-center bg-white/5 rounded-lg p-6 text-center">
+      <div className="flex flex-col items-center justify-center bg-white/5 rounded-lg py-6 text-center">
         <div className="relative group mb-4">
           <img
             src={picture}

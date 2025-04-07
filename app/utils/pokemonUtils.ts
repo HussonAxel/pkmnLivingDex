@@ -109,8 +109,8 @@ export const translatePokemonName = (pokemonName: string): string => {
   }
 };
 
-export const getIdFromUrl = (urlString: string): string | null => {
-  if (!urlString) return null;
+export const getIdFromUrl = (urlString: string): number | number => {
+  if (!urlString) return 0;
   // Split by '/', filter out empty strings resulting from trailing/leading/double slashes
   const parts = urlString.split("/").filter((part) => part.length > 0);
   // Get the last element from the filtered array
@@ -118,7 +118,7 @@ export const getIdFromUrl = (urlString: string): string | null => {
 
   // Check if the last part is actually a number
   if (potentialId && /^\d+$/.test(potentialId)) {
-    return potentialId;
+    return parseInt(potentialId);
   }
-  return null; // Return null if the last part isn't a number
+  return 0; // Return 0 if the last part isn't a number
 };
