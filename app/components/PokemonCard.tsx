@@ -18,7 +18,7 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const isRegionalVariant = getGenerationVariantsForm.some((region) =>
-    pokemon.name.en.toLowerCase().includes(region.toLowerCase()),
+    pokemon.name.en.toLowerCase().includes(region.toLowerCase())
   );
 
   const getSpriteUrl = () => {
@@ -71,10 +71,7 @@ export function PokemonCard({ pokemon, viewSettings }: PokemonCardProps) {
             <h2 className="font-semibold text-lg xl:text-xl truncate w-full ">
               {pokemon.name[viewSettings.language]}{" "}
               <span className="text-md text-gray-500">
-                #
-                {isRegionalVariant
-                  ? `${pokemon.pokedex_id} (Variant Form)`
-                  : pokemon.pokedex_id}
+                #{pokemon.pokedex_id}
               </span>
             </h2>
             <div
