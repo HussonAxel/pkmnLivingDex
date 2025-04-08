@@ -1,6 +1,5 @@
 import { PokemonCard } from "./PokemonCard";
 import { ViewSettings } from "~/types/pokemonTypes";
-import { getGenerationVariantsForm } from "~/utils/pokemonUtils";
 
 type PokemonGridProps = {
   generationData: any[];
@@ -13,15 +12,7 @@ export function PokemonGrid({
   viewSettings,
   generationID,
 }: PokemonGridProps) {
-  const isRegionalForm = (pokemonName: string): boolean => {
-    return getGenerationVariantsForm.some((region) =>
-      pokemonName.toLowerCase().includes(region.toLowerCase())
-    );
-  };
-
-  const sortedData = generationData.sort(
-    (a, b) => a.pokedex_id - b.pokedex_id
-  );
+  const sortedData = generationData.sort((a, b) => a.pokedex_id - b.pokedex_id);
 
   return (
     <div>
