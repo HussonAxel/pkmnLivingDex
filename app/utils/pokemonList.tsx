@@ -38,7 +38,7 @@ export const fetchGenerationsDetails = createServerFn({
       } catch (error) {
         console.error(
           `Error fetching details for generation ${gen.name}:`,
-          error,
+          error
         );
         return {
           ...gen,
@@ -46,7 +46,7 @@ export const fetchGenerationsDetails = createServerFn({
           error: true,
         };
       }
-    }),
+    })
   );
   return generationsData;
 });
@@ -77,14 +77,14 @@ export const pokemonsPerGenerationDetails = createServerFn({
         // Filter out MissingNo from the first generation
         if (index === 0) {
           return pokemonListPerGen.filter(
-            (pokemon: Pokemon) => pokemon.pokedex_id !== 0,
+            (pokemon: Pokemon) => pokemon.pokedex_id !== 0
           );
         }
         return pokemonListPerGen;
       } catch (error) {
         console.error(
           `Error fetching details for generation ${gen.name}:`,
-          error,
+          error
         );
         return {
           name: gen.name,
@@ -92,7 +92,7 @@ export const pokemonsPerGenerationDetails = createServerFn({
           error: true,
         };
       }
-    }),
+    })
   );
   return pokemonsPerGeneration;
 });
@@ -110,7 +110,7 @@ export const fetchPokemonList = createServerFn({ method: "GET" }).handler(
     return axios
       .get<PokemonListType>(`${pokeAPIRootURL}pokemon?limit=-1`)
       .then((response) => response.data.results);
-  },
+  }
 );
 
 export const pokemonQueryOptions = () =>
@@ -123,9 +123,9 @@ const normalizePokemonName = (name: string): string => {
   // Remove special characters and convert to lowercase
   return name
     .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]/g, '-');
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]/g, "-");
 };
 
 export const fetchPokemonDetails = createServerFn({ method: "GET" })
@@ -133,21 +133,54 @@ export const fetchPokemonDetails = createServerFn({ method: "GET" })
   .handler(async ({ data: name }) => {
     console.info(`Fetching ${name} data...`);
     const normalizedName = normalizePokemonName(name);
-    
+
     try {
+      // First try to get the species data to check for forms
+      const speciesResponse = await axios
+        .get<PokemonSpeciesType>(
+          `${pokeAPIRootURL}pokemon-species/${normalizedName}`
+        )
+        .catch(() => null);
+
+      let pokemonUrl = `${pokeAPIRootURL}pokemon/${normalizedName}`;
+
+      // If we have species data, check for default form
+      if (speciesResponse) {
+        const defaultVariety = speciesResponse.data.varieties.find(
+          (v) => v.is_default
+        );
+        if (defaultVariety) {
+          pokemonUrl = defaultVariety.pokemon.url;
+        }
+      }
+
+      // Special cases for Pokémon with specific forms
+      const specialForms: Record<string, string> = {
+        aegislash: "aegislash-shield",
+        minior: "minior-red-meteor",
+        mimikyu: "mimikyu-disguised",
+        toxtricity: "toxtricity-amped",
+        urshifu: "urshifu-single-strike",
+        basculegion: "basculegion-male",
+        indeedee: "indeedee-male",
+        oinkologne: "oinkologne-male",
+        meowstic: "meowstic-male",
+        squawkabilly: "squawkabilly-green-plumage",
+      };
+
+      if (specialForms[normalizedName]) {
+        pokemonUrl = `${pokeAPIRootURL}pokemon/${specialForms[normalizedName]}`;
+      }
+
       const pokemon = await axios
-        .get<PokemonDetailsType>(`${pokeAPIRootURL}pokemon/${normalizedName}`)
+        .get<PokemonDetailsType>(pokemonUrl)
         .then((r) => r.data);
 
-      // If the Pokémon is a regional form or has a special ID, fetch the species data
-      if (pokemon.id > 1025) {
-        const speciesResponse = await axios.get<PokemonSpeciesType>(
-          `${pokeAPIRootURL}pokemon-species/${pokemon.species.name}`
-        );
-        // Create a new species object with the required url property
+      // Add species data if we have it
+      if (speciesResponse) {
         pokemon.species = {
           ...speciesResponse.data,
-          url: `${pokeAPIRootURL}pokemon-species/${pokemon.species.name}`
+          url: `${pokeAPIRootURL}pokemon-species/${pokemon.species.name}`,
         };
       }
 
@@ -173,11 +206,13 @@ export const fetchPokemonSpecies = createServerFn({ method: "GET" })
   .validator((name: string) => name)
   .handler(async ({ data: name }) => {
     const normalizedName = normalizePokemonName(name);
-    
+
     try {
       // First try to get the species directly
       const species = await axios
-        .get<PokemonSpeciesType>(`${pokeAPIRootURL}pokemon-species/${normalizedName}`)
+        .get<PokemonSpeciesType>(
+          `${pokeAPIRootURL}pokemon-species/${normalizedName}`
+        )
         .then((r) => r.data);
 
       return species;
@@ -189,7 +224,9 @@ export const fetchPokemonSpecies = createServerFn({ method: "GET" })
           .then((r) => r.data);
 
         const species = await axios
-          .get<PokemonSpeciesType>(`${pokeAPIRootURL}pokemon-species/${pokemon.species.name}`)
+          .get<PokemonSpeciesType>(
+            `${pokeAPIRootURL}pokemon-species/${pokemon.species.name}`
+          )
           .then((r) => r.data);
 
         return species;

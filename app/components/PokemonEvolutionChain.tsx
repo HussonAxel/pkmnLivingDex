@@ -51,7 +51,7 @@ export function PokemonEvolutionChain() {
 
   const pokemonData = useSuspenseQuery(pokemonDetailsQueryOptions(pokemonName));
   const pokemonSpeciesData = useSuspenseQuery(
-    pokemonSpeciesQueryOptions(pokemonName),
+    pokemonSpeciesQueryOptions(pokemonName)
   );
 
   const fetchedSpeciesData = pokemonSpeciesData.data;
@@ -83,75 +83,103 @@ export function PokemonEvolutionChain() {
           />
           {firstEvolutions.length > 0 && (
             <div className="flex flex-wrap justify-center gap-x-8 gap-y-4">
-              {firstEvolutions.map((evolution) => {
-                console.log(evolution);
-                const secondEvolutions = evolution.evolves_to;
+              {firstEvolutions.map(
+                (evolution: {
+                  evolves_to: any;
+                  evolution_details: {
+                    min_level: any;
+                    item: any;
+                    trigger: { name: any };
+                  }[];
+                  species: { name: React.Key | null | undefined; url: string };
+                }) => {
+                  console.log(evolution);
+                  const secondEvolutions = evolution.evolves_to;
 
-                const evolutionCondition = evolution.evolution_details?.[0]
-                  ? ` Via ${
-                      evolution.evolution_details[0].min_level
-                        ? `Lv ${evolution.evolution_details[0].min_level}`
-                        : evolution.evolution_details[0].item?.name ||
-                          evolution.evolution_details[0].trigger?.name ||
-                          "Special"
-                    }`
-                  : "";
+                  const evolutionCondition = evolution.evolution_details?.[0]
+                    ? ` Via ${
+                        evolution.evolution_details[0].min_level
+                          ? `Lv ${evolution.evolution_details[0].min_level}`
+                          : evolution.evolution_details[0].item?.name ||
+                            evolution.evolution_details[0].trigger?.name ||
+                            "Special"
+                      }`
+                    : "";
 
-                return (
-                  <div
-                    key={evolution.species.name}
-                    className="flex flex-row items-center"
-                  >
-                    <span className="text-xl text-gray-400 mb-1 px-2"> → </span>
-                    <span className="text-xs text-gray-400 mb-1">
-                      {evolutionCondition}
-                    </span>
-                    <PokemonDisplayCard
-                      name={evolution.species.name}
-                      url={evolution.species.url}
-                      className="h-56 w-auto"
-                    />
+                  return (
+                    <div
+                      key={evolution.species.name}
+                      className="flex flex-row items-center"
+                    >
+                      <span className="text-xl text-gray-400 mb-1 px-2">
+                        {" "}
+                        →{" "}
+                      </span>
+                      <span className="text-xs text-gray-400 mb-1">
+                        {evolutionCondition}
+                      </span>
+                      {evolution.species.name && (
+                        <PokemonDisplayCard
+                          name={evolution.species.name as string}
+                          url={evolution.species.url}
+                          className="h-56 w-auto"
+                        />
+                      )}
 
-                    {secondEvolutions.length > 0 && (
-                      <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-2">
-                        {secondEvolutions.map((innerEvolution) => {
-                          console.log(innerEvolution);
-                          const innerEvolutionCondition = innerEvolution
-                            .evolution_details?.[0]
-                            ? `Via ${
-                                innerEvolution.evolution_details[0].min_level
-                                  ? `Lv ${innerEvolution.evolution_details[0].min_level}`
-                                  : innerEvolution.evolution_details[0].item
-                                      ?.name ||
-                                    innerEvolution.evolution_details[0].trigger
-                                      ?.name ||
-                                    "Special"
-                              }`
-                            : "";
-                          return (
-                            <div
-                              key={innerEvolution.species.name}
-                              className="flex flex-row items-center"
-                            >
-                              <span className="text-lg text-gray-500 px-2">
-                                →
-                              </span>
-                              <span className="text-xs text-gray-500">
-                                {innerEvolutionCondition}
-                              </span>
-                              <PokemonDisplayCard
-                                name={innerEvolution.species.name}
-                                url={innerEvolution.species.url}
-                                className="h-56 w-auto"
-                              />
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                      {secondEvolutions.length > 0 && (
+                        <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-2">
+                          {secondEvolutions.map(
+                            (innerEvolution: {
+                              evolution_details: {
+                                min_level: any;
+                                item: any;
+                                trigger: { name: any };
+                              }[];
+                              species: {
+                                name: React.Key | null | undefined;
+                                url: string;
+                              };
+                            }) => {
+                              console.log(innerEvolution);
+                              const innerEvolutionCondition = innerEvolution
+                                .evolution_details?.[0]
+                                ? `Via ${
+                                    innerEvolution.evolution_details[0]
+                                      .min_level
+                                      ? `Lv ${innerEvolution.evolution_details[0].min_level}`
+                                      : innerEvolution.evolution_details[0].item
+                                          ?.name ||
+                                        innerEvolution.evolution_details[0]
+                                          .trigger?.name ||
+                                        "Special"
+                                  }`
+                                : "";
+                              return (
+                                <div
+                                  key={innerEvolution.species.name}
+                                  className="flex flex-row items-center"
+                                >
+                                  <span className="text-lg text-gray-500 px-2">
+                                    →
+                                  </span>
+                                  <span className="text-xs text-gray-500">
+                                    {innerEvolutionCondition}
+                                  </span>
+                                  <PokemonDisplayCard
+                                    name={innerEvolution.species.name as string}
+                                    url={innerEvolution.species.url}
+                                    className="h-56 w-auto"
+                                  />
+                                </div>
+                              );
+                            }
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+              )}
             </div>
           )}
         </div>

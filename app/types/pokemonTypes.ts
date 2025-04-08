@@ -382,3 +382,13 @@ export interface Type {
   slot: number;
   type: Species;
 }
+
+export type PokemonBioData = {
+  species: string;
+  height: string;
+  weight: string;
+  gender: string;
+  region: string;
+  abilities: string[];
+  forms?: string;
+};
