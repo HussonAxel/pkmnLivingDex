@@ -29,13 +29,17 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
         initial="hidden"
         animate="show"
       >
-        <motion.div
-          variants={item}
-          className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-full h-full max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40 cursor-pointer"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+        <Link
+          to="/pokedex"
+          className="w-full h-full"
+          onClick={() => setIsActive(false)}
         >
-          <Link to="/pokedex" className="" onClick={() => setIsActive(false)}>
+          <motion.div
+            variants={item}
+            className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-full h-full max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40 cursor-pointer"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
             <motion.h2
               className="font-anton uppercase transition-opacity duration-500 text-3xl group-hover:hidden text-cream"
               initial={{ opacity: 1 }}
@@ -50,16 +54,20 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
             >
               Browse all Pokémon
             </motion.p>
-          </Link>
-        </motion.div>
+          </motion.div>
+        </Link>
 
-        <motion.div
-          variants={item}
-          className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-full h-full max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40 cursor-pointer"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+        <Link
+          to="/pokedex"
+          className="w-full h-full"
+          onClick={() => setIsActive(false)}
         >
-          <Link to="/pokedex" className="" onClick={() => setIsActive(false)}>
+          <motion.div
+            variants={item}
+            className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-full h-full max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40 cursor-pointer"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
             <motion.h2
               className="font-anton uppercase transition-opacity duration-500 text-3xl group-hover:hidden text-cream"
               initial={{ opacity: 1 }}
@@ -74,16 +82,20 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
             >
               Fun Pokémon mini-games
             </motion.p>
-          </Link>
-        </motion.div>
+          </motion.div>
+        </Link>
 
-        <motion.div
-          variants={item}
-          className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-full h-full max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40 cursor-pointer"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+        <Link
+          to="/pokedex"
+          className="w-full h-full"
+          onClick={() => setIsActive(false)}
         >
-          <Link to="/pokedex" className="" onClick={() => setIsActive(false)}>
+          <motion.div
+            variants={item}
+            className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-full h-full max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40 cursor-pointer"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
             <motion.h2
               className="font-anton uppercase transition-opacity duration-500 text-3xl group-hover:hidden text-cream"
               initial={{ opacity: 1 }}
@@ -98,16 +110,20 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
             >
               Daily random Pokémon
             </motion.p>
-          </Link>
-        </motion.div>
+          </motion.div>
+        </Link>
 
-        <motion.div
-          variants={item}
-          className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-full h-full max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40 cursor-pointer"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+        <Link
+          to="/pokedex"
+          className="w-full h-full"
+          onClick={() => setIsActive(false)}
         >
-          <Link to="/pokedex" className="" onClick={() => setIsActive(false)}>
+          <motion.div
+            variants={item}
+            className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-full h-full max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40 cursor-pointer"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
             <motion.h2
               className="font-anton uppercase transition-opacity duration-500 text-3xl group-hover:hidden text-cream"
               initial={{ opacity: 1 }}
@@ -122,19 +138,19 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
             >
               Detailed Pokémon information
             </motion.p>
-          </Link>
-        </motion.div>
+          </motion.div>
+        </Link>
 
-        <motion.div
-          variants={item}
-          className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-full h-full max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40/20 hover:text-red text-cream cursor-not-allowed"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+        <Link
+          to="/pokedex"
+          className="pointer-events-none w-full h-full"
+          onClick={() => setIsActive(false)}
         >
-          <Link
-            to="/pokedex"
-            className="pointer-events-none"
-            onClick={() => setIsActive(false)}
+          <motion.div
+            variants={item}
+            className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-full h-full max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40/20 hover:text-red text-cream cursor-not-allowed"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
             <motion.h2
               className="font-anton uppercase transition-opacity duration-500 text-3xl group-hover:hidden text-cream"
@@ -150,19 +166,19 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
             >
               Coming Soon...
             </motion.p>
-          </Link>
-        </motion.div>
+          </motion.div>
+        </Link>
 
-        <motion.div
-          variants={item}
-          className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-full h-full max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40/20 hover:text-red text-cream cursor-not-allowed"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+        <Link
+          to="/pokedex"
+          className="pointer-events-none h-full w-full"
+          onClick={() => setIsActive(false)}
         >
-          <Link
-            to="/pokedex"
-            className="pointer-events-none"
-            onClick={() => setIsActive(false)}
+          <motion.div
+            variants={item}
+            className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-full h-full max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40/20 hover:text-red text-cream cursor-not-allowed"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
             <motion.h2
               className="font-anton uppercase transition-opacity duration-500 text-3xl group-hover:hidden text-cream"
@@ -178,18 +194,18 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
             >
               Coming Soon...
             </motion.p>
-          </Link>
-        </motion.div>
-        <motion.div
-          variants={item}
-          className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-full h-full max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40/20 hover:text-red text-cream cursor-not-allowed"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          </motion.div>
+        </Link>
+        <Link
+          to="/pokedex"
+          className="pointer-events-none h-full w-full"
+          onClick={() => setIsActive(false)}
         >
-          <Link
-            to="/pokedex"
-            className="pointer-events-none"
-            onClick={() => setIsActive(false)}
+          <motion.div
+            variants={item}
+            className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-full h-full max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40/20 hover:text-red text-cream cursor-not-allowed"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
             <motion.h2
               className="font-anton uppercase transition-opacity duration-500 text-3xl group-hover:hidden text-cream"
@@ -205,19 +221,19 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
             >
               Coming Soon...
             </motion.p>
-          </Link>
-        </motion.div>
+          </motion.div>
+        </Link>
 
-        <motion.div
-          variants={item}
-          className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-full h-full max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40/20 hover:text-red text-cream cursor-not-allowed"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+        <Link
+          to="/pokedex"
+          className="pointer-events-none h-full w-full"
+          onClick={() => setIsActive(false)}
         >
-          <Link
-            to="/pokedex"
-            className="pointer-events-none"
-            onClick={() => setIsActive(false)}
+          <motion.div
+            variants={item}
+            className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-full h-full max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40/20 hover:text-red text-cream cursor-not-allowed"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
             <motion.h2
               className="font-anton uppercase transition-opacity duration-500 text-3xl group-hover:hidden text-cream"
@@ -233,19 +249,19 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
             >
               Coming Soon...
             </motion.p>
-          </Link>
-        </motion.div>
+          </motion.div>
+        </Link>
 
-        <motion.div
-          variants={item}
-          className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-full h-full max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40/20 hover:text-red text-cream cursor-not-allowed"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+        <Link
+          to="/pokedex"
+          className="pointer-events-none h-full w-full"
+          onClick={() => setIsActive(false)}
         >
-          <Link
-            to="/pokedex"
-            className="pointer-events-none"
-            onClick={() => setIsActive(false)}
+          <motion.div
+            variants={item}
+            className="border shadow-md rounded-sm border-cream bg-[#353941]/20 font-Anton group text-center content-center w-full h-full max-w-[440px] max-h-[220px] transition-colors duration-500  hover:bg-[#353941]/40/20 hover:text-red text-cream cursor-not-allowed"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
             <motion.h2
               className="font-anton uppercase transition-opacity duration-500 text-3xl group-hover:hidden text-cream"
@@ -261,8 +277,8 @@ export default function OpenedHeaderSection({ setIsActive }: Props) {
             >
               Coming Soon...
             </motion.p>
-          </Link>
-        </motion.div>
+          </motion.div>
+        </Link>
       </motion.section>
     </div>
   );
