@@ -7,7 +7,7 @@ export const Route = createFileRoute("/pokedex/")({
 
 function PokemonsIndexComponent() {
   return (
-    <div className="container mx-auto px-6 py-10 max-w-6xl">
+    <div className="container mx-auto px-6 py-10">
       <h2 className="text-2xl md:text-3xl font-bold mb-8 relative inline-block">
         <span className="relative z-10">Select a Region</span>
         <span className="absolute bottom-0 left-0 w-full h-3 bg-yellow-300 opacity-40 -z-10 transform -rotate-1"></span>
