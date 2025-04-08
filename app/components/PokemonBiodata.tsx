@@ -1,5 +1,3 @@
-import { PokemonType } from "./PokemonCard";
-
 interface PokemonBioDataTypes {
   name: string;
   picture: string;
@@ -19,29 +17,29 @@ export function PokemonBioData(props: PokemonBioDataTypes) {
   const { name, ID, picture, description, pokemonBiodata } = props;
 
   return (
-    <section className="flex-grow grid grid-cols-1 md:grid-cols-3 gap-8 md:p-24 backdrop-blur-sm p-24 min-w-[1600px] max-w-[1600px] w-full">
-      <div className="flex flex-col items-center justify-center bg-white/5 rounded-lg py-6 text-center">
-        <div className="relative group mb-4">
+    <section className="flex-grow grid grid-cols-1 md:grid-cols-3 gap-8 backdrop-blur-sm min-w-[1600px] max-w-[1600px] w-full">
+      <div className="flex flex-col items-center justify-center text-center ">
+        <div className="relative">
           <img
             src={picture}
             alt={name}
-            className="w-64 h-64 md:w-80 md:h-80 object-contain transition-transform duration-300 group-hover:scale-105"
+            className="w-48 h-48 md:w-64 md:h-64 object-contain transition-transform duration-300 group-hover:scale-105"
           />
+          <div className="flex flex-col align-middle items-center mb-4">
+            <p className="text-center uppercase font-bebas text-2xl md:text-3xl tracking-wider content-center">
+              {name}
+            </p>
+            <span className="text-xl ml-4 opacity-80">{ID}</span>
+          </div>
         </div>
-        <p className="text-center uppercase font-anton text-2xl md:text-3xl text-white/90 tracking-wider mb-1">
-          {name}
-        </p>
-        <span className="font-worksans text-lg text-white/70 tracking-wide">
-          {ID}
-        </span>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:col-span-2 content-start">
         <div className="p-4 col-span-1 sm:col-span-2">
-          <span className="capitalize text-md text-white/60 tracking-wider mb-1 block">
+          <span className="text-md tracking-wider mb-1 block uppercase font-worksans">
             Description
           </span>
-          <p className="text-lg md:text-xl text-white/90 tracking-wider whitespace-pre-line font-worksans">
+          <p className="text-lg md:text-xl tracking-wider whitespace-pre-line font-bebas">
             {description}
           </p>
         </div>
@@ -51,10 +49,8 @@ export function PokemonBioData(props: PokemonBioDataTypes) {
             key={key}
             className="flex flex-col p-4 rounded-lg transition-colors duration-300 font-worksans"
           >
-            <span className="capitalize text-md text-white/60 tracking-wider mb-1">
-              {key}
-            </span>
-            <span className="text-xl md:text-2xl text-white/90 capitalize ">
+            <span className="text-md tracking-wider mb-1 uppercase">{key}</span>
+            <span className="text-xl md:text-2xl uppercase font-bebas">
               {Array.isArray(value) ? value.join(", ") : value}
             </span>
           </div>

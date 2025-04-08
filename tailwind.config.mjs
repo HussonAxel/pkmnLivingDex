@@ -13,6 +13,7 @@ export default {
       fontFamily: {
         anton: ["Anton", "sans-serif"],
         worksans: ["Work Sans", "sans-serif"],
+        bebas: ["Bebas Neue", "sans-serif"],
       },
     },
   },
