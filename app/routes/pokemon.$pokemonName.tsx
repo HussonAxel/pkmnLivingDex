@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Link } from "@tanstack/react-router";
 import { PokemonBioData as PokemonBioDataComponent } from "~/components/PokemonBiodata";
 import {
   pokemonDetailsQueryOptions,
@@ -62,12 +61,6 @@ function PokemonDetail() {
       ? "Genderless"
       : `${(dataSpecies.gender_rate / 8) * 100}% ♀ - ${100 - (dataSpecies.gender_rate / 8) * 100}% ♂`;
 
-  // Get available forms
-  const availableForms = dataSpecies.varieties.map((variety) => ({
-    name: variety.pokemon.name,
-    isDefault: variety.is_default,
-  }));
-
   const pokemonBiodata: PokemonBioData = {
     region: `${region} - ${formattedGeneration}`,
     species: genus,
@@ -83,10 +76,6 @@ function PokemonDetail() {
     height: `${data.height / 10}m - ${Math.round(
       (data.height / 10) * 3.2808
     )} ft`,
-    forms:
-      availableForms.length > 1
-        ? availableForms.map((form) => form.name).join(", ")
-        : "No other forms",
   };
 
   return (
