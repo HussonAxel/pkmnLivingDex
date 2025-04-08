@@ -20,6 +20,7 @@
     "framer-motion": "^12.6.2",
     "lucide-react": "^0.483.0",
     "motion": "^12.6.2",
+    "pokeapi-types": "^0.0.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "redaxios": "^0.5.1",

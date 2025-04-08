@@ -1,3 +1,5 @@
+import { PokeAPI } from "pokeapi-types";
+
 export type ViewSettings = {
   isShiny: boolean;
   isUserDatabase: boolean;
@@ -106,70 +108,15 @@ export type PokemonCardProps = {
   viewSettings: ViewSettings;
 };
 
-export type PokemonListResponse = {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: Array<{
-    name: string;
-    url: string;
-  }>;
-};
+export type PokemonListResponse = PokeAPI.NamedAPIResourceList;
 
-export type PokemonSpeciesType = {
-  base_happiness: number;
-  capture_rate: number;
-  color: { name: string };
-  egg_groups: Array<{ name: string }>;
-  evolution_chain: { url: string };
-  evolves_from_species: { name: string } | null;
-  flavor_text_entries: Array<{
-    flavor_text: string;
-    language: { name: string };
-    version: { name: string };
-  }>;
-  form_descriptions: Array<any>;
-  forms_switchable: boolean;
-  gender_rate: number;
-  genera: Array<{
-    genus: string;
-    language: { name: string };
-  }>;
-  generation: { name: string };
-  growth_rate: { name: string };
-  habitat: { name: string } | null;
-  has_gender_differences: boolean;
-  hatch_counter: number;
-  id: number;
-  is_baby: boolean;
-  is_legendary: boolean;
-  is_mythical: boolean;
-  name: string;
-  names: Array<{
-    language: { name: string };
-    name: string;
-  }>;
-  order: number;
-  pal_park_encounters: Array<any>;
-  pokedex_numbers: Array<any>;
-  shape: { name: string };
-  varieties: Array<{
-    is_default: boolean;
-    pokemon: { name: string; url: string };
-  }>;
-};
+export type PokemonSpeciesType = PokeAPI.PokemonSpecies;
 
-export interface PokemonListType {
-  count: number;
-  next: null;
-  previous: null;
+export interface PokemonListType extends PokeAPI.NamedAPIResourceList {
   results: pokemonListPerGenType[];
 }
 
-export interface pokemonListPerGenType {
-  name: string;
-  url: string;
-}
+export interface pokemonListPerGenType extends PokeAPI.NamedAPIResource {}
 
 export interface MainRegionsTypes {
   abilities: any[];
@@ -183,81 +130,33 @@ export interface MainRegionsTypes {
   version_groups: MainRegion[];
 }
 
-export interface MainRegion {
-  name: string;
-  url: string;
-}
+export interface MainRegion extends PokeAPI.NamedAPIResource {}
 
 export interface Name {
   language: MainRegion;
   name: string;
 }
 
-export interface PokemonDetailsType {
-  abilities: Ability[];
-  base_experience: number;
-  cries: Cries;
-  forms: Species[];
-  game_indices: GameIndex[];
-  height: number;
-  held_items: HeldItem[];
-  id: number;
-  is_default: boolean;
-  location_area_encounters: string;
-  moves: Move[];
-  name: string;
-  order: number;
-  past_abilities: any[];
-  past_types: any[];
-  species: Species;
-  sprites: Sprites;
-  stats: Stat[];
-  types: Type[];
-  weight: number;
-}
+export interface PokemonDetailsType extends PokeAPI.Pokemon {}
 
-export interface Ability {
-  ability: Species;
-  is_hidden: boolean;
-  slot: number;
-}
+export interface Ability extends PokeAPI.PokemonAbility {}
 
-export interface Species {
-  name: string;
-  url: string;
-}
+export interface Species extends PokeAPI.NamedAPIResource {}
 
 export interface Cries {
   latest: string;
   legacy: string;
 }
 
-export interface GameIndex {
-  game_index: number;
-  version: Species;
-}
+export interface GameIndex extends PokeAPI.VersionGameIndex {}
 
-export interface HeldItem {
-  item: Species;
-  version_details: VersionDetail[];
-}
+export interface HeldItem extends PokeAPI.PokemonHeldItem {}
 
-export interface VersionDetail {
-  rarity: number;
-  version: Species;
-}
+export interface VersionDetail extends PokeAPI.PokemonHeldItemVersion {}
 
-export interface Move {
-  move: Species;
-  version_group_details: VersionGroupDetail[];
-}
+export interface Move extends PokeAPI.PokemonMove {}
 
-export interface VersionGroupDetail {
-  level_learned_at: number;
-  move_learn_method: Species;
-  order: null;
-  version_group: Species;
-}
+export interface VersionGroupDetail extends PokeAPI.PokemonMoveVersion {}
 
 export interface GenerationV {
   "black-white": Sprites;
@@ -280,23 +179,40 @@ export interface Versions {
   "generation-viii": GenerationViii;
 }
 
-export interface Other {
-  dream_world: DreamWorld;
-  home: Home;
-  "official-artwork": OfficialArtwork;
-  showdown: Sprites;
+export interface DreamWorld {
+  front_default: string | null;
+  front_female: string | null;
+}
+
+export interface Home {
+  front_default: string | null;
+  front_female: string | null;
+  front_shiny: string | null;
+  front_shiny_female: string | null;
+}
+
+export interface OfficialArtwork {
+  front_default: string | null;
+  front_shiny: string | null;
+}
+
+export interface PokemonSpriteOther {
+  dream_world?: DreamWorld;
+  home?: Home;
+  "official-artwork"?: OfficialArtwork;
+  [key: string]: any;
 }
 
 export interface Sprites {
-  back_default: string;
-  back_female: null;
-  back_shiny: string;
-  back_shiny_female: null;
-  front_default: string;
-  front_female: null;
-  front_shiny: string;
-  front_shiny_female: null;
-  other?: Other;
+  back_default: string | null;
+  back_female: string | null;
+  back_shiny: string | null;
+  back_shiny_female: string | null;
+  front_default: string | null;
+  front_female: string | null;
+  front_shiny: string | null;
+  front_shiny_female: string | null;
+  other?: PokemonSpriteOther;
   versions?: Versions;
   animated?: Sprites;
 }
@@ -346,42 +262,18 @@ export interface GenerationIii {
   "ruby-sapphire": Gold;
 }
 
-export interface OfficialArtwork {
-  front_default: string;
-  front_shiny: string;
-}
-
-export interface Home {
-  front_default: string;
-  front_female: null;
-  front_shiny: string;
-  front_shiny_female: null;
-}
-
 export interface GenerationVii {
   icons: DreamWorld;
   "ultra-sun-ultra-moon": Home;
-}
-
-export interface DreamWorld {
-  front_default: string;
-  front_female: null;
 }
 
 export interface GenerationViii {
   icons: DreamWorld;
 }
 
-export interface Stat {
-  base_stat: number;
-  effort: number;
-  stat: Species;
-}
+export interface Stat extends PokeAPI.PokemonStat {}
 
-export interface Type {
-  slot: number;
-  type: Species;
-}
+export interface Type extends PokeAPI.PokemonType {}
 
 export type PokemonBioData = {
   species: string;
